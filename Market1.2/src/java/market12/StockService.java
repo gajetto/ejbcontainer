@@ -32,15 +32,15 @@ public class StockService {
         setStockList(new ArrayList());
         
         StockProduct thisStockPdt = new StockProduct("Sun");
-        thisStockPdt.setStockID("1");
+        thisStockPdt.setStockID(1);
         getStockList().add(thisStockPdt);
         
         thisStockPdt = new StockProduct("Apple");
-        thisStockPdt.setStockID("2");
+        thisStockPdt.setStockID(2);
         getStockList().add(thisStockPdt);
         
         thisStockPdt = new StockProduct("IBM");
-        thisStockPdt.setStockID("3");
+        thisStockPdt.setStockID(3);
         getStockList().add(thisStockPdt);
         
         // AJOUT: passe la liste au publisher qui s'occupera de la gerer.
