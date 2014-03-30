@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <admin-object-resource enabled="true" jndi-name="jms/destinationTopic" object-type="user" res-adapter="jmsra" res-type="javax.jms.Topic">
+    <description/>
+    <property name="Name" value="destinationTopic"/>
+  </admin-object-resource>
+</resources>
