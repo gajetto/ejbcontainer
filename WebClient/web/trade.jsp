@@ -18,7 +18,7 @@
                   url: 'servletgetstock',
                   cache: false,
                   success: function(data) {
-                      console.log(data);
+                        console.log(data);
                       printStock(data);
                       drawChart(getChartData(data));                     
                       setTimeout(function() {

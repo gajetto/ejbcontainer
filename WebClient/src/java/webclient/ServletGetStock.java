@@ -9,15 +9,8 @@ package webclient;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import javax.jms.JMSException;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
-import javax.jms.Session;
-import javax.jms.Topic;
-import javax.jms.TopicConnection;
-import javax.jms.TopicConnectionFactory;
-import javax.jms.TopicSession;
-import javax.jms.TopicSubscriber;
+import javax.jms.*;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -125,7 +118,7 @@ public class ServletGetStock extends HttpServlet implements MessageListener {
     /**
      * initialize a subscriber connection that reads messages sent from the market
      */
-    public void initializeSubscriber(){
+        public void initializeSubscriber(){
             final String TOPIC_NAME = "market";
 
             TopicConnectionFactory connectionFactory = new com.sun.messaging.TopicConnectionFactory();
