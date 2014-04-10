@@ -21,7 +21,7 @@ import java.lang.Double;
  */
 public class StockProduct implements Serializable {
     private String stockName;
-    private String stockID;
+    private int stockID;
     private Double stockPrice = new Double(0);
     
     /**
@@ -39,11 +39,11 @@ public class StockProduct implements Serializable {
         this.stockName = stockName;
     }
     
-    public String getStockID() {
+    public int getStockID() {
         return stockID;
     }
     
-    public void setStockID(String stockID) {
+    public void setStockID(int stockID) {
         this.stockID = stockID;
     }
     
