@@ -19,6 +19,7 @@ import javax.jms.MessageListener;
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
     @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/destinationTopic"),
     @ActivationConfigProperty(propertyName = "clientId", propertyValue = "jms/destinationTopic"),
+    @ActivationConfigProperty(propertyName = "subscriptionDurability", propertyValue = "Durable"),
     @ActivationConfigProperty(propertyName = "subscriptionName", propertyValue = "jms/destinationTopic")
 })
 public class MessageBean implements MessageListener {
