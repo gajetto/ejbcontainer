@@ -8,8 +8,9 @@ package beans;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
-import javax.jms.Message;
-import javax.jms.MessageListener;
+import javax.jms.*;
+import beans.SingletonPriceEvolutionBean;
+import java.lang.Exception;
 
 /**
  *
@@ -24,12 +25,24 @@ import javax.jms.MessageListener;
 })
 public class MessageBean implements MessageListener {
     
+    
+    
     public MessageBean() {
+       
     }
     
     @Override
     public void onMessage(Message message) {
-        System.out.println("message received");
+        try {
+String StockPriceEvolution = ((TextMessage) message).getText();
+
+        
+            synchronized (this) { this.notify(); }
+        System.out.println("message received : " + StockPriceEvolution );
     }
+        catch (JMSException e){
+            System.out.println("A JMS error has occured...");
+        }
     
+    }
 }

@@ -8,10 +8,12 @@ package beans;
 
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
+import javax.jms.Message;
+import beans.MessageBean;
 
 /**
  *
- * @author Sohaila.Baset
+ * @author Sohaila & Ludovic
  */
 @Singleton
 @LocalBean
@@ -19,4 +21,8 @@ public class SingletonPriceEvolutionBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    
+    
+    
+    
 }
