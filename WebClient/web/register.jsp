@@ -33,7 +33,7 @@
                         <input type="text" name="lastName" class="long" />
                         <br />
                         <label for="dateOfBirth">Date of birth: </label>
-                        <input type="number" name="dateOfBirth" id="datePicker" class="long" />
+                        <input type="text" name="dateOfBirth" id="datePicker" class="long" />
                         <br />
                         <label for="password">Password: </label>
                         <input type="password" name="password" id="password"  onkeyup="passwordLength();" onchange="passwordLength();" class="long" />
