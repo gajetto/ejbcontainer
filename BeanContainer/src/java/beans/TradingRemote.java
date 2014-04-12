@@ -7,16 +7,17 @@
 package beans;
 
 import dataTransferObjects.UserDTO;
+import javax.ejb.Local;
 import javax.ejb.Remote;
 
 /**
  *
  * @author Sohaila.Baset
  */
-@Remote
+@Local
 public interface TradingRemote {
     
     public boolean authenticateUser(UserDTO userDTO);
-    public boolean registerUser(UserDTO userDTO);
+    public boolean registerUser(UserDTO userDTO);    
     
 }

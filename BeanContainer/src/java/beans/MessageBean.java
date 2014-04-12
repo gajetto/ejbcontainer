@@ -54,10 +54,6 @@ ArrayList <StockProduct> messageList = (ArrayList) objectMessage.getObject();
         catch (EJBException e){
             System.out.println("An EJB exception has occured ...");
         }
-        
-        stockProduct getStock (){
-        
-    }
     
     }
 }

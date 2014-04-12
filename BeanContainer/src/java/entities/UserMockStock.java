@@ -25,6 +25,7 @@ import javax.persistence.Temporal;
 public class UserMockStock implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "UserId", nullable = false)    
     private int id;
     

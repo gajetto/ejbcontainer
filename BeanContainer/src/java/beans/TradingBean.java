@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.sql.DataSource;
 import javax.*;
+import javax.ejb.TransactionAttribute;
 
 /**
  *
@@ -40,15 +41,18 @@ public class TradingBean implements TradingRemote {
     }
 
     @Override
+    @TransactionAttribute(javax.ejb.TransactionAttributeType.REQUIRES_NEW)
     public boolean registerUser(UserDTO userDTO) {
+        System.out.println("hola");
         try {
-            ds = (javax.sql.DataSource) ctx.lookup("jdbc/MockStockDB");
-            cn = ds.getConnection();
-            cn.setAutoCommit(false);
             insertUser(GetEntitiyFromDTO(userDTO));
+//            ds = (javax.sql.DataSource) ctx.lookup("jdbc/MockStockDB");
+//            cn = ds.getConnection();
+//            cn.setAutoCommit(false);
             return true;
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             return false;
         }
 
@@ -56,7 +60,6 @@ public class TradingBean implements TradingRemote {
 
     public void insertUser(UserMockStock entity) {
         manager.persist(entity);
-
     }
 
     private UserMockStock GetEntitiyFromDTO(UserDTO userDTO) {
