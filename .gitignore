@@ -14,3 +14,6 @@
 /build/
 /WebClient/dist/
 /dist/
+/RichClientEE/nbproject/private/
+/RichClientEE/build/
+/RichClientEE/dist/

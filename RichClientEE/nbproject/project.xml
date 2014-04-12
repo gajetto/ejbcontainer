@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.j2ee.clientproject</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/car-project/1">
+            <name>RichClientEE</name>
+            <minimum-ant-version>1.6.5</minimum-ant-version>
+            <source-roots>
+                <root id="src.dir" name="Source Packages"/>
+            </source-roots>
+            <test-roots>
+                <root id="test.src.dir" name="Test Packages"/>
+            </test-roots>
+            <included-library dirs="200">file.reference.imq.jar</included-library>
+            <included-library dirs="200">file.reference.jcommon-1.0.21.jar</included-library>
+            <included-library dirs="200">file.reference.jfreechart-1.0.17.jar</included-library>
+            <included-library dirs="200">file.reference.jms.jar</included-library>
+            <included-library dirs="200">file.reference.swingx-all-1.6.4.jar</included-library>
+            <included-library dirs="200">libs.beans-binding.classpath</included-library>
+            <included-library dirs="200">libs.swing-layout.classpath</included-library>
+        </data>
+        <libraries xmlns="http://www.netbeans.org/ns/ant-project-libraries/1">
+            <definitions>.\lib\nblibraries.properties</definitions>
+        </libraries>
+    </configuration>
+</project>

@@ -14,7 +14,7 @@ import javax.ejb.Remote;
  *
  * @author Sohaila.Baset
  */
-@Local
+@Remote
 public interface TradingRemote {
     
     public boolean authenticateUser(UserDTO userDTO);

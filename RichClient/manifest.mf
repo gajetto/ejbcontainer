@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-SplashScreen-Image: images/Nexon-Courier.jpg
-X-COMMENT: Main-Class will be added automatically by build
-
