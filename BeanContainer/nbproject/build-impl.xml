@@ -973,7 +973,7 @@ exists or setup the property manually. For example like this:
                 DEBUGGING SECTION
             -->
     <target depends="init,compile,dist-directory-deploy" description="Debug project in IDE." if="netbeans.home" name="debug">
-        <nbdeploy debugmode="true"/>
+        <nbdeploy debugmode="false"/>
         <antcall target="connect-debugger"/>
     </target>
     <target name="connect-debugger" unless="is.debugged">
