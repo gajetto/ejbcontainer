@@ -11,10 +11,13 @@ import javax.ejb.MessageDriven;
 import javax.jms.*;
 import beans.SingletonPriceEvolutionBean;
 import java.lang.Exception;
+import javax.ejb.EJBException;
+import market12.StockProduct;
+import java.util.ArrayList;
 
 /**
  *
- * @author Jerome
+ * @author Jerome & Ludovic
  */
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
@@ -25,6 +28,7 @@ import java.lang.Exception;
 })
 public class MessageBean implements MessageListener {
     
+   
     
     
     public MessageBean() {
@@ -34,15 +38,26 @@ public class MessageBean implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-String StockPriceEvolution = ((TextMessage) message).getText();
+ObjectMessage objectMessage = (ObjectMessage) message;
 
-        
+ArrayList <StockProduct> messageList = (ArrayList) objectMessage.getObject();
+
             synchronized (this) { this.notify(); }
-        System.out.println("message received : " + StockPriceEvolution );
+        for (StockProduct stockMessage : messageList){
+            System.out.println( stockMessage.getStockName() + 
+                                             " Stock Price : " + stockMessage.getStockPrice());
+        }
     }
         catch (JMSException e){
             System.out.println("A JMS error has occured...");
         }
+        catch (EJBException e){
+            System.out.println("An EJB exception has occured ...");
+        }
+        
+        stockProduct getStock (){
+        
+    }
     
     }
 }
