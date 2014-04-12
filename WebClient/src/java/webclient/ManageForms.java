@@ -35,9 +35,6 @@ import trading.TradingTransactionType;
 @Stateless()
 public class ManageForms extends HttpServlet {
     
-    
-    
-    @EJB
     TradingRemote tr;
 
     /**
@@ -60,13 +57,12 @@ public class ManageForms extends HttpServlet {
             String lastName = request.getParameter("lastName");
             String dateOfBirth = request.getParameter("dateOfBirth");
 
+            System.out.println(userName + password + firstName + lastName + dateOfBirth);
             
-            Date date = new SimpleDateFormat("dd.MM.YYYY", Locale.FRENCH).parse(dateOfBirth);
+            Date date = new SimpleDateFormat("MMMM d, yyyy", Locale.FRENCH).parse(dateOfBirth);
+            System.out.println(date);
             UserDTO user = new UserDTO(userName, firstName, lastName, date, password, false);
-//                InitialContext ic = new InitialContext();
-//                tr = (TradingRemote) ic.lookup("java:module/BeanContainer/beans");
             tr.registerUser(user);
-            System.out.println(userName + password);
             
         }
 
