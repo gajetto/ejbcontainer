@@ -1,7 +1,20 @@
 package webclient;
 
+import beans.TradingRemote;
+import dataTransferObjects.UserDTO;
 import trading.Trader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.jws.WebService;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +31,14 @@ import trading.TradingTransactionType;
  * @author Jerome
  */
 @WebServlet(name = "ManageForms", urlPatterns = {"/manageforms"})
+@WebService()
+@Stateless()
 public class ManageForms extends HttpServlet {
     
+    
+    
+    @EJB
+    TradingRemote tr;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,14 +51,23 @@ public class ManageForms extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         
         if(request.getParameter("userName")!=null){
-            WebAppData.newTrader(request.getParameter("userName"));
-            WebAppData.newStockService();
-            SessionStatusRequest ssr = new SessionStatusRequest(request.getParameter("userName"), SessionState.Connected);
-            PTPConnection.sendStatusRequest(ssr);
-            response.sendRedirect("trade.jsp");
+            String userName = request.getParameter("userName");
+            String password = request.getParameter("password");
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String dateOfBirth = request.getParameter("dateOfBirth");
+
+            
+            Date date = new SimpleDateFormat("dd.MM.YYYY", Locale.FRENCH).parse(dateOfBirth);
+            UserDTO user = new UserDTO(userName, firstName, lastName, date, password, false);
+//                InitialContext ic = new InitialContext();
+//                tr = (TradingRemote) ic.lookup("java:module/BeanContainer/beans");
+            tr.registerUser(user);
+            System.out.println(userName + password);
+            
         }
 
         else if(request.getParameter("hitButton")!=null){
@@ -136,7 +164,11 @@ public class ManageForms extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(ManageForms.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -150,7 +182,11 @@ public class ManageForms extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(ManageForms.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

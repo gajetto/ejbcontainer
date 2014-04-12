@@ -22,13 +22,19 @@
                     <form name="userForm" action="manageforms" method="post">
                         <label for="userName">Trader Name: </label>
                         <input type="text" name="userName" class="long" />
-
+                        <br />
+                        <label for="userName">Password: </label>
+                        <input type="password" name="password" class="long" />
+                        <br />
                         <input type="submit" value="Join Market" class="long" />
+                        <a href="register.jsp">
+                            <input type="button" class="button" value="signup" class="long" />
+                        </a>
                     </form>
                 </div>
             </div>
             <div id="footer">
-                MockStock, group 2, HEC march 2014
+                MockStock, group 2, HEC April 2014
             </div>
         </div>
     </body>
