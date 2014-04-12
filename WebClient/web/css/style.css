@@ -75,25 +75,29 @@ input[type=text]{
     border-bottom: 1px solid blue;
 }
 
-input[type=submit]:disabled{
+
+a{
+    text-decoration: none;
+}
+input[type=submit]:disabled, .button:disabled{
     background-color: lightgray;
     color: #5C5C5C;
     border: 1px solid darkgray;
 }
 
-input[type=submit]:hover{
+input[type=submit]:hover, .button:hover{
     border: 1px solid darkgray;
     background-color: darkgreen;
     text-decoration: none;
     cursor: pointer;
 }
-input[type=submit]:disabled:hover{
+input[type=submit]:disabled:hover, .button:disabled:hover{
     border: 1px solid darkgray;
     background-color: lightgray;
     cursor: auto;
 }
 
-input[type=submit]{
+input[type=submit], .button{
     text-transform: uppercase;
     color: lightgray;
     background-color: green;
@@ -163,4 +167,12 @@ input[type=submit]{
 
 #result{
     padding-top: 20px;
+}
+
+.formError{
+    color: red;
+}
+
+.formValid{
+    color: green;
 }

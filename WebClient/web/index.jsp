@@ -28,7 +28,7 @@
                         <br />
                         <input type="submit" value="Join Market" class="long" />
                         <a href="register.jsp">
-                            <input type="button" class="button" value="signup" class="long" />
+                            <input type="button" class="button long" value="signup" />
                         </a>
                     </form>
                 </div>

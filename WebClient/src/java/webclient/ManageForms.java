@@ -4,6 +4,7 @@ import beans.TradingRemote;
 import dataTransferObjects.UserDTO;
 import trading.Trader;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,8 +35,9 @@ import trading.TradingTransactionType;
 @WebService()
 @Stateless()
 public class ManageForms extends HttpServlet {
-    
+
     TradingRemote tr;
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,10 +59,9 @@ public class ManageForms extends HttpServlet {
             String lastName = request.getParameter("lastName");
             String dateOfBirth = request.getParameter("dateOfBirth");
 
-            System.out.println(userName + password + firstName + lastName + dateOfBirth);
+            DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+            Date date = df.parse(dateOfBirth);    
             
-            Date date = new SimpleDateFormat("MMMM d, yyyy", Locale.FRENCH).parse(dateOfBirth);
-            System.out.println(date);
             UserDTO user = new UserDTO(userName, firstName, lastName, date, password, false);
             tr.registerUser(user);
             
