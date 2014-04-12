@@ -9,6 +9,7 @@
         <property name="Password" value="EDA_G2"/>
         <property name="URL" value="jdbc:derby://localhost:1527/MockStockDB"/>
         <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
+        <property type="javax.sql.DataSource"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="MockStockDB" object-type="user" pool-name="derby_net_MockStockDB_EDA_G2Pool"/>
 </resources>

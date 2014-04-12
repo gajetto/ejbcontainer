@@ -6,17 +6,17 @@
 
 package beans;
 
-import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
+import dataTransferObjects.UserDTO;
+import javax.ejb.Remote;
 
 /**
  *
  * @author Sohaila.Baset
  */
-@Stateless
-@LocalBean
-public class AuthenticationBean {
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+@Remote
+public interface TradingRemote {
+    
+    public boolean authenticateUser(UserDTO userDTO);
+    public boolean registerUser(UserDTO userDTO);
+    
 }
