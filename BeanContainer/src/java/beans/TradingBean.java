@@ -6,7 +6,8 @@
 package beans;
 
 import dataTransferObjects.UserDTO;
-import entities.User;
+import entities.UserMockStock;
+import java.sql.*;
 import java.sql.Connection;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -15,12 +16,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.sql.DataSource;
+import javax.*;
 
 /**
  *
  * @author Sohaila.Baset
  */
-@Resource(name = "jdbc/MockStockDB")
+@Resource(name = "jdbc/MockStockDB", type = javax.sql.DataSource.class)
 @Stateless
 public class TradingBean implements TradingRemote {
 
@@ -52,13 +54,13 @@ public class TradingBean implements TradingRemote {
 
     }
 
-    public void insertUser(User entity) {
+    public void insertUser(UserMockStock entity) {
         manager.persist(entity);
 
     }
 
-    private User GetEntitiyFromDTO(UserDTO userDTO) {
-        User entity = new User();
+    private UserMockStock GetEntitiyFromDTO(UserDTO userDTO) {
+        UserMockStock entity = new UserMockStock();
         entity.setFirstName(userDTO.getFirstName());
         entity.setLastName(userDTO.getLastName());
         entity.setUserName(userDTO.getUserName());

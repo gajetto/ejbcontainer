@@ -21,13 +21,12 @@ import javax.persistence.Temporal;
  * @author Sohaila.Baset
  */
 @Entity
-@Table(name = "User")
-public class User implements Serializable {
+@Table(name = "UserMockStock")
+public class UserMockStock implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "UserId", nullable = false)    
-    private Long id;
+    private int id;
     
     @Column(name = "UserName")
     private String userName;
@@ -49,31 +48,31 @@ public class User implements Serializable {
     private boolean isAdmin;
     
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+//        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof UserMockStock)) {
             return false;
         }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
+        UserMockStock other = (UserMockStock) object;
+//        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+//            return false;
+//        }
         return true;
     }
 
