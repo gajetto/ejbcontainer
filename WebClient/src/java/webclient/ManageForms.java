@@ -1,6 +1,7 @@
 package webclient;
 
 import beans.TradingRemote;
+import com.sun.messaging.jmq.util.MD5;
 import dataTransferObjects.UserDTO;
 import trading.Trader;
 import java.io.IOException;
@@ -35,8 +36,11 @@ import trading.TradingTransactionType;
 @WebService()
 @Stateless()
 public class ManageForms extends HttpServlet {
+    
+    @EJB
+    private TradingRemote tradingBean;
 
-    TradingRemote tr;
+    
     
 
     /**
@@ -61,10 +65,9 @@ public class ManageForms extends HttpServlet {
 
             DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
             Date date = df.parse(dateOfBirth);    
-            
-            UserDTO user = new UserDTO(userName, firstName, lastName, date, password, false);
-            tr.registerUser(user);
-            
+            String hashedPassword = MD5.getHashString(password);
+            UserDTO user = new UserDTO(userName, firstName, lastName, date, hashedPassword, false);
+            tradingBean.registerUser(user);
         }
 
         else if(request.getParameter("hitButton")!=null){
