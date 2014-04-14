@@ -1,3 +1,4 @@
+<%@ page import="webclient.WebAppData" %>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -24,30 +25,21 @@
                 <div>
                     <form name="userCreate" action="manageforms" method="post">
                         <p>
-                            <label for="userNameRegister">Username: </label><br />
-                            <input type="text" name="userNameRegister" id="userNameRegister" class="long" onkeyup="usernameCheck();" onchange="usernameCheck();" />
-                            <input type="hidden"  id="username_ok" name="username_ok"  value="false" />
-                            &nbsp;
-                            <span class="verif" id="username_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <label for="userNameUpdate">Username: </label><br />
+                            <input type="text" name="userNameUpdate" class="long" value="<%= WebAppData.getTrader().getUser().getUserName() %>" disabled="diabled" />
                         </p>
                         <p>
                             <label for="firstName">First name: </label><br />
-                            <input type="text" name="firstName" id="firstName" class="long" onkeyup="firstnameCheck();" onchange="firstnameCheck();" />
-                            <input type="hidden"  id="firstname_ok" name="firstname_ok"  value="false" />
-                            &nbsp;
-                            <span class="verif" id="firstname_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <input type="text" name="firstName" class="long" value="<%= WebAppData.getTrader().getUser().getFirstName() %>" />
                         </p>
                         <p>
                             <label for="lastName">Last name: </label><br />
-                            <input type="text" name="lastName" id="lastName" class="long" onkeyup="lastnameCheck();" onchange="lastnameCheck();" />
-                            <input type="hidden"  id="lastname_ok" name="lastname_ok"  value="false" />
-                            &nbsp;
-                            <span class="verif" id="lastname_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <input type="text" name="lastName" class="long" value="<%= WebAppData.getTrader().getUser().getLastName() %>" />
                         </p>
                         <p>
                             <label for="dateOfBirth">Date of birth: </label><br />
-                            <input type="text" name="dateOfBirth" id="datePicker" class="long" onkeyup="dateCheck();" onchange="dateCheck();" />
-                            <input type="hidden"  id="date_ok" name="date_ok"  value="false" />
+                            <input type="text" name="dateOfBirth" id="datePicker" class="long" onkeyup="dateCheck();" onchange="dateCheck();" value="<%= WebAppData.getTrader().getUser().getDateOfBirth() %>" />
+                            <input type="hidden"  id="date_ok" name="password_ok"  value="false" />
                             &nbsp;
                             <span class="verif" id="date_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         </p>
@@ -66,9 +58,9 @@
                             <span class="verif" id="passwordRepeat_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         </p>
                         <p>
-                            <input type="submit" value="Signup" id="registerSignup" class="long" disabled="disabled" />
+                            <input type="submit" value="Update" id="registerSignup" class="long" disabled="disabled" />
                             &nbsp;
-                            <a href="index.jsp">
+                            <a href="trade.jsp">
                                 <input type="button" class="button long" value="Cancel" />
                             </a>
                         </p>

@@ -71,10 +71,21 @@ public class ManageForms extends HttpServlet {
                 response.sendRedirect("index.jsp?error=signup");
             }
         }
-        else if(request.getParameter("userName")!=null){
-//            WebAppData.newTrader(request.getParameter("userName"));
-            WebAppData.newStockService();
-            response.sendRedirect("trade.jsp");
+        else if(request.getParameter("userName")!=null && request.getParameter("password")!=null){
+            String hashedPassword = MD5.getHashString(request.getParameter("password"));
+            if(tradingBean.authenticateUser(request.getParameter("userName"), hashedPassword)){
+                UserDTO user = tradingBean.getUser(request.getParameter("userName"));
+                if(user != null){
+                    WebAppData.newTrader(user);
+                    WebAppData.newStockService();
+                    response.sendRedirect("trade.jsp"); 
+                }
+                else{
+                    response.sendRedirect("index.jsp?error=user");
+                }
+            }else{
+                response.sendRedirect("index.jsp?error=login");
+            }
         }
 
         else if(request.getParameter("hitButton")!=null){
@@ -151,8 +162,9 @@ public class ManageForms extends HttpServlet {
             if(trading){
                 response.sendRedirect("trade.jsp");
             }else if(request.getParameter("hitLogout")!=null){
-                SessionStatusRequest ssr = new SessionStatusRequest(WebAppData.getTrader().getUserName(), SessionState.Disconnected);
-                PTPConnection.sendStatusRequest(ssr);
+//                SessionStatusRequest ssr = new SessionStatusRequest(WebAppData.getTrader().getUserName(), SessionState.Disconnected);
+//                PTPConnection.sendStatusRequest(ssr);
+                WebAppData.trader.setUser(null);
                 response.sendRedirect("index.jsp");
             }
         }   

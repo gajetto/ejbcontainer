@@ -17,7 +17,8 @@ import javax.ejb.Remote;
 @Remote
 public interface TradingRemote {
     
-    public boolean authenticateUser(UserDTO userDTO);
-    public boolean registerUser(UserDTO userDTO);    
+    public boolean authenticateUser(String username, String hashedPassword);
+    public boolean registerUser(UserDTO userDTO);
+    public UserDTO getUser(String username);
     
 }

@@ -20,7 +20,6 @@ import trading.StockProduct;
 public class WebAppData {
     protected static ArrayList<StockProduct> historyStocks = new ArrayList<>();
     protected static Trader trader;
-    protected static UserDTO user;
     protected static StockService currentStocks;
     protected static boolean connected;
         
@@ -104,13 +103,6 @@ public class WebAppData {
     
     public static boolean getConnected(){
         return connected;
-    }
-    
-    public static void setUser(UserDTO newUser){
-        user = newUser;
-    }
-    public static UserDTO getUser(){
-        return user;
     }
 
 }

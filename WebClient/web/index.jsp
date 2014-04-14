@@ -18,6 +18,23 @@
                 <div class="center">
                     <img src="images/logoMockStock.jpg" />
                 </div>
+                    <%
+                        if (request.getParameter("error") != null) {
+                            
+                            out.println("<div class=\"error\">");
+                            
+                            if(request.getParameter("error").equals("login")){
+                                out.println("Username or password incorrect");
+                            }else if(request.getParameter("error").equals("user")){
+                                out.println("Error while logging in. Please try again");
+                            }else if(request.getParameter("error").equals("register")){
+                                out.println("Error while registering. Please try again");
+                            }
+                            
+                            out.println("</div>");
+                            
+                        }
+                    %>
                 <div>
                     <form name="userForm" action="manageforms" method="post">
                         <p>

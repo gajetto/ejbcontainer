@@ -25,7 +25,7 @@ body{
     padding-top: 10px;
 }
 
-#stockList{
+.stockList, .transactionList{
     height: 332px;
     overflow: auto;
     margin-left: 10px;
@@ -175,4 +175,8 @@ input[type=submit], .button{
 
 .formValid{
     color: green;
+}
+
+.error{
+    color: red;
 }

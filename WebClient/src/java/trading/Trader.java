@@ -123,4 +123,12 @@ public class Trader {
             myStock.add(j.clone());
         }
     }
+    
+    public UserDTO getUser(){
+        return user;
+    }
+    
+    public void setUser(UserDTO newUser){
+        user = newUser;
+    }
 }

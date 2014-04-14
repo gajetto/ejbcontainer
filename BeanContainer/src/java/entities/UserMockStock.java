@@ -29,7 +29,7 @@ public class UserMockStock implements Serializable {
     @Column(name = "UserId", nullable = false)    
     private int id;
     
-    @Column(name = "UserName")
+    @Column(name = "UserName", unique = true)
     private String userName;
     
     @Column(name = "FirstName")

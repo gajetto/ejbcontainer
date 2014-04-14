@@ -3,12 +3,16 @@
     <head>
         <meta charset="utf-8">
         <title>Trade</title>
-    </head>
         <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script src="js/functions.js"></script>
+        <script src="js/stockFunctions.js"></script>
         <script>
+            $(function() {
+                $( "#tabs" ).tabs();
+              });
             google.load("visualization", "1", {packages:["corechart"]});
             google.setOnLoadCallback(drawChart);
             $(document).ready(function () {
@@ -48,7 +52,12 @@
                 <div class="clear">&nbsp;</div>
             </div>
             <div class="leftDiv">
-                <div class="columnTitle">Portfolio of: <%= WebAppData.getTrader().getName() %></div>
+                <div class="columnTitle">
+                    Portfolio of: 
+                    <a href="user.jsp">
+                    <%= WebAppData.getTrader().getUser().getUserName() %>
+                    </a>
+                </div>
                 <div id="operations">
                     <div class="stockName">
                         &nbsp;
@@ -125,9 +134,27 @@
                 </div>
             </div>
             <div class="rightDiv">
-                <div class="columnTitle">stocks</div>
-                <div id="stockList">
-                    <div class="newStock"></div>
+                <div id="tabs">
+                    <ul>
+                        <li>
+                            <a href="#tabs-1">
+                            Stock history
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tabs-2">
+                            Transaction history
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="stockList" id="tabs-1">
+                        <div class="columnTitle">stocks</div>
+                        <div class="newStock"></div>
+                    </div>
+                    <div class="transactionList" id="tabs-2">
+                        <div class="columnTitle">transactions</div>
+                        <div class="newTransaction"></div>
+                    </div>
                 </div>
             </div>
             <div id="chart_div">
