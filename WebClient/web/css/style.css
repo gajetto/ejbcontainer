@@ -152,19 +152,19 @@ input[type=submit], .button{
 }
 
 
-#logoutButton:hover{
-    border: 1px solid darkgray;
-    background-color: darkred;
+.redButton:hover{
+    border: 1px solid darkgray !important;
+    background-color: darkred !important;
     text-decoration: none;
     cursor: pointer;
 }
 
-#logoutButton{
+.redButton{
     text-transform: uppercase;
-    background-color: #cc3333;
+    background-color: #cc3333 !important;
     font-weight: bold;
-    color: white;
-    border: 1px solid darkred;
+    color: white !important;
+    border: 1px solid darkred !important;
     height: 30px;
     width: 100px;
 }

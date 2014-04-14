@@ -121,4 +121,10 @@ public class TradingBean implements TradingRemote {
         }
         return usersDTO;
     }
+
+    @Override
+    public boolean deleteUser(UserDTO userDTO) {
+        System.out.println("delete");
+        return true;
+    }
 }

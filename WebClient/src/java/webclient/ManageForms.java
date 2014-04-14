@@ -117,6 +117,15 @@ public class ManageForms extends HttpServlet {
             response.sendRedirect("user.jsp");
         }
         
+        else if(request.getParameter("delete")!=null){
+            UserDTO user = WebAppData.getUserToModifyByAdmin();
+            if(tradingBean.deleteUser(user)){
+                response.sendRedirect("trade.jsp");
+            }else{
+                response.sendRedirect("trade.jsp?error=delete");
+            }
+        }
+        
         else if(request.getParameter("userUpdate")!=null){
             UserDTO user;
             if(WebAppData.editOther){

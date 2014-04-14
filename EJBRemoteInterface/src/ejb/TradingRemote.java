@@ -22,5 +22,6 @@ public interface TradingRemote {
     public UserDTO getUser(String username);
     public boolean updateUser(UserDTO userDTO);
     public List<UserDTO> searchUsers(String username);
+    public boolean deleteUser(UserDTO userDTO);
     
 }

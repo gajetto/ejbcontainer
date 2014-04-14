@@ -72,6 +72,16 @@
                                 <input type="button" class="button xlong" value="Change Password" />
                             </a>
                         </p>
+                        <%
+                        if(WebAppData.getEditOther()){
+                            out.println("<p>");
+                            out.println("<a href=\"manageforms?delete=true\">");
+                            out.println("<input type=\"button\" class=\"redbutton xlong\" value=\"Delete User\" />");
+                            out.println("</a>");
+                            out.println("</p>"); 
+                        }
+                        
+                        %>
                         <p>
                             <input type="submit" value="Update" id="userUpdate" class="long" />
                             &nbsp;
