@@ -1,8 +1,8 @@
 package webclient;
 
-import beans.TradingRemote;
 import com.sun.messaging.jmq.util.MD5;
 import dataTransferObjects.UserDTO;
+import ejb.TradingRemote;
 import trading.Trader;
 import java.io.IOException;
 import java.text.DateFormat;

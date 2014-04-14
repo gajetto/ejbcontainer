@@ -45,6 +45,13 @@
                 </div>
                 <div id="logoutDiv">
                     <form name="logout" action="manageforms" method="post">
+                    <%
+                        if(WebAppData.getTrader().getUser().isIsAdmin()){
+                             out.println("<a href=\"chooseUser.jsp\">");
+                             out.println("  <input type=\"button\" class=\"button long\" value=\"admin\" />");
+                             out.println("</a>");
+                        }
+                    %>
                         <input type="submit" name="logout" value="logout" id="logoutButton" onclick="this.form.hitLogout.value=this.name" />
                         <input type="hidden" name="hitLogout"  />
                     <form>

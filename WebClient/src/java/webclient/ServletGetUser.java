@@ -13,8 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import beans.TradingRemote;
 import dataTransferObjects.UserDTO;
+import ejb.TradingRemote;
 import javax.ejb.EJB;
 import org.json.simple.JSONObject;
 
@@ -24,9 +24,11 @@ import org.json.simple.JSONObject;
  */
 @WebServlet(name = "ServletGetUser", urlPatterns = {"/ServletGetUser"})
 public class ServletGetUser extends HttpServlet {
-
+    
     @EJB
     private TradingRemote tradingBean;
+
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

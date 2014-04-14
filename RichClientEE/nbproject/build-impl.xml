@@ -794,8 +794,12 @@ exists or setup the property manually. For example like this:
             </condition>
         </fail>
     </target>
-    <target depends="init" if="no.dist.ear.dir" name="-deps-module-jar" unless="no.deps"/>
-    <target depends="init" if="dist.ear.dir" name="-deps-ear-jar" unless="no.deps"/>
+    <target depends="init" if="no.dist.ear.dir" name="-deps-module-jar" unless="no.deps">
+        <ant antfile="${project.EJBRemoteInterface}/build.xml" inheritall="false" target="jar"/>
+    </target>
+    <target depends="init" if="dist.ear.dir" name="-deps-ear-jar" unless="no.deps">
+        <ant antfile="${project.EJBRemoteInterface}/build.xml" inheritall="false" target="jar"/>
+    </target>
     <target depends="init, -check-main-class, -deps-module-jar, -deps-ear-jar" name="deps-jar"/>
     <target depends="init,deps-jar" name="-pre-pre-compile">
         <mkdir dir="${classes.dir}"/>
@@ -812,8 +816,9 @@ exists or setup the property manually. For example like this:
         <basename file="${file.reference.swingx-all-1.6.4.jar}" property="manifest.file.reference.swingx-all-1.6.4.jar"/>
         <basename file="${libs.beans-binding.classpath}" property="manifest.libs.beans-binding.classpath"/>
         <basename file="${libs.swing-layout.classpath}" property="manifest.libs.swing-layout.classpath"/>
+        <basename file="${reference.EJBRemoteInterface.jar}" property="manifest.reference.EJBRemoteInterface.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 "/>
+            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 "/>
             <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.imq.jar}"/>
             <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.jcommon-1.0.21.jar}"/>
             <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.jfreechart-1.0.17.jar}"/>
@@ -821,6 +826,7 @@ exists or setup the property manually. For example like this:
             <attribute name="jar-5-Extension-Name" value="${manifest.file.reference.swingx-all-1.6.4.jar}"/>
             <attribute name="jar-6-Extension-Name" value="${manifest.libs.beans-binding.classpath}"/>
             <attribute name="jar-7-Extension-Name" value="${manifest.libs.swing-layout.classpath}"/>
+            <attribute name="jar-8-Extension-Name" value="${manifest.reference.EJBRemoteInterface.jar}"/>
         </manifest>
     </target>
     <target depends="compile" if="dist.ear.dir" name="library-inclusion-in-manifest">
@@ -831,8 +837,9 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.swingx-all-1.6.4.jar}" manifestproperty="manifest.file.reference.swingx-all-1.6.4.jar" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.beans-binding.classpath}" manifestproperty="manifest.libs.beans-binding.classpath" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${libs.swing-layout.classpath}" manifestproperty="manifest.libs.swing-layout.classpath" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${reference.EJBRemoteInterface.jar}" manifestproperty="manifest.reference.EJBRemoteInterface.jar" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.file.reference.imq.jar} lib/${manifest.file.reference.imq.jar} ${manifest.file.reference.jcommon-1.0.21.jar} lib/${manifest.file.reference.jcommon-1.0.21.jar} ${manifest.file.reference.jfreechart-1.0.17.jar} lib/${manifest.file.reference.jfreechart-1.0.17.jar} ${manifest.file.reference.jms.jar} lib/${manifest.file.reference.jms.jar} ${manifest.file.reference.swingx-all-1.6.4.jar} lib/${manifest.file.reference.swingx-all-1.6.4.jar} ${manifest.libs.beans-binding.classpath} lib/${manifest.libs.beans-binding.classpath} ${manifest.libs.swing-layout.classpath} lib/${manifest.libs.swing-layout.classpath} "/>
+            <attribute name="Class-Path" value="${manifest.file.reference.imq.jar} lib/${manifest.file.reference.imq.jar} ${manifest.file.reference.jcommon-1.0.21.jar} lib/${manifest.file.reference.jcommon-1.0.21.jar} ${manifest.file.reference.jfreechart-1.0.17.jar} lib/${manifest.file.reference.jfreechart-1.0.17.jar} ${manifest.file.reference.jms.jar} lib/${manifest.file.reference.jms.jar} ${manifest.file.reference.swingx-all-1.6.4.jar} lib/${manifest.file.reference.swingx-all-1.6.4.jar} ${manifest.libs.beans-binding.classpath} lib/${manifest.libs.beans-binding.classpath} ${manifest.libs.swing-layout.classpath} lib/${manifest.libs.swing-layout.classpath} ${manifest.reference.EJBRemoteInterface.jar} lib/${manifest.reference.EJBRemoteInterface.jar} "/>
         </manifest>
     </target>
     <target name="-copy-meta-inf">
@@ -1335,7 +1342,9 @@ exists or setup the property manually. For example like this:
                 CLEANUP SECTION
                 ===============
             -->
-    <target depends="init" name="deps-clean" unless="no.deps"/>
+    <target depends="init" name="deps-clean" unless="no.deps">
+        <ant antfile="${project.EJBRemoteInterface}/build.xml" inheritall="false" target="clean"/>
+    </target>
     <target depends="init" name="-do-clean">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.dir}"/>

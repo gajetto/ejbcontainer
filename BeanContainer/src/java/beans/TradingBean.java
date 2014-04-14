@@ -6,6 +6,8 @@
 package beans;
 
 import dataTransferObjects.UserDTO;
+import ejb.TradingRemote;
+import ejb.TradingRemote;
 import entities.UserMockStock;
 import java.sql.*;
 import java.sql.Connection;

@@ -5,9 +5,11 @@
  */
 package trader;
 
+import ejb.TradingRemote;
 import java.util.ArrayList;
 import java.awt.event.*;
 import java.lang.String;
+import javax.ejb.EJB;
 
 
 /**
@@ -15,6 +17,9 @@ import java.lang.String;
  *
  */
 public class JoinMarketGUI extends javax.swing.JFrame {
+    
+    @EJB
+    private static TradingRemote tradingBean;
 
     private String name;
     
