@@ -9,26 +9,24 @@
 
 package trading;
 
-import trading.StockService;
+import dataTransferObjects.UserDTO;
 import java.util.ArrayList;
-import trading.StockProduct;
-import trading.TradingTransaction;
-import trading.TradingTransactionType;
+
 
 /**
  * Trader object
  */
 public class Trader {
     
-    private String name;
+    private UserDTO user;
     private StockService marketPrices = new StockService();
     private ArrayList<StockProduct> myStock;
     
     /**
      * Creates a new instance of Trader
      */
-    public Trader(String name) {
-        this.name = name;
+    public Trader(UserDTO user) {
+        this.user = user;
         initiateMyStock();
     }
     
@@ -67,8 +65,8 @@ public class Trader {
      * Get the name of the trader
      * @return String
      */
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return user.getUserName();
     }
     
     /**

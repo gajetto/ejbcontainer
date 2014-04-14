@@ -18,18 +18,23 @@
                 <div class="center">
                     <img src="images/logoMockStock.jpg" />
                 </div>
-                <div class="center">
+                <div>
                     <form name="userForm" action="manageforms" method="post">
-                        <label for="userName">Trader Name: </label>
-                        <input type="text" name="userName" class="long" />
-                        <br />
-                        <label for="userName">Password: </label>
-                        <input type="password" name="password" class="long" />
-                        <br />
-                        <input type="submit" value="Join Market" class="long" />
-                        <a href="register.jsp">
-                            <input type="button" class="button long" value="signup" />
-                        </a>
+                        <p>
+                            <label for="userName">Username: </label><br />
+                            <input type="text" name="userName" class="long" />
+                        </p>
+                        <p>
+                            <label for="userName">Password: </label><br />
+                            <input type="password" name="password" class="long" />
+                        </p>
+                        <p>
+                            <input type="submit" value="Login" class="long" />
+                            &nbsp;
+                            <a href="register.jsp">
+                                <input type="button" class="button long" value="signup" />
+                            </a>
+                        </p>
                     </form>
                 </div>
             </div>

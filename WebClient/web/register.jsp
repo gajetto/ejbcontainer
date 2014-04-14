@@ -21,33 +21,48 @@
                 <div class="center">
                     <img src="images/logoMockStock.jpg" />
                 </div>
-                <div class="center">
+                <div>
                     <form name="userCreate" action="manageforms" method="post">
-                        <label for="userName">Username: </label>
-                        <input type="text" name="userName" class="long" />
-                        <br />
-                        <label for="firstName">First name: </label>
-                        <input type="text" name="firstName" class="long" />
-                        <br />
-                        <label for="lastName">Last name: </label>
-                        <input type="text" name="lastName" class="long" />
-                        <br />
-                        <label for="dateOfBirth">Date of birth: </label>
-                        <input type="text" name="dateOfBirth" id="datePicker" class="long" />
-                        <br />
-                        <label for="password">Password: </label>
-                        <input type="password" name="password" id="password"  onkeyup="passwordLength();" onchange="passwordLength();" class="long" />
-                        <input type="hidden"  id="password_ok" name="password_ok"  value="false" />
-                        &nbsp;
-                        <span class="verif" id="password_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <br />
-                        <label for="passwordRepeat">Repeat password: </label>
-                        <input type="password" name="passwordRepeat" id="passwordRepeat" onkeyup="passwordCheck();" onchange="passwordCheck();" class="long" />
-                        <input type="hidden"  id="passwordRepeat_ok" name="passwordRepeat_ok"  value="false" />
-                        &nbsp;
-                        <span class="verif" id="passwordRepeat_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <br />
-                        <input type="submit" value="Signup" class="long" />
+                        <p>
+                            <label for="userNameRegister">Username: </label><br />
+                            <input type="text" name="userNameRegister" class="long" />
+                        </p>
+                        <p>
+                            <label for="firstName">First name: </label><br />
+                            <input type="text" name="firstName" class="long" />
+                        </p>
+                        <p>
+                            <label for="lastName">Last name: </label><br />
+                            <input type="text" name="lastName" class="long" />
+                        </p>
+                        <p>
+                            <label for="dateOfBirth">Date of birth: </label><br />
+                            <input type="text" name="dateOfBirth" id="datePicker" class="long" onkeyup="dateCheck();" onchange="dateCheck();" />
+                            <input type="hidden"  id="date_ok" name="password_ok"  value="false" />
+                            &nbsp;
+                            <span class="verif" id="date_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </p>
+                        <p>
+                            <label for="password">Password: </label><br />
+                            <input type="password" name="password" id="password"  onkeyup="passwordLength();" onchange="passwordLength();" class="long" />
+                            <input type="hidden"  id="password_ok" name="password_ok"  value="false" />
+                            &nbsp;
+                            <span class="verif" id="password_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </p>
+                        <p>
+                            <label for="passwordRepeat">Repeat password: </label><br />
+                            <input type="password" name="passwordRepeat" id="passwordRepeat" onkeyup="passwordCheck();" onchange="passwordCheck();" class="long" />
+                            <input type="hidden"  id="passwordRepeat_ok" name="passwordRepeat_ok"  value="false" />
+                            &nbsp;
+                            <span class="verif" id="passwordRepeat_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </p>
+                        <p>
+                            <input type="submit" value="Signup" id="registerSignup" class="long" disabled="disabled" />
+                            &nbsp;
+                            <a href="index.jsp">
+                                <input type="button" class="button long" value="Cancel" />
+                            </a>
+                        </p>
                     </form>
                 </div>
             </div>

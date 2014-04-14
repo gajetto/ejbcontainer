@@ -6,10 +6,12 @@
 
 package webclient;
 
+import dataTransferObjects.UserDTO;
 import trading.Trader;
 import trading.StockService;
 import java.util.ArrayList;
 import trading.StockProduct;
+
 
 /**
  * Stores data that can stay persistent
@@ -18,6 +20,7 @@ import trading.StockProduct;
 public class WebAppData {
     protected static ArrayList<StockProduct> historyStocks = new ArrayList<>();
     protected static Trader trader;
+    protected static UserDTO user;
     protected static StockService currentStocks;
     protected static boolean connected;
         
@@ -52,8 +55,8 @@ public class WebAppData {
      * Instanciates a new trader
      * @param name the name of the new Trader
      */
-    public static void newTrader(String name){
-        trader = new Trader(name);
+    public static void newTrader(UserDTO user){
+        trader = new Trader(user);
     }
     
     /**
@@ -101,6 +104,13 @@ public class WebAppData {
     
     public static boolean getConnected(){
         return connected;
+    }
+    
+    public static void setUser(UserDTO newUser){
+        user = newUser;
+    }
+    public static UserDTO getUser(){
+        return user;
     }
 
 }

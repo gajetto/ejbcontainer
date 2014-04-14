@@ -9,14 +9,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,8 +53,8 @@ public class ManageForms extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException {
         
-        if(request.getParameter("userName")!=null){
-            String userName = request.getParameter("userName");
+        if(request.getParameter("userNameRegister")!=null){
+            String userName = request.getParameter("userNameRegister");
             String password = request.getParameter("password");
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
@@ -67,12 +64,22 @@ public class ManageForms extends HttpServlet {
             Date date = df.parse(dateOfBirth);    
             String hashedPassword = MD5.getHashString(password);
             UserDTO user = new UserDTO(userName, firstName, lastName, date, hashedPassword, false);
-            tradingBean.registerUser(user);
+            if(tradingBean.registerUser(user)){
+                WebAppData.newTrader(user);
+                response.sendRedirect("trade.jsp");
+            }else{
+                response.sendRedirect("index.jsp?error=signup");
+            }
+        }
+        else if(request.getParameter("userName")!=null){
+//            WebAppData.newTrader(request.getParameter("userName"));
+            WebAppData.newStockService();
+            response.sendRedirect("trade.jsp");
         }
 
         else if(request.getParameter("hitButton")!=null){
             int stockNumber = 0;
-            String traderName = WebAppData.getTrader().getName();
+            String traderName = WebAppData.getTrader().getUserName();
             TradingTransactionType tty;
             StockProduct product;
             TradingTransaction tt;
@@ -144,7 +151,7 @@ public class ManageForms extends HttpServlet {
             if(trading){
                 response.sendRedirect("trade.jsp");
             }else if(request.getParameter("hitLogout")!=null){
-                SessionStatusRequest ssr = new SessionStatusRequest(WebAppData.getTrader().getName(), SessionState.Disconnected);
+                SessionStatusRequest ssr = new SessionStatusRequest(WebAppData.getTrader().getUserName(), SessionState.Disconnected);
                 PTPConnection.sendStatusRequest(ssr);
                 response.sendRedirect("index.jsp");
             }
