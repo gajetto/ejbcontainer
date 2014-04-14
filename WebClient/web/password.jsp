@@ -1,4 +1,16 @@
+<%@page import="dataTransferObjects.UserDTO"%>
 <%@ page import="webclient.WebAppData" %>
+<%
+    if(WebAppData.getTrader() == null || WebAppData.getTrader().getUser() == null){
+        response.sendRedirect("index.jsp");
+    }
+    UserDTO user;
+    if(WebAppData.getEditOther()){
+        user = WebAppData.getUserToModifyByAdmin();
+    }else{
+        user = WebAppData.getTrader().getUser();
+    }
+%>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -21,10 +33,12 @@
                     <img src="images/logoMockStock.jpg" />
                 </div>
                 <div>
+                    <span class="columnTitle">Modify password for <%= user.getUserName() %></span>
+                    <br /><br />
                     <form name="passwordChange" action="manageforms" method="post">
                         <p>
                             <label for="password">Password: </label><br />
-                            <input type="password" name="password" id="password"  onkeyup="passwordLength();" onchange="passwordLength();" class="long" />
+                            <input type="password" name="passwordChange" id="passwordChange"  onkeyup="passwordLength();" onchange="passwordLength();" class="long" />
                             <input type="hidden"  id="password_ok" name="password_ok"  value="false" />
                             &nbsp;
                             <span class="verif" id="password_check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>

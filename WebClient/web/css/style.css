@@ -133,6 +133,10 @@ input[type=submit], .button{
     width: 120px !important;
 }
 
+.xlong{
+    width: 200px !important;
+}
+
 .center{
     text-align:center;
 
@@ -179,4 +183,44 @@ input[type=submit], .button{
 
 .error{
     color: red;
+}
+
+.largeTextInput{
+    width: 300px !important;
+    height: 30px !important;
+}
+
+#userSearch{
+    height: 25px;
+    width: 300px;
+}
+
+.userSearchCell{
+    width: 16%;
+}
+
+#userResult{
+    width:100%;
+    border-collapse:collapse;
+    border: solid 1px black;
+    margin-top: 20px;
+}
+
+#userResult td, #userResult tr, #userResult th{
+    border-left: solid 1px black;
+}
+
+#userResult th{
+    border-bottom: solid 1px black;
+    background-color: thistle;
+}
+
+#userResult tr:nth-of-type(2n+1){
+    background-color: darkgrey;
+}
+
+
+
+#userSearchHeader{
+    display: none;
 }

@@ -7,6 +7,7 @@
 package ejb;
 
 import dataTransferObjects.UserDTO;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -19,5 +20,7 @@ public interface TradingRemote {
     public boolean authenticateUser(String username, String hashedPassword);
     public boolean registerUser(UserDTO userDTO);
     public UserDTO getUser(String username);
+    public boolean updateUser(UserDTO userDTO);
+    public List<UserDTO> searchUsers(String username);
     
 }

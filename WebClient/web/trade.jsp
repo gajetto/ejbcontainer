@@ -1,4 +1,9 @@
 <%@ page import="webclient.WebAppData" %>
+<%
+    if(WebAppData.getTrader() == null || WebAppData.getTrader().getUser() == null){
+        response.sendRedirect("index.jsp");
+    }
+%>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -61,7 +66,7 @@
             <div class="leftDiv">
                 <div class="columnTitle">
                     Portfolio of: 
-                    <a href="user.jsp">
+                    <a href="manageforms?editSelf=true">
                     <%= WebAppData.getTrader().getUser().getUserName() %>
                     </a>
                 </div>

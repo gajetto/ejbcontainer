@@ -11,6 +11,7 @@ import ejb.TradingRemote;
 import entities.UserMockStock;
 import java.sql.*;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -97,5 +98,27 @@ public class TradingBean implements TradingRemote {
             
             return GetDTOFromEntity(users.get(0));
         }
+    }
+
+    @Override
+    public boolean updateUser(UserDTO userDTO) {
+        System.out.println("update");
+        return true;
+    }
+
+    @Override
+    public List<UserDTO> searchUsers(String username) {
+        String q = "SELECT u FROM UserMockStock u WHERE u.userName LIKE '%"+username+"%' ";
+        List<UserDTO> usersDTO = new ArrayList<UserDTO>();
+        
+        Query query = manager.createQuery(q);
+        List<UserMockStock> users = query.getResultList();
+        if(!users.isEmpty()){
+            for (UserMockStock entity : users) {
+                UserDTO userDTO = new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin());
+                usersDTO.add(userDTO);
+            }            
+        }
+        return usersDTO;
     }
 }

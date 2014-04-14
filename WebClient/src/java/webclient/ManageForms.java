@@ -37,6 +37,7 @@ public class ManageForms extends HttpServlet {
     @EJB
     private TradingRemote tradingBean;
 
+    private DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
     
     
 
@@ -60,7 +61,6 @@ public class ManageForms extends HttpServlet {
             String lastName = request.getParameter("lastName");
             String dateOfBirth = request.getParameter("dateOfBirth");
 
-            DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
             Date date = df.parse(dateOfBirth);    
             String hashedPassword = MD5.getHashString(password);
             UserDTO user = new UserDTO(userName, firstName, lastName, date, hashedPassword, false);
@@ -85,6 +85,53 @@ public class ManageForms extends HttpServlet {
                 }
             }else{
                 response.sendRedirect("index.jsp?error=login");
+            }
+        }
+        
+        else if(request.getParameter("passwordChange")!=null){
+            String hashedPassword = MD5.getHashString(request.getParameter("passwordChange"));
+            UserDTO user;
+            if(WebAppData.editOther){
+                user = WebAppData.getUserToModifyByAdmin();
+            }else{
+                user = WebAppData.getTrader().getUser();
+            }
+            user.setPassword(hashedPassword);
+            if(tradingBean.updateUser(user)){
+                response.sendRedirect("trade.jsp");
+            }else{
+                response.sendRedirect("trade.jsp?error=pwd");
+            }
+        }
+        
+        else if(request.getParameter("edit")!=null){
+            WebAppData.setEditOther(true);
+            String nickname = request.getParameter("edit");
+            UserDTO user = tradingBean.getUser(nickname);
+            WebAppData.setUserToModifyByAmin(user);
+            response.sendRedirect("user.jsp");
+        }
+        
+        else if(request.getParameter("editSelf")!=null){
+            WebAppData.setEditOther(false);
+            response.sendRedirect("user.jsp");
+        }
+        
+        else if(request.getParameter("userUpdate")!=null){
+            UserDTO user;
+            if(WebAppData.editOther){
+                user = WebAppData.getUserToModifyByAdmin();
+            }else{
+                user = WebAppData.getTrader().getUser();
+            }
+            user.setFirstName(request.getParameter("firstName"));
+            user.setLastName(request.getParameter("lastName"));
+            Date date = df.parse(request.getParameter("dateOfBirth"));
+            user.setDateOfBirth(date);
+            if(tradingBean.updateUser(user)){
+                response.sendRedirect("trade.jsp");
+            }else{
+                response.sendRedirect("trade.jsp?error=update");
             }
         }
 

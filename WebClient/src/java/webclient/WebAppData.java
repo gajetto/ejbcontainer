@@ -21,7 +21,8 @@ public class WebAppData {
     protected static ArrayList<StockProduct> historyStocks = new ArrayList<>();
     protected static Trader trader;
     protected static StockService currentStocks;
-    protected static boolean connected;
+    protected static boolean editOther = false;
+    protected static UserDTO userToModifyByAdmin;
         
     /**
      * Get the history of all stocks during the webclient life
@@ -97,12 +98,20 @@ public class WebAppData {
         currentStocks.setDaList(newStocks);
     }
     
-    public static void setConnected(boolean isConnected){
-        connected = isConnected;
+    public static void setEditOther(boolean isEditOther){
+        editOther = isEditOther;
     }
     
-    public static boolean getConnected(){
-        return connected;
+    public static boolean getEditOther(){
+        return editOther;
+    }
+    
+    public static void setUserToModifyByAmin(UserDTO user){
+        userToModifyByAdmin = user;
+    }
+    
+    public static UserDTO getUserToModifyByAdmin(){
+        return userToModifyByAdmin;
     }
 
 }

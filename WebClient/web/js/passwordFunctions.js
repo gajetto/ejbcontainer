@@ -1,5 +1,5 @@
 function passwordLength() {
-        var password = $("#password").val();
+        var password = $("#passwordChange").val();
 	if (password.length == 0){
 		$("#password_ok").val(false);
                 $("#password_check").removeClass("formValid").removeClass("formError");
@@ -21,7 +21,7 @@ function passwordLength() {
 }
 
 function passwordCheck() {
-	var password = $("#password").val();
+	var password = $("#passwordChange").val();
 	var check = $("#passwordRepeat").val();
 	
 	if (check != null && check.length == 0){

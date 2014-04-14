@@ -77,7 +77,7 @@ function firstnameCheck() {
                 $("#firstname_check").html("");
 		$("#firstname_ok").val(true);
 	}
-        checkform();
+        checkForm();
 }
 
 function lastnameCheck() {

@@ -1,3 +1,9 @@
+<%@ page import="webclient.WebAppData" %>
+<%
+    if(WebAppData.getTrader() != null && WebAppData.getTrader().getUser() != null){
+        response.sendRedirect("trade.jsp");
+    }
+%>
 <html lang="en">
     <head>
         <meta charset="utf-8">
