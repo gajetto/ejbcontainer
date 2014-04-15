@@ -7,24 +7,30 @@
  * and open the template in the editor.
  */
 
-package trading;
+package dataTransferObjects;
 
 import java.io.Serializable;
 
 /**
  * Contient les informations d'un titre. 
  */
-public class StockProduct implements Serializable{
+public class StockProductDTO implements Serializable{
     private String stockName;
     private int stockID;
-    private Double stockPrice = new Double(0);
+    private double stockPrice = new Double(0);
     private int stockQty = 0;
     private double stockResult = 0.0;
     
+    public StockProductDTO(int stockID, double stockPrice, int stockQty, double stockResult){
+        this.stockID = stockID;
+        this.stockPrice = stockPrice;
+        this.stockQty = stockQty;
+        this.stockResult = stockResult;
+    }
     /**
      * Creates a new instance of StockLine
      */
-    public StockProduct(String nameValue) {
+    public StockProductDTO(String nameValue) {
         stockName = nameValue;
     }
     
@@ -69,8 +75,8 @@ public class StockProduct implements Serializable{
         this.stockResult = result;
     }
     
-    public StockProduct clone(){
-        StockProduct result = new StockProduct(this.stockName);
+    public StockProductDTO clone(){
+        StockProductDTO result = new StockProductDTO(this.stockName);
         result.setStockID(this.stockID);
         result.setStockPrice(this.stockPrice);
         result.setStockQty(this.stockQty);

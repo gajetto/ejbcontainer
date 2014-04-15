@@ -7,28 +7,27 @@
  * and open the template in the editor.
  */
 
-package trading;
-import trading.StockProduct;
+package dataTransferObjects;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  */
-public class StockService implements Serializable{
+public class StockServiceDTO implements Serializable{
     
-    private ArrayList<StockProduct> daList;
+    private ArrayList<StockProductDTO> daList;
     /** Creates a new instance of StockService */
-    public StockService() {
+    public StockServiceDTO() {
         setDaList(new ArrayList());
-        StockProduct thisStockPdt = new StockProduct("Sun");
-        thisStockPdt.setStockID(1);
+        StockProductDTO thisStockPdt = new StockProductDTO("Sun");
+        thisStockPdt.setStockID(0);
         getDaList().add(thisStockPdt);
-        thisStockPdt = new StockProduct("Apple");
+        thisStockPdt = new StockProductDTO("Apple");
         thisStockPdt.setStockID(1);       
         getDaList().add(thisStockPdt);
-        thisStockPdt = new StockProduct("IBM");
-        thisStockPdt.setStockID(1);
+        thisStockPdt = new StockProductDTO("IBM");
+        thisStockPdt.setStockID(2);
         getDaList().add(thisStockPdt);
     }
     

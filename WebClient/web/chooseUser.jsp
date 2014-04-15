@@ -1,8 +1,8 @@
 <%@ page import="webclient.WebAppData" %>
 <% 
-    if(WebAppData.getTrader() == null || WebAppData.getTrader().getUser() == null){
+    if(WebAppData.getUser() == null){
         response.sendRedirect("index.jsp");
-    }else if(!WebAppData.getTrader().getUser().isIsAdmin()){
+    }else if(!WebAppData.getUser().isIsAdmin()){
         response.sendRedirect("trade.jsp");
     }
 %>

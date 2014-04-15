@@ -5,10 +5,12 @@
  */
 package beans;
 
+import dataTransferObjects.StockProductDTO;
 import dataTransferObjects.TransactionDTO;
 import dataTransferObjects.UserDTO;
 import ejb.TradingRemote;
 import ejb.TradingRemote;
+import entities.StockProduct;
 import entities.TransactionMockStock;
 import entities.UserMockStock;
 import java.sql.*;
@@ -56,7 +58,7 @@ public class TradingBean implements TradingRemote {
     @TransactionAttribute(javax.ejb.TransactionAttributeType.REQUIRES_NEW)
     public boolean registerUser(UserDTO userDTO) {
         try {
-            insertUser(GetEntitiyFromDTO(userDTO));
+            insertUser(getEntitiyFromDTO(userDTO));
 //            ds = (javax.sql.DataSource) ctx.lookup("jdbc/MockStockDB");
 //            cn = ds.getConnection();
 //            cn.setAutoCommit(false);
@@ -73,7 +75,7 @@ public class TradingBean implements TradingRemote {
         manager.persist(entity);
     }
 
-    private UserMockStock GetEntitiyFromDTO(UserDTO userDTO) {
+    private UserMockStock getEntitiyFromDTO(UserDTO userDTO) {
         UserMockStock entity = new UserMockStock();
         entity.setFirstName(userDTO.getFirstName());
         entity.setLastName(userDTO.getLastName());
@@ -81,16 +83,22 @@ public class TradingBean implements TradingRemote {
         entity.setdOB(userDTO.getDateOfBirth());
         entity.setPassword(userDTO.getPassword());
         entity.setIsAdmin(userDTO.isIsAdmin());
+        entity.setTransactionsMockStock(getEntityListFromTransactionDTOList(userDTO.getTransactionList()));
+        entity.setStockProducts(getEntityListFromStockProductDTOList(userDTO.getMyStock()));
 
         return entity;
 
     }
     
     private TransactionDTO getDTOFromEntity(TransactionMockStock entity){
-        return new TransactionDTO(entity.getId(), entity.getNumber(), entity.getStockPrice(), entity.getTransactionDate(), entity.isIsBuy());
+        return new TransactionDTO(entity.getId(), entity.getQty(), entity.getStockPrice(), entity.getTransactionDate(), entity.isIsBuy(), entity.getStockId());
     }
     
-    private List<TransactionDTO> getDTOListFromEntityList(List<TransactionMockStock> entities){
+    private StockProductDTO getDTOFromEntity(StockProduct entity){
+        return new StockProductDTO(entity.getId(), entity.getStockPrice(), entity.getStockQty(), entity.getStockResult());
+    }
+    
+    private List<TransactionDTO> getTransactionDTOListFromEntityList(List<TransactionMockStock> entities){
         List<TransactionDTO> transactionsList = new ArrayList<>();
         for (TransactionMockStock entity : entities) {
             TransactionDTO transaction = getDTOFromEntity(entity);
@@ -99,8 +107,53 @@ public class TradingBean implements TradingRemote {
         return transactionsList;
     }
     
+    private List<TransactionMockStock> getEntityListFromTransactionDTOList(List<TransactionDTO> transactionsDTO){
+        List<TransactionMockStock> entities = new ArrayList<>();
+        for (TransactionDTO transaction : transactionsDTO) {
+            TransactionMockStock entity = getEntityFromDTO(transaction);
+            entities.add(entity);
+        }
+        return entities;
+    }
+    
+     private List<StockProduct> getEntityListFromStockProductDTOList(List<StockProductDTO> productsDTO){
+        List<StockProduct> entities = new ArrayList<>();
+        for (StockProductDTO product : productsDTO) {
+            StockProduct entity = getEntityFromDTO(product);
+            entities.add(entity);
+        }
+        return entities;
+    }
+     private List<StockProductDTO> getStockProductDTOListFromEntityList(List<StockProduct> stocks){
+         List<StockProductDTO> entities = new ArrayList<>();
+         for (StockProduct stock : stocks) {
+             StockProductDTO entity = getDTOFromEntity(stock);
+             entities.add(entity);
+         }
+         return entities;
+     }
+     
+     private StockProduct getEntityFromDTO(StockProductDTO productDTO){
+         StockProduct product = new StockProduct();
+         product.setStockId(productDTO.getStockID());
+         product.setStockPrice(productDTO.getStockPrice());
+         product.setStockQty(productDTO.getStockQty());
+         product.setStockResult(productDTO.getResult());
+         return product;
+     }
+     
+     private TransactionMockStock getEntityFromDTO(TransactionDTO transactionDTO){
+         TransactionMockStock transaction = new TransactionMockStock();
+         transaction.setStockId(transactionDTO.getStockID());
+         transaction.setIsBuy(transactionDTO.isIsBuy());
+         transaction.setQty(transactionDTO.getQty());
+         transaction.setStockPrice(transactionDTO.getStockPrice());
+         transaction.setTransactionDate(transactionDTO.getTransactionDate());
+         return transaction;
+     }
+    
     private UserDTO getDTOFromEntity(UserMockStock entity){
-        return new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin(), getDTOListFromEntityList(entity.getTransactionsMockStock()));
+        return new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin(), getTransactionDTOListFromEntityList(entity.getTransactionsMockStock()), getStockProductDTOListFromEntityList(entity.getStockProducts()));
     }
 
     @Override
@@ -130,7 +183,7 @@ public class TradingBean implements TradingRemote {
         List<UserMockStock> users = query.getResultList();
         if(!users.isEmpty()){
             for (UserMockStock entity : users) {
-                UserDTO userDTO = new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin(), getDTOListFromEntityList(entity.getTransactionsMockStock()));
+                UserDTO userDTO = new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin(), getTransactionDTOListFromEntityList(entity.getTransactionsMockStock()), getStockProductDTOListFromEntityList(entity.getStockProducts()));
                 usersDTO.add(userDTO);
             }            
         }

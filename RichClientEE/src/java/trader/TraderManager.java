@@ -21,7 +21,7 @@ import javax.jms.Session;
 import trading.SessionState;
 import trading.SessionStatusRequest;
 import trading.SessionStatusResponse;
-import trading.StockProduct;
+import trading.StockProductDTO;
 import trading.TradingTransaction;
 import trading.TradingTransactionType;
 
@@ -152,7 +152,7 @@ public class TraderManager implements MessageListener {
             tty = TradingTransactionType.Sell;
         }
         
-        StockProduct p = new StockProduct(uGUI.getTrader().getMyStock().get(stockID).getStockName());
+        StockProductDTO p = new StockProductDTO(uGUI.getTrader().getMyStock().get(stockID).getStockName());
         TradingTransaction tt = new TradingTransaction(tty, p, uGUI.getQtty(), uGUI.getTrader().getName());
         
         ConnectionFactory connectionFactory = new com.sun.messaging.ConnectionFactory();

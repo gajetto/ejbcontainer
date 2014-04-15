@@ -1,14 +1,14 @@
 <%@page import="dataTransferObjects.UserDTO"%>
 <%@ page import="webclient.WebAppData" %>
 <%
-    if(WebAppData.getTrader() == null || WebAppData.getTrader().getUser() == null){
+    if(WebAppData.getUser() == null){
         response.sendRedirect("index.jsp");
     }
     UserDTO user;
     if(WebAppData.getEditOther()){
         user = WebAppData.getUserToModifyByAdmin();
     }else{
-        user = WebAppData.getTrader().getUser();
+        user = WebAppData.getUser();
     }
 %>
 <html lang="en">

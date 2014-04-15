@@ -10,8 +10,8 @@
 package trader;
 
 import java.util.ArrayList;
-import trading.StockProduct;
-import trading.StockService;
+import trading.StockProductDTO;
+import trading.StockServiceDTO;
 
 /**
  * Trader object
@@ -19,8 +19,8 @@ import trading.StockService;
 public class Trader {
     
     private String name;
-    private StockService marketPrices = new StockService();
-    private ArrayList<StockProduct> myStock;
+    private StockServiceDTO marketPrices = new StockServiceDTO();
+    private ArrayList<StockProductDTO> myStock;
     
     /**
      * Creates a new instance of Trader
@@ -37,22 +37,22 @@ public class Trader {
         
         if(type.equals("buy")){//si l'utilisateur achete
             //recupere le prix d'achat
-            double price = ((StockProduct)marketPricesUpdate.get(stockID)).getStockPrice();
+            double price = ((StockProductDTO)marketPricesUpdate.get(stockID)).getStockPrice();
             //insere dans myStock la quantite du titre achete
-            ((StockProduct) myStock.get(stockID)).setStockQty(((StockProduct) myStock.get(stockID)).getStockQty() + qtty);
+            ((StockProductDTO) myStock.get(stockID)).setStockQty(((StockProductDTO) myStock.get(stockID)).getStockQty() + qtty);
             //insere dans myStock le prix auquel le titre a ete achete
-            ((StockProduct) myStock.get(stockID)).setStockPrice(price);
+            ((StockProductDTO) myStock.get(stockID)).setStockPrice(price);
             
         }else if(type.equals("sell")){//si l'utilisateur vend
-            if (qtty <= ((StockProduct) myStock.get(stockID)).getStockQty()){//verifie si il possede la quantite qu'il veut vendre
+            if (qtty <= ((StockProductDTO) myStock.get(stockID)).getStockQty()){//verifie si il possede la quantite qu'il veut vendre
                 //soustrait la quantite vendue a la quantite dans myStock
-                ((StockProduct) myStock.get(stockID)).setStockQty(((StockProduct) myStock.get(stockID)).getStockQty() - qtty);
+                ((StockProductDTO) myStock.get(stockID)).setStockQty(((StockProductDTO) myStock.get(stockID)).getStockQty() - qtty);
                 //calcule l'ajustement a faire au resultat en fonction du prix d'achat et du prix de vente du titre
-                double adjust = ((qtty* ((StockProduct)marketPricesUpdate.get(stockID)).getStockPrice()))-((qtty* ((StockProduct) myStock.get(stockID)).getStockPrice()));
+                double adjust = ((qtty* ((StockProductDTO)marketPricesUpdate.get(stockID)).getStockPrice()))-((qtty* ((StockProductDTO) myStock.get(stockID)).getStockPrice()));
                 //fait l'ajustement
-                ((StockProduct) myStock.get(stockID)).setResult(((StockProduct) myStock.get(stockID)).getResult() + Math.round(adjust));
+                ((StockProductDTO) myStock.get(stockID)).setResult(((StockProductDTO) myStock.get(stockID)).getResult() + Math.round(adjust));
                 //enregistre le dernier prix d'achat
-                ((StockProduct) myStock.get(stockID)).setStockPrice(((StockProduct)marketPricesUpdate.get(stockID)).getStockPrice());
+                ((StockProductDTO) myStock.get(stockID)).setStockPrice(((StockProductDTO)marketPricesUpdate.get(stockID)).getStockPrice());
             }
         }
     }
@@ -69,7 +69,7 @@ public class Trader {
      * Get the list of stocks
      * @return ArrayList
      */
-    public ArrayList<StockProduct> getMyStock() {
+    public ArrayList<StockProductDTO> getMyStock() {
         return myStock;
     }
     
@@ -87,7 +87,7 @@ public class Trader {
       */
     public String getTextQuantity(int stockID){
         String text = "";
-        text = " "+ ((StockProduct) myStock.get(stockID)).getStockQty();
+        text = " "+ ((StockProductDTO) myStock.get(stockID)).getStockQty();
         return text;
     }
     
@@ -98,7 +98,7 @@ public class Trader {
       */
     public String getTextResult(int stockID){
         String text = "";
-        text = " "+ ((StockProduct) myStock.get(stockID)).getResult();
+        text = " "+ ((StockProductDTO) myStock.get(stockID)).getResult();
         return text;
     }
     
@@ -108,7 +108,7 @@ public class Trader {
       */
     public Double getTotalResult(){
         double total = new Double(0);
-        for(StockProduct j : myStock){
+        for(StockProductDTO j : myStock){
             total = total + j.getResult();}
         return total;
     }
@@ -118,8 +118,8 @@ public class Trader {
      */
     public void initiateMyStock(){
         myStock = new ArrayList();
-        ArrayList<StockProduct> serviceList = marketPrices.getDaList();
-        for(StockProduct j: serviceList){
+        ArrayList<StockProductDTO> serviceList = marketPrices.getDaList();
+        for(StockProductDTO j: serviceList){
             myStock.add(j.clone());
         }
     }

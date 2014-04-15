@@ -6,6 +6,7 @@ package webclient;
  * and open the template in the editor.
  */
 
+import dataTransferObjects.StockProductDTO;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import trading.StockProduct;
 import org.json.simple.JSONObject;
 
 /**
@@ -26,7 +26,7 @@ import org.json.simple.JSONObject;
 @WebServlet(urlPatterns = {"/ServletGetStock"})
 public class ServletGetStock extends HttpServlet implements MessageListener {
 
-    private ArrayList<StockProduct> stocks;
+    private ArrayList<StockProductDTO> stocks;
     
     @Override
     public synchronized void init() throws ServletException {
@@ -48,7 +48,7 @@ public class ServletGetStock extends HttpServlet implements MessageListener {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        ArrayList<StockProduct> list = WebAppData.getHistoryStocks();
+        ArrayList<StockProductDTO> list = WebAppData.getHistoryStocks();
         
         DecimalFormat df = new DecimalFormat("##0.00");
         double ratePrice = 0.0;
@@ -154,7 +154,7 @@ public class ServletGetStock extends HttpServlet implements MessageListener {
         ObjectMessage stockProducts = null;
         stockProducts = (ObjectMessage) message;
         try {
-            this.stocks = (ArrayList<StockProduct>) stockProducts.getObject();
+            this.stocks = (ArrayList<StockProductDTO>) stockProducts.getObject();
             WebAppData.addStocks(this.stocks);
             WebAppData.newStockService();
             WebAppData.setStockServiceList(this.stocks);

@@ -5,6 +5,7 @@
  */
 package richclient;
 
+import trading.StockProduct;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JPanel;
@@ -16,7 +17,6 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
-import trading.StockProduct;
 
 /**
  * This class represents a line chart that represent the market evolution

@@ -4,7 +4,7 @@ package richclient;
  * StockService is a class that provides the action of the market
  */
 
-import trading.StockProduct;
+import trading.StockProductDTO;
 import java.util.ArrayList;
 
 /**
@@ -12,17 +12,17 @@ import java.util.ArrayList;
  */
 public class StockService {
     
-    private ArrayList<StockProduct> daList;
+    private ArrayList<StockProductDTO> daList;
     /** Creates a new instance of StockService */
     public StockService() {
         setDaList(new ArrayList());
-        StockProduct thisStockPdt = new StockProduct("Sun");
+        StockProductDTO thisStockPdt = new StockProductDTO("Sun");
         thisStockPdt.setStockID(1);
         getDaList().add(thisStockPdt);
-        thisStockPdt = new StockProduct("Apple");
+        thisStockPdt = new StockProductDTO("Apple");
         thisStockPdt.setStockID(2);       
         getDaList().add(thisStockPdt);
-        thisStockPdt = new StockProduct("IBM");
+        thisStockPdt = new StockProductDTO("IBM");
         thisStockPdt.setStockID(3);
         getDaList().add(thisStockPdt);
     }

@@ -7,6 +7,7 @@
 package dataTransferObjects;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +24,9 @@ public class UserDTO implements Serializable{
     private String password;
     private boolean isAdmin;
     private List<TransactionDTO> transactionList;
+    private List<StockProductDTO> myStock;
 
-    public UserDTO(String userName, String firstName, String lastName, Date dateOfBirth, String password, boolean isAdmin, List<TransactionDTO> transactionList) {
+    public UserDTO(String userName, String firstName, String lastName, Date dateOfBirth, String password, boolean isAdmin, List<TransactionDTO> transactionList, List<StockProductDTO> products) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,6 +34,38 @@ public class UserDTO implements Serializable{
         this.password = password;
         this.isAdmin = isAdmin;
         this.transactionList = transactionList;
+        this.myStock = products;
+    }
+    
+     /**
+     * 
+     * @param qtty
+     * @param stockID
+     * @param type
+     * @param marketPricesUpdate 
+     */
+    public void update(int qtty, int stockID, String type, ArrayList marketPricesUpdate){
+
+        if(type.equals("buy")){//si l'utilisateur achete
+            //recupere le prix d'achat
+            double price = ((StockProductDTO)marketPricesUpdate.get(stockID)).getStockPrice();
+            //insere dans myStock la quantite du titre achete
+            ((StockProductDTO) getMyStock().get(stockID)).setStockQty(((StockProductDTO) getMyStock().get(stockID)).getStockQty() + qtty);
+            //insere dans myStock le prix auquel le titre a ete achete
+            ((StockProductDTO) getMyStock().get(stockID)).setStockPrice(price);
+            
+        }else if(type.equals("sell")){//si l'utilisateur vend
+            if (qtty <= ((StockProductDTO) getMyStock().get(stockID)).getStockQty()){//verifie si il possede la quantite qu'il veut vendre
+                //soustrait la quantite vendue a la quantite dans myStock
+                ((StockProductDTO) getMyStock().get(stockID)).setStockQty(((StockProductDTO) getMyStock().get(stockID)).getStockQty() - qtty);
+                //calcule l'ajustement a faire au resultat en fonction du prix d'achat et du prix de vente du titre
+                double adjust = ((qtty* ((StockProductDTO)marketPricesUpdate.get(stockID)).getStockPrice()))-((qtty* ((StockProductDTO) getMyStock().get(stockID)).getStockPrice()));
+                //fait l'ajustement
+                ((StockProductDTO) getMyStock().get(stockID)).setResult(((StockProductDTO) getMyStock().get(stockID)).getResult() + Math.round(adjust));
+                //enregistre le dernier prix d'achat
+                ((StockProductDTO) getMyStock().get(stockID)).setStockPrice(((StockProductDTO)marketPricesUpdate.get(stockID)).getStockPrice());
+            }
+        }
     }
 
     /**
@@ -145,6 +179,18 @@ public class UserDTO implements Serializable{
     public void setTransactionList(List<TransactionDTO> transactionList) {
         this.transactionList = transactionList;
     }
-    
-    
+
+    /**
+     * @return the myStock
+     */
+    public List<StockProductDTO> getMyStock() {
+        return myStock;
+    }
+
+    /**
+     * @param myStock the myStock to set
+     */
+    public void setMyStock(ArrayList<StockProductDTO> myStock) {
+        this.myStock = myStock;
+    }
 }

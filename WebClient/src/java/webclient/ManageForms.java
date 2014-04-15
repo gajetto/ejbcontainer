@@ -1,14 +1,17 @@
 package webclient;
 
 import com.sun.messaging.jmq.util.MD5;
+import dataTransferObjects.StockProductDTO;
+import dataTransferObjects.TransactionDTO;
 import dataTransferObjects.UserDTO;
 import ejb.TradingRemote;
-import trading.Trader;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -21,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import trading.SessionState;
 import trading.SessionStatusRequest;
-import trading.StockProduct;
 import trading.TradingTransaction;
 import trading.TradingTransactionType;
 
@@ -63,9 +65,17 @@ public class ManageForms extends HttpServlet {
 
             Date date = df.parse(dateOfBirth);    
             String hashedPassword = MD5.getHashString(password);
-            UserDTO user = new UserDTO(userName, firstName, lastName, date, hashedPassword, false, null);
+            StockProductDTO product0 = new StockProductDTO(0, 0.0, 0, 0.0);
+            StockProductDTO product1 = new StockProductDTO(1, 0.0, 0, 0.0);
+            StockProductDTO product2 = new StockProductDTO(2, 0.0, 0, 0.0);
+            List<StockProductDTO> products = new ArrayList<>();
+            products.add(product2);
+            products.add(product1);
+            products.add(product0);
+            List<TransactionDTO> transactions = new ArrayList<>();
+            UserDTO user = new UserDTO(userName, firstName, lastName, date, hashedPassword, false, transactions, products);
             if(tradingBean.registerUser(user)){
-                WebAppData.newTrader(user);
+                WebAppData.setUser(user);
                 response.sendRedirect("trade.jsp");
             }else{
                 response.sendRedirect("index.jsp?error=signup");
@@ -76,7 +86,7 @@ public class ManageForms extends HttpServlet {
             if(tradingBean.authenticateUser(request.getParameter("userName"), hashedPassword)){
                 UserDTO user = tradingBean.getUser(request.getParameter("userName"));
                 if(user != null){
-                    WebAppData.newTrader(user);
+                    WebAppData.setUser(user);
                     WebAppData.newStockService();
                     response.sendRedirect("trade.jsp"); 
                 }
@@ -94,7 +104,7 @@ public class ManageForms extends HttpServlet {
             if(WebAppData.editOther){
                 user = WebAppData.getUserToModifyByAdmin();
             }else{
-                user = WebAppData.getTrader().getUser();
+                user = WebAppData.getUser();
             }
             user.setPassword(hashedPassword);
             if(tradingBean.updateUser(user)){
@@ -131,7 +141,7 @@ public class ManageForms extends HttpServlet {
             if(WebAppData.editOther){
                 user = WebAppData.getUserToModifyByAdmin();
             }else{
-                user = WebAppData.getTrader().getUser();
+                user = WebAppData.getUser();
             }
             user.setFirstName(request.getParameter("firstName"));
             user.setLastName(request.getParameter("lastName"));
@@ -146,72 +156,72 @@ public class ManageForms extends HttpServlet {
 
         else if(request.getParameter("hitButton")!=null){
             int stockNumber = 0;
-            String traderName = WebAppData.getTrader().getUserName();
+            String username = WebAppData.getUser().getUserName();
             TradingTransactionType tty;
-            StockProduct product;
+            StockProductDTO product;
             TradingTransaction tt;
-            Trader trader = WebAppData.getTrader();
+            UserDTO user = WebAppData.getUser();
             boolean trading = false;
             switch (request.getParameter("hitButton")){
                 case "buySun":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberSun"));
                     tty = TradingTransactionType.Buy;
-                    product = new StockProduct("Sun");
-                    tt = new TradingTransaction(tty, product, stockNumber, traderName);
+                    product = new StockProductDTO("Sun");
+                    tt = new TradingTransaction(tty, product, stockNumber, username);
                     PTPConnection.sendOrder(tt);
-                    trader.update(stockNumber, 0, "buy", WebAppData.getStockService().getDaList());
-                    WebAppData.updateTrader(trader);
-                    StockProduct p = (StockProduct) WebAppData.getStockService().getDaList().get(0);
+                    user.update(stockNumber, 0, "buy", WebAppData.getStockService().getDaList());
+                    WebAppData.setUser(user);
+                    StockProductDTO p = (StockProductDTO) WebAppData.getStockService().getDaList().get(0);
                     trading = true;
                     break;
                 case "sellSun":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberSun"));
                     tty = TradingTransactionType.Sell;
-                    product = new StockProduct("Sun");
-                    tt = new TradingTransaction(tty, product, stockNumber, traderName);
+                    product = new StockProductDTO("Sun");
+                    tt = new TradingTransaction(tty, product, stockNumber, username);
                     PTPConnection.sendOrder(tt);
-                    trader.update(stockNumber, 0, "sell", WebAppData.getStockService().getDaList());
-                    WebAppData.updateTrader(trader);
+                    user.update(stockNumber, 0, "sell", WebAppData.getStockService().getDaList());
+                    WebAppData.setUser(user);
                     trading = true;
                     break;
                 case "buyIBM":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberIBM"));
                     tty = TradingTransactionType.Buy;
-                    product = new StockProduct("IBM");
-                    tt = new TradingTransaction(tty, product, stockNumber, traderName);
+                    product = new StockProductDTO("IBM");
+                    tt = new TradingTransaction(tty, product, stockNumber, username);
                     PTPConnection.sendOrder(tt);
-                    trader.update(stockNumber, 2, "buy", WebAppData.getStockService().getDaList());
-                    WebAppData.updateTrader(trader);
+                    user.update(stockNumber, 2, "buy", WebAppData.getStockService().getDaList());
+                    WebAppData.setUser(user);
                     trading = true;
                     break;
                 case "sellIBM":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberIBM"));
                     tty = TradingTransactionType.Sell;
-                    product = new StockProduct("IBM");
-                    tt = new TradingTransaction(tty, product, stockNumber, traderName);
+                    product = new StockProductDTO("IBM");
+                    tt = new TradingTransaction(tty, product, stockNumber, username);
                     PTPConnection.sendOrder(tt);
-                    trader.update(stockNumber, 2, "sell", WebAppData.getStockService().getDaList());
-                    WebAppData.updateTrader(trader);
+                    user.update(stockNumber, 2, "sell", WebAppData.getStockService().getDaList());
+                    WebAppData.setUser(user);
                     trading = true;
                     break;
                 case "buyApple":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberApple"));
                     tty = TradingTransactionType.Buy;
-                    product = new StockProduct("apple");
-                    tt = new TradingTransaction(tty, product, stockNumber, traderName);
+                    product = new StockProductDTO("apple");
+                    tt = new TradingTransaction(tty, product, stockNumber, username);
                     PTPConnection.sendOrder(tt);
-                    trader.update(stockNumber, 1, "buy", WebAppData.getStockService().getDaList());
-                    WebAppData.updateTrader(trader);
+                    user.update(stockNumber, 1, "buy", WebAppData.getStockService().getDaList());
+                    WebAppData.setUser(user);
                     trading = true;
                     break;
                 case "sellApple":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberApple"));
                     tty = TradingTransactionType.Sell;
-                    product = new StockProduct("apple");
-                    tt = new TradingTransaction(tty, product, stockNumber, traderName);
+                    product = new StockProductDTO("apple");
+                    tt = new TradingTransaction(tty, product, stockNumber, username);
                     PTPConnection.sendOrder(tt);
-                    trader.update(stockNumber, 1, "sell", WebAppData.getStockService().getDaList());
-                    WebAppData.updateTrader(trader);
+                    user.update(stockNumber, 1, "sell", WebAppData.getStockService().getDaList());
+                    WebAppData.setUser(user);
                     trading = true;
                     break;
             }
@@ -220,7 +230,7 @@ public class ManageForms extends HttpServlet {
             }else if(request.getParameter("hitLogout")!=null){
 //                SessionStatusRequest ssr = new SessionStatusRequest(WebAppData.getTrader().getUserName(), SessionState.Disconnected);
 //                PTPConnection.sendStatusRequest(ssr);
-                WebAppData.trader.setUser(null);
+                WebAppData.setUser(null);
                 response.sendRedirect("index.jsp");
             }
         }   

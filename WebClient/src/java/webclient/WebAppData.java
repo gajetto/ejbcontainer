@@ -6,11 +6,10 @@
 
 package webclient;
 
+import dataTransferObjects.StockProductDTO;
+import dataTransferObjects.StockServiceDTO;
 import dataTransferObjects.UserDTO;
-import trading.Trader;
-import trading.StockService;
 import java.util.ArrayList;
-import trading.StockProduct;
 
 
 /**
@@ -18,9 +17,9 @@ import trading.StockProduct;
  * @author Jerome
  */
 public class WebAppData {
-    protected static ArrayList<StockProduct> historyStocks = new ArrayList<>();
-    protected static Trader trader;
-    protected static StockService currentStocks;
+    protected static ArrayList<StockProductDTO> historyStocks = new ArrayList<>();
+    protected static UserDTO user;
+    protected static StockServiceDTO currentStocks;
     protected static boolean editOther = false;
     protected static UserDTO userToModifyByAdmin;
         
@@ -28,7 +27,7 @@ public class WebAppData {
      * Get the history of all stocks during the webclient life
      * @return 
      */
-    public static ArrayList<StockProduct> getHistoryStocks() {
+    public static ArrayList<StockProductDTO> getHistoryStocks() {
         return historyStocks;
     }
     
@@ -36,7 +35,7 @@ public class WebAppData {
      * Set the history of stocks
      * @param newStocks list of stocks
      */
-    public static void sethistoryStocks(ArrayList<StockProduct> newStocks) {
+    public static void sethistoryStocks(ArrayList<StockProductDTO> newStocks) {
         historyStocks = newStocks;
     }
         
@@ -44,8 +43,8 @@ public class WebAppData {
      * Add stocks to the top of the history stocks
      * @param newStocks a list of new received stocks
      */
-    public static void addStocks(ArrayList<StockProduct> newStocks){
-        ArrayList<StockProduct> temp = new ArrayList<>();
+    public static void addStocks(ArrayList<StockProductDTO> newStocks){
+        ArrayList<StockProductDTO> temp = new ArrayList<>();
         temp.addAll(newStocks);
         temp.addAll(historyStocks);
         historyStocks = temp;
@@ -55,38 +54,30 @@ public class WebAppData {
      * Instanciates a new trader
      * @param name the name of the new Trader
      */
-    public static void newTrader(UserDTO user){
-        trader = new Trader(user);
+    public static void setUser(UserDTO newUser){
+        user = newUser;
     }
     
     /**
      * Gets the Trader instance
      * @return the trader
      */
-    public static Trader getTrader(){
-        return trader;
-    }
-    
-    /**
-     * Update the trader with an unpdated trader
-     * @param updatedTrader the updated trader to store
-     */
-    public static void updateTrader(Trader updatedTrader){
-        trader = updatedTrader;
+    public static UserDTO getUser(){
+        return user;
     }
     
     /**
      * Instanciates a StockService
      */
     public static void newStockService(){
-        currentStocks = new StockService();
+        currentStocks = new StockServiceDTO();
     }
     
     /**
      * Gets a StockService
      * @return the StockService
      */
-    public static StockService getStockService(){
+    public static StockServiceDTO getStockService(){
         return currentStocks;
     }
     

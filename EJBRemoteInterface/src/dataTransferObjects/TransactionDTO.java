@@ -15,17 +15,19 @@ import java.util.Date;
  */
 public class TransactionDTO  implements Serializable {
     private int transactionID;
-    private int number;
+    private int qty;
     private double stockPrice;
     private Date transactionDate;
     private boolean isBuy;
+    private int stockID;
     
-    public TransactionDTO(int TransactionID, int number, double stockPrice, Date transactionDate, boolean isBuy){
+    public TransactionDTO(int TransactionID, int qty, double stockPrice, Date transactionDate, boolean isBuy, int stockID){
         this.transactionID = transactionID;
-        this.number = number;
+        this.qty = qty;
         this.stockPrice = stockPrice;
         this.transactionDate = transactionDate;
         this.isBuy = isBuy;
+        this.stockID = stockID;
     }
 
     /**
@@ -45,15 +47,15 @@ public class TransactionDTO  implements Serializable {
     /**
      * @return the number
      */
-    public int getNumber() {
-        return number;
+    public int getQty() {
+        return qty;
     }
 
     /**
      * @param number the number to set
      */
-    public void setNumber(int number) {
-        this.number = number;
+    public void setQty(int number) {
+        this.qty = number;
     }
 
     /**
@@ -96,6 +98,20 @@ public class TransactionDTO  implements Serializable {
      */
     public void setIsBuy(boolean isBuy) {
         this.isBuy = isBuy;
+    }
+
+    /**
+     * @return the stockID
+     */
+    public int getStockID() {
+        return stockID;
+    }
+
+    /**
+     * @param stockID the stockID to set
+     */
+    public void setStockID(int stockID) {
+        this.stockID = stockID;
     }
     
     

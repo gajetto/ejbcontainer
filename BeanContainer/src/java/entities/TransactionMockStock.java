@@ -35,12 +35,11 @@ public class TransactionMockStock implements Serializable {
     @JoinColumn(name = "UserMockStock")
     private UserMockStock userMockStock;
     
-//    @ManyToOne
-//    @JoinColumn(name = "Stock")
-//    private Stock Stock;
+    @Column(name = "stockId")
+    private int stockId;
     
-    @Column(name = "number")
-    private int number;
+    @Column(name = "qty")
+    private int qty;
     
     @Column(name = "stockPrice")
     private double stockPrice;
@@ -88,15 +87,15 @@ public class TransactionMockStock implements Serializable {
     /**
      * @return the number
      */
-    public int getNumber() {
-        return number;
+    public int getQty() {
+        return qty;
     }
 
     /**
      * @param number the number to set
      */
-    public void setNumber(int number) {
-        this.number = number;
+    public void setQty(int number) {
+        this.qty = number;
     }
 
     /**
@@ -181,6 +180,20 @@ public class TransactionMockStock implements Serializable {
      */
     public void setUserMockStock(UserMockStock userMockStock) {
         this.userMockStock = userMockStock;
+    }
+
+    /**
+     * @return the stockId
+     */
+    public int getStockId() {
+        return stockId;
+    }
+
+    /**
+     * @param stockId the stockId to set
+     */
+    public void setStockId(int stockId) {
+        this.stockId = stockId;
     }
     
 }

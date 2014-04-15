@@ -9,12 +9,12 @@ import java.io.Serializable;
 public class TradingTransaction implements Serializable{
     
     private TradingTransactionType type;
-    private StockProduct product;
+    private StockProductDTO product;
     private int qty;
     private String clientName;
 
     
-    public TradingTransaction(TradingTransactionType type,StockProduct product,int qty,String clientName)
+    public TradingTransaction(TradingTransactionType type,StockProductDTO product,int qty,String clientName)
     {
         this.product=product;
         this.qty=qty;
@@ -40,14 +40,14 @@ public class TradingTransaction implements Serializable{
     /**
      * @return the product
      */
-    public StockProduct getProduct() {
+    public StockProductDTO getProduct() {
         return product;
     }
 
     /**
      * @param product the product to set
      */
-    public void setProduct(StockProduct product) {
+    public void setProduct(StockProductDTO product) {
         this.product = product;
     }
 

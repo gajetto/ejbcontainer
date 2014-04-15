@@ -53,6 +53,9 @@ public class UserMockStock implements Serializable {
     
     @OneToMany(mappedBy = "UserMockStock", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<TransactionMockStock> transactionsMockStock;
+    
+    @OneToMany(mappedBy = "UserMockStock", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<StockProduct> stockProducts;
 
     public int getId() {
         return id;
@@ -183,6 +186,20 @@ public class UserMockStock implements Serializable {
      */
     public void setTransactionsMockStock(List<TransactionMockStock> transactionsMockStock) {
         this.transactionsMockStock = transactionsMockStock;
+    }
+
+    /**
+     * @return the stockProducts
+     */
+    public List<StockProduct> getStockProducts() {
+        return stockProducts;
+    }
+
+    /**
+     * @param stockProducts the stockProducts to set
+     */
+    public void setStockProducts(List<StockProduct> stockProducts) {
+        this.stockProducts = stockProducts;
     }
     
 }

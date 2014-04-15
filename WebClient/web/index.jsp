@@ -1,6 +1,6 @@
 <%@ page import="webclient.WebAppData" %>
 <%
-    if(WebAppData.getTrader() != null && WebAppData.getTrader().getUser() != null){
+    if(WebAppData.getUser() != null){
         response.sendRedirect("trade.jsp");
     }
 %>
