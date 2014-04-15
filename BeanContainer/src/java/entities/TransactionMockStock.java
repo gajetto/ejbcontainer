@@ -7,12 +7,16 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -26,6 +30,27 @@ public class TransactionMockStock implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private int id;
+    
+    @ManyToOne
+    @JoinColumn(name = "UserMockStock")
+    private UserMockStock userMockStock;
+    
+//    @ManyToOne
+//    @JoinColumn(name = "Stock")
+//    private Stock Stock;
+    
+    @Column(name = "number")
+    private int number;
+    
+    @Column(name = "stockPrice")
+    private double stockPrice;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "transactionDate")
+    private Date transactionDate;
+    
+    @Column(name = "isBuy")
+    private boolean isBuy;
 
     public int getId() {
         return id;
@@ -58,6 +83,104 @@ public class TransactionMockStock implements Serializable {
     @Override
     public String toString() {
         return "entities.Transaction[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the number
+     */
+    public int getNumber() {
+        return number;
+    }
+
+    /**
+     * @param number the number to set
+     */
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    /**
+     * @return the isBuy
+     */
+    public boolean isIsBuy() {
+        return isBuy;
+    }
+
+    /**
+     * @param isBuy the isBuy to set
+     */
+    public void setIsBuy(boolean isBuy) {
+        this.isBuy = isBuy;
+    }
+
+//    /**
+//     * @return the UserMockStock
+//     */
+//    public UserMockStock getUserMockStock() {
+//        return UserMockStock;
+//    }
+//
+//    /**
+//     * @param UserMockStock the UserMockStock to set
+//     */
+//    public void setUserMockStock(UserMockStock UserMockStock) {
+//        this.UserMockStock = UserMockStock;
+//    }
+
+//    /**
+//     * @return the Stock
+//     */
+//    public Stock getStock() {
+//        return Stock;
+//    }
+//
+//    /**
+//     * @param Stock the Stock to set
+//     */
+//    public void setStock(Stock Stock) {
+//        this.Stock = Stock;
+//    }
+
+    /**
+     * @return the stockPrice
+     */
+    public double getStockPrice() {
+        return stockPrice;
+    }
+
+    /**
+     * @param stockPrice the stockPrice to set
+     */
+    public void setStockPrice(double stockPrice) {
+        this.stockPrice = stockPrice;
+    }
+
+    /**
+     * @return the transactionDate
+     */
+    public Date getTransactionDate() {
+        return transactionDate;
+    }
+
+    /**
+     * @param transactionDate the transactionDate to set
+     */
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
+    /**
+     * @return the userMockStock
+     */
+    public UserMockStock getUserMockStock() {
+        return userMockStock;
+    }
+
+    /**
+     * @param userMockStock the userMockStock to set
+     */
+    public void setUserMockStock(UserMockStock userMockStock) {
+        this.userMockStock = userMockStock;
     }
     
 }

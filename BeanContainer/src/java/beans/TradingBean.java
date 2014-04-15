@@ -5,9 +5,11 @@
  */
 package beans;
 
+import dataTransferObjects.TransactionDTO;
 import dataTransferObjects.UserDTO;
 import ejb.TradingRemote;
 import ejb.TradingRemote;
+import entities.TransactionMockStock;
 import entities.UserMockStock;
 import java.sql.*;
 import java.sql.Connection;
@@ -84,8 +86,21 @@ public class TradingBean implements TradingRemote {
 
     }
     
-    private UserDTO GetDTOFromEntity(UserMockStock entity){
-        return new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin());
+    private TransactionDTO getDTOFromEntity(TransactionMockStock entity){
+        return new TransactionDTO(entity.getId(), entity.getNumber(), entity.getStockPrice(), entity.getTransactionDate(), entity.isIsBuy());
+    }
+    
+    private List<TransactionDTO> getDTOListFromEntityList(List<TransactionMockStock> entities){
+        List<TransactionDTO> transactionsList = new ArrayList<>();
+        for (TransactionMockStock entity : entities) {
+            TransactionDTO transaction = getDTOFromEntity(entity);
+            transactionsList.add(transaction);
+        }
+        return transactionsList;
+    }
+    
+    private UserDTO getDTOFromEntity(UserMockStock entity){
+        return new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin(), getDTOListFromEntityList(entity.getTransactionsMockStock()));
     }
 
     @Override
@@ -96,7 +111,7 @@ public class TradingBean implements TradingRemote {
             return null;
         }else{
             
-            return GetDTOFromEntity(users.get(0));
+            return getDTOFromEntity(users.get(0));
         }
     }
 
@@ -115,7 +130,7 @@ public class TradingBean implements TradingRemote {
         List<UserMockStock> users = query.getResultList();
         if(!users.isEmpty()){
             for (UserMockStock entity : users) {
-                UserDTO userDTO = new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin());
+                UserDTO userDTO = new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin(), getDTOListFromEntityList(entity.getTransactionsMockStock()));
                 usersDTO.add(userDTO);
             }            
         }

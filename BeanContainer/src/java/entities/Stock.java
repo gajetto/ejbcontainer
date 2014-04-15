@@ -7,10 +7,13 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -21,20 +24,23 @@ public class Stock implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
-    public Long getId() {
+//    @OneToMany(mappedBy = "TransactionMockStock", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private Collection<TransactionMockStock> transactionsMockStock;
+    
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+//        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -45,9 +51,9 @@ public class Stock implements Serializable {
             return false;
         }
         Stock other = (Stock) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
+//        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+//            return false;
+//        }
         return true;
     }
 

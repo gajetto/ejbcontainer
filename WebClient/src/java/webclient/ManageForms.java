@@ -63,7 +63,7 @@ public class ManageForms extends HttpServlet {
 
             Date date = df.parse(dateOfBirth);    
             String hashedPassword = MD5.getHashString(password);
-            UserDTO user = new UserDTO(userName, firstName, lastName, date, hashedPassword, false);
+            UserDTO user = new UserDTO(userName, firstName, lastName, date, hashedPassword, false, null);
             if(tradingBean.registerUser(user)){
                 WebAppData.newTrader(user);
                 response.sendRedirect("trade.jsp");

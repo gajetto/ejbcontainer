@@ -8,11 +8,14 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -48,6 +51,8 @@ public class UserMockStock implements Serializable {
     @Column(name = "IsAdmin")
     private boolean isAdmin;
     
+    @OneToMany(mappedBy = "UserMockStock", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<TransactionMockStock> transactionsMockStock;
 
     public int getId() {
         return id;
@@ -164,6 +169,20 @@ public class UserMockStock implements Serializable {
      */
     public void setdOB(Date dOB) {
         this.dOB = dOB;
+    }
+
+    /**
+     * @return the transactionsMockStock
+     */
+    public List<TransactionMockStock> getTransactionsMockStock() {
+        return transactionsMockStock;
+    }
+
+    /**
+     * @param transactionsMockStock the transactionsMockStock to set
+     */
+    public void setTransactionsMockStock(List<TransactionMockStock> transactionsMockStock) {
+        this.transactionsMockStock = transactionsMockStock;
     }
     
 }

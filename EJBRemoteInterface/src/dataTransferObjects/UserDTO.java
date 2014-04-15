@@ -8,12 +8,13 @@ package dataTransferObjects;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Jerome
  */
-public class UserDTO {
+public class UserDTO implements Serializable{
     private int userId;
     private String userName;
     private String firstName;
@@ -21,14 +22,16 @@ public class UserDTO {
     private Date dateOfBirth;
     private String password;
     private boolean isAdmin;
+    private List<TransactionDTO> transactionList;
 
-    public UserDTO(String userName, String firstName, String lastName, Date dateOfBirth, String password, boolean isAdmin) {
+    public UserDTO(String userName, String firstName, String lastName, Date dateOfBirth, String password, boolean isAdmin, List<TransactionDTO> transactionList) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.transactionList = transactionList;
     }
 
     /**
@@ -128,4 +131,20 @@ public class UserDTO {
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
+
+    /**
+     * @return the transactionList
+     */
+    public List<TransactionDTO> getTransactionList() {
+        return transactionList;
+    }
+
+    /**
+     * @param transactionList the transactionList to set
+     */
+    public void setTransactionList(List<TransactionDTO> transactionList) {
+        this.transactionList = transactionList;
+    }
+    
+    
 }
