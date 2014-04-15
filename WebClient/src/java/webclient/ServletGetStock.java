@@ -7,9 +7,11 @@ package webclient;
  */
 
 import dataTransferObjects.StockProductDTO;
+import ejb.TradingRemote;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import javax.ejb.EJB;
 import javax.jms.*;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -24,14 +26,15 @@ import org.json.simple.JSONObject;
  * @author Jerome
  */
 @WebServlet(urlPatterns = {"/ServletGetStock"})
-public class ServletGetStock extends HttpServlet implements MessageListener {
+public class ServletGetStock extends HttpServlet {
+    @EJB
+    private TradingRemote tradingBean;
 
     private ArrayList<StockProductDTO> stocks;
     
     @Override
     public synchronized void init() throws ServletException {
         this.stocks = new ArrayList<>();
-        initializeSubscriber();
     }
     
     /**
@@ -48,6 +51,7 @@ public class ServletGetStock extends HttpServlet implements MessageListener {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        stocks = tradingBean.getLastStocks();
         ArrayList<StockProductDTO> list = WebAppData.getHistoryStocks();
         
         DecimalFormat df = new DecimalFormat("##0.00");
@@ -114,56 +118,5 @@ public class ServletGetStock extends HttpServlet implements MessageListener {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    /**
-     * initialize a subscriber connection that reads messages sent from the market
-     */
-        public void initializeSubscriber(){
-            final String TOPIC_NAME = "market";
-
-            TopicConnectionFactory connectionFactory = new com.sun.messaging.TopicConnectionFactory();
-
-            TopicConnection connection = null;
-            try {
-
-                connection = connectionFactory.createTopicConnection();
-                TopicSession session = connection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
-                Topic topic = new com.sun.messaging.Topic(TOPIC_NAME);
-                TopicSubscriber subscriber = session.createSubscriber(topic);
-                MessageListener listener = new ServletGetStock();
-                subscriber.setMessageListener(listener);
-                connection.start();
-                synchronized (listener) {
-                    //listener.wait();
-                }
-            } catch (Exception e) {
-                System.out.println("Exception occurred: " + e.toString());
-                System.exit(1);
-            }
-
-            System.out.println("Client started!!");
-        }
-    
-    /**
-     * Reads the messages sent from the market and stores them in a list
-     * @param message the message received from the market
-     */
-    @Override
-    public void onMessage(javax.jms.Message message) {
-        
-        ObjectMessage stockProducts = null;
-        stockProducts = (ObjectMessage) message;
-        try {
-            this.stocks = (ArrayList<StockProductDTO>) stockProducts.getObject();
-            WebAppData.addStocks(this.stocks);
-            WebAppData.newStockService();
-            WebAppData.setStockServiceList(this.stocks);
-        } catch (JMSException ex) {
-            
-        }
-            synchronized (this) {
-                this.notify();
-            }
-    }
 
 }

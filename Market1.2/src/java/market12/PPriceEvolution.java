@@ -52,7 +52,7 @@ public class PPriceEvolution {
             java.util.Iterator it = getStockList().iterator();
             while(it.hasNext()){
                 java.util.Random randomizer;
-                StockProduct thisStock = (StockProduct) it.next();
+                StockProductDTO thisStock = (StockProductDTO) it.next();
                 double proba ;
                 randomizer = new Random();
                 proba=randomizer.nextDouble();

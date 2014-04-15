@@ -10,7 +10,4 @@
   <module>
     <ejb>BeanContainer.jar</ejb>
   </module>
-  <module>
-    <java>RichClientEE.jar</java>
-  </module>
 </application>

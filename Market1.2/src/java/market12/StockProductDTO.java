@@ -19,7 +19,7 @@ import java.lang.Double;
 /**
  * Contient les informations d'un titre.
  */
-public class StockProduct implements Serializable {
+public class StockProductDTO implements Serializable {
     private String stockName;
     private int stockID;
     private Double stockPrice = new Double(0);
@@ -27,7 +27,7 @@ public class StockProduct implements Serializable {
     /**
      * Creates a new instance of StockProduct
      */
-    public StockProduct(String nameValue) {
+    public StockProductDTO(String nameValue) {
         stockName = nameValue;
     }
     
