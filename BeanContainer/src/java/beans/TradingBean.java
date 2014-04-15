@@ -73,6 +73,7 @@ public class TradingBean implements TradingRemote {
 
     }
     
+    @Override
     public ArrayList<StockProductDTO> getLastStocks(){
         return sb.getStockProducts();
     }
