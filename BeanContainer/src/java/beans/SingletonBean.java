@@ -7,10 +7,8 @@ package beans;
 
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
-import javax.jms.Message;
-import beans.MessageBean;
+import dataTransferObjects.StockProductDTO;
 import java.util.ArrayList;
-import market12.StockProduct;
 
 /**
  *
@@ -26,24 +24,31 @@ public class SingletonBean {
 
     }
 
-    ArrayList<StockProduct> mess;
-    private static SingletonBean sb = null;
+    private ArrayList<StockProductDTO> stockProducts;
+    private static SingletonBean instance = null;
 
-    public ArrayList<StockProduct> getMess() {
-        return mess;
+    public ArrayList<StockProductDTO> getMess() {
+        return getStockProducts();
     }
 
     
     public static SingletonBean getInstance() {
-        if (sb == null) {
-            sb = new SingletonBean();
+        if (instance == null) {
+            instance = new SingletonBean();
         }
-        return sb;
+        return instance;
     }
     
-    public void setMess(ArrayList<StockProduct> mess) {
-        this.mess = mess;
+    public void setStockProducts(ArrayList<StockProductDTO> newStockProducts) {
+        this.stockProducts = newStockProducts;
     }
 
+    /**
+     * @return the stockProducts
+     */
+    public ArrayList<StockProductDTO> getStockProducts() {
+        return stockProducts;
     }
+
+}
 

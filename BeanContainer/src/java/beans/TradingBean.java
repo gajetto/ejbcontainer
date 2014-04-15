@@ -37,6 +37,8 @@ public class TradingBean implements TradingRemote {
 
     private DataSource ds;
     private Connection cn;
+    private SingletonBean sb = SingletonBean.getInstance();
+    
     @Resource
     SessionContext ctx;
 
@@ -69,6 +71,10 @@ public class TradingBean implements TradingRemote {
             return false;
         }
 
+    }
+    
+    public ArrayList<StockProductDTO> getLastStocks(){
+        return sb.getStockProducts();
     }
 
     public void insertUser(UserMockStock entity) {

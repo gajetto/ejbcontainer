@@ -11,9 +11,9 @@ import javax.jms.*;
 import beans.SingletonBean;
 import java.lang.Exception;
 import javax.ejb.EJBException;
-import market12.StockProduct;
 import java.util.ArrayList;
 import beans.SingletonBean;
+import dataTransferObjects.StockProductDTO;
 /**
  *
  * @author Jerome & Ludovic
@@ -28,8 +28,8 @@ import beans.SingletonBean;
 
 public class MessageBean implements MessageListener {
 
-    StockProduct stockSingle;
-    StockProduct paramessage;
+    StockProductDTO stockSingle;
+    StockProductDTO paramessage;
     SingletonBean sb;
 
     public MessageBean() {
@@ -42,10 +42,10 @@ public class MessageBean implements MessageListener {
         try {
             ObjectMessage objectMessage = (ObjectMessage) message;
 
-            ArrayList<StockProduct> messageList = (ArrayList) objectMessage.getObject();
+            ArrayList<StockProductDTO> messageList = (ArrayList) objectMessage.getObject();
             
             
-            sb.setMess(messageList);
+            sb.setStockProducts(messageList);
             synchronized (this) {
                 this.notify();
             }
