@@ -13,7 +13,7 @@ import java.lang.Exception;
 import javax.ejb.EJBException;
 import java.util.ArrayList;
 import beans.SingletonBean;
-import dataTransferObjects.StockProductDTO;
+import dataTransferObjects.StockPriceDTO;
 /**
  *
  * @author Jerome & Ludovic
@@ -28,8 +28,8 @@ import dataTransferObjects.StockProductDTO;
 
 public class MessageBean implements MessageListener {
 
-    StockProductDTO stockSingle;
-    StockProductDTO paramessage;
+    StockPriceDTO stockSingle;
+    StockPriceDTO paramessage;
     SingletonBean sb;
 
     public MessageBean() {
@@ -42,7 +42,7 @@ public class MessageBean implements MessageListener {
         try {
             ObjectMessage objectMessage = (ObjectMessage) message;
 
-            ArrayList<StockProductDTO> messageList = (ArrayList) objectMessage.getObject();
+            ArrayList<StockPriceDTO> messageList = (ArrayList) objectMessage.getObject();
             
             
             sb.setStockProducts(messageList);
@@ -51,6 +51,7 @@ public class MessageBean implements MessageListener {
             }
         } catch (JMSException e) {
             System.out.println("A JMS error has occured...");
+            e.printStackTrace();
         } catch (EJBException e) {
             System.out.println("An EJB exception has occured ...");
         }

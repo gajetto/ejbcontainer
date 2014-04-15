@@ -6,7 +6,7 @@ package webclient;
  * and open the template in the editor.
  */
 
-import dataTransferObjects.StockProductDTO;
+import dataTransferObjects.StockPriceDTO;
 import ejb.TradingRemote;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -30,7 +30,7 @@ public class ServletGetStock extends HttpServlet {
     @EJB
     private TradingRemote tradingBean;
 
-    private ArrayList<StockProductDTO> stocks;
+    private ArrayList<StockPriceDTO> stocks;
     
     @Override
     public synchronized void init() throws ServletException {
@@ -52,16 +52,19 @@ public class ServletGetStock extends HttpServlet {
             throws ServletException, IOException {
         
         stocks = tradingBean.getLastStocks();
-        ArrayList<StockProductDTO> list = WebAppData.getHistoryStocks();
+        
+        ArrayList<StockPriceDTO> list = WebAppData.getHistoryStocks();
         
         DecimalFormat df = new DecimalFormat("##0.00");
         double ratePrice = 0.0;
         JSONObject obj2 = new JSONObject();
         
         if(!list.isEmpty()){
+            WebAppData.addStocks(stocks);
             for(int i=0; i<list.size()/3; i++){
             JSONObject obj = new JSONObject();
                 for(int j=0; j<3; j++){
+                    System.out.println(list.get(j).getStockName()+" "+list.get(j).getStockPrice());
                     obj.put(list.get((3*i)+j).getStockName(), list.get((3*i)+j).getStockPrice());
                     if((i+1)<list.size()/3 && list.get((3*(i+1))+j).getStockPrice() != 0.0){
                         ratePrice = ((list.get((3*i)+j).getStockPrice()/ list.get((3*(i+1))+j).getStockPrice()) - 1) * 100;
@@ -72,6 +75,8 @@ public class ServletGetStock extends HttpServlet {
                 }
                 obj2.put(i, obj);
             }
+        }else{
+            WebAppData.sethistoryStocks(stocks);
         }
        
         response.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.

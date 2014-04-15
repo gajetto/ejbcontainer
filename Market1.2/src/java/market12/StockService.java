@@ -21,7 +21,7 @@ import java.util.Iterator;
  */
 public class StockService {
     
-    private ArrayList<StockProductDTO> stockList;
+    private ArrayList<StockPriceDTO> stockList;
     private MarketPublisher pub;
     
     /**
@@ -31,15 +31,15 @@ public class StockService {
         this.pub = pub;
         setStockList(new ArrayList());
         
-        StockProductDTO thisStockPdt = new StockProductDTO("Sun");
+        StockPriceDTO thisStockPdt = new StockPriceDTO("Sun");
         thisStockPdt.setStockID(1);
         getStockList().add(thisStockPdt);
         
-        thisStockPdt = new StockProductDTO("Apple");
+        thisStockPdt = new StockPriceDTO("Apple");
         thisStockPdt.setStockID(2);
         getStockList().add(thisStockPdt);
         
-        thisStockPdt = new StockProductDTO("IBM");
+        thisStockPdt = new StockPriceDTO("IBM");
         thisStockPdt.setStockID(3);
         getStockList().add(thisStockPdt);
         

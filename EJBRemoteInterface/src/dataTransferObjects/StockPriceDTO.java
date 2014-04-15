@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package market12;
+package dataTransferObjects;
 
 /**
  *
@@ -19,7 +19,7 @@ import java.lang.Double;
 /**
  * Contient les informations d'un titre.
  */
-public class StockProductDTO implements Serializable {
+public class StockPriceDTO implements Serializable {
     private String stockName;
     private int stockID;
     private Double stockPrice = new Double(0);
@@ -27,7 +27,7 @@ public class StockProductDTO implements Serializable {
     /**
      * Creates a new instance of StockProduct
      */
-    public StockProductDTO(String nameValue) {
+    public StockPriceDTO(String nameValue) {
         stockName = nameValue;
     }
     

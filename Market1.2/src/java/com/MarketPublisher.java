@@ -98,7 +98,7 @@ public class MarketPublisher {
         String text = "";
         Iterator it = stockList.iterator();
         while (it.hasNext()){
-            StockProductDTO stock = (StockProductDTO) it.next();
+            StockPriceDTO stock = (StockPriceDTO) it.next();
             text += stock.getStockName() + ": " + stock.getStockPrice() + "\n";
         }
         gui.updatePrice(text);
