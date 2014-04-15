@@ -6,6 +6,7 @@
 
 package trader;
 
+import dataTransferObjects.StockProductDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jms.Connection;
@@ -21,7 +22,6 @@ import javax.jms.Session;
 import trading.SessionState;
 import trading.SessionStatusRequest;
 import trading.SessionStatusResponse;
-import trading.StockProductDTO;
 import trading.TradingTransaction;
 import trading.TradingTransactionType;
 

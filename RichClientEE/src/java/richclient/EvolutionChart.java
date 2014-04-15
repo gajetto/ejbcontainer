@@ -5,7 +5,8 @@
  */
 package richclient;
 
-import trading.StockProduct;
+
+import dataTransferObjects.StockProductDTO;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JPanel;
@@ -25,7 +26,7 @@ import org.jfree.data.xy.XYDataset;
  */
 public class EvolutionChart extends JPanel {
 
-    private ArrayList<StockProduct> stocks;
+    private ArrayList<StockProductDTO> stocks;
 
     private ChartPanel chartPanel;
 

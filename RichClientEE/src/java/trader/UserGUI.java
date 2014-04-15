@@ -5,6 +5,7 @@
  */
 package trader;
  
+import dataTransferObjects.StockProductDTO;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.awt.event.*;
@@ -28,7 +29,7 @@ import javax.jms.TopicSubscriber;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import trading.StockProduct;
+
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYDataset;
@@ -55,7 +56,7 @@ public class UserGUI extends javax.swing.JFrame { //implements MessageListener {
 
     private String displayText = "";
 
-    private ArrayList<StockProduct> stocks = null;
+    private ArrayList<StockProductDTO> stocks = null;
     
     private String name;
     private TraderManager traderM;
@@ -406,11 +407,11 @@ public class UserGUI extends javax.swing.JFrame { //implements MessageListener {
         }
     }
 
-    public ArrayList<StockProduct> getStocks() {
+    public ArrayList<StockProductDTO> getStocks() {
         return stocks;
     }
 
-    public void setStocks(ArrayList<StockProduct> stocks) {
+    public void setStocks(ArrayList<StockProductDTO> stocks) {
         this.stocks = stocks;
     }
 

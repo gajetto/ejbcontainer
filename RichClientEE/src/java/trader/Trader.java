@@ -9,9 +9,9 @@
 
 package trader;
 
+import dataTransferObjects.StockProductDTO;
+import dataTransferObjects.StockServiceDTO;
 import java.util.ArrayList;
-import trading.StockProductDTO;
-import trading.StockServiceDTO;
 
 /**
  * Trader object

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.awt.event.*;
 import java.lang.String;
 import javax.ejb.EJB;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -20,6 +21,8 @@ public class JoinMarketGUI extends javax.swing.JFrame {
     
     @EJB
     private static TradingRemote tradingBean;
+    
+    private boolean isCreate = false;
 
     private String name;
     
@@ -33,9 +36,19 @@ public class JoinMarketGUI extends javax.swing.JFrame {
      */
     public JoinMarketGUI() {
         initComponents();
-
-        marketM = new MarketManager();
-        traderM = new TraderManager(this, marketM);
+        
+        //marketM = new MarketManager();
+        //traderM = new TraderManager(this, marketM);
+    }
+    
+    public void connection() {
+                
+        if (isCreate) {
+            System.out.println("Open market");
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Error occurs while trying to register. Try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         
     }
 
@@ -134,13 +147,15 @@ public class JoinMarketGUI extends javax.swing.JFrame {
             //cree un nouvel utilisateur
             
 
-            traderM.connection(name);
+            //traderM.connection(name);
             
             //if (traderM.isConnected()) {
             if (true) {
-                uGUI = new UserGUI(name, traderM, marketM);
-                this.setVisible(false);
-                jPanel1.setEnabled(false);
+                System.out.println("Connect existe DB");
+                
+//                uGUI = new UserGUI(name, traderM, marketM);
+//                this.setVisible(false);
+//                jPanel1.setEnabled(false);
             }
             else {
                 nameTextField.setText("");
@@ -158,13 +173,15 @@ public class JoinMarketGUI extends javax.swing.JFrame {
             if (!nameTextField.getText().trim().equals("")) {
                 name = nameTextField.getText().trim();
                 
-            traderM.connection(name);
+            //traderM.connection(name);
             
             //if (traderM.isConnected()) {
             if (true) {
-                uGUI = new UserGUI(name, traderM, marketM);
-                this.setVisible(false);
-                jPanel1.setEnabled(false);
+                
+                
+//                uGUI = new UserGUI(name, traderM, marketM);
+//                this.setVisible(false);
+//                jPanel1.setEnabled(false);
             }
             else {
                 nameTextField.setText("");
@@ -174,7 +191,12 @@ public class JoinMarketGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_nameTextFieldKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Formulaire f = new Formulaire();
+        Formulaire f = new Formulaire(tradingBean, this);
+
+//        uGUI = new UserGUI(name, traderM, marketM);
+//        this.setVisible(false);
+//        jPanel1.setEnabled(false);
+        
         f.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -193,6 +215,11 @@ public class JoinMarketGUI extends javax.swing.JFrame {
 
     }
 
+    public void setIsCreate(boolean isCreate) {
+        this.isCreate = isCreate;
+    }
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

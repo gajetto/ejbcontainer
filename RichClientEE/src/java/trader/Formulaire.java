@@ -7,14 +7,19 @@
 package trader;
 
 
+import com.sun.messaging.jmq.util.MD5;
 import dataTransferObjects.UserDTO;
+import ejb.TradingRemote;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,13 +27,19 @@ import javax.ejb.EJB;
  */
 public class Formulaire extends javax.swing.JFrame {
 
-
     
+    private TradingRemote tradingBean;
+    
+    private JoinMarketGUI jmGUI;
     
     /**
      * Creates new form Formulaire
+     * @param tradingBean
+     * @param jmGUI
      */
-    public Formulaire() {
+    public Formulaire(TradingRemote tradingBean, JoinMarketGUI jmGUI) {
+        this.tradingBean = tradingBean;
+        this.jmGUI = jmGUI;
         initComponents();
     }
 
@@ -195,14 +206,26 @@ public class Formulaire extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(Formulaire.class.getName()).log(Level.SEVERE, null, ex);
         }
-        UserDTO user = new UserDTO(username, firstName, lastName, date, password, false);
-//                InitialContext ic = new InitialContext();
-//                tr = (TradingRemote) ic.lookup("java:module/BeanContainer/beans");
-//        System.out.println(tr);
-//        tr.registerUser(user);
-            
-            
-            System.out.println("WORKING");
+        String hashedPassword = MD5.getHashString(password);
+        UserDTO user = new UserDTO(username, firstName, lastName, date, password, rootPaneCheckingEnabled, null, null);
+        
+        UserDTO userTest = tradingBean.getUser(username);
+        if (true) {
+            if (tradingBean.registerUser(user)) {
+                jmGUI.setIsCreate(true);
+                this.setVisible(false);
+            }
+            else {
+                jmGUI.setIsCreate(true);
+                this.setVisible(false);
+            }
+            jmGUI.connection();
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Username "+username+" already in use. Choose another one.", "Warning", JOptionPane.ERROR_MESSAGE);
+            jTextField1.setText("");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -230,4 +253,7 @@ public class Formulaire extends javax.swing.JFrame {
     private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
+
+
 }

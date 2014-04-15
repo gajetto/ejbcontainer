@@ -6,6 +6,7 @@
 
 package trader;
 
+import dataTransferObjects.StockProductDTO;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +20,7 @@ import javax.jms.TopicConnection;
 import javax.jms.TopicConnectionFactory;
 import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
-import trading.StockProduct;
+
 
 /**
  *
@@ -89,7 +90,7 @@ public class MarketManager implements MessageListener {
         ObjectMessage stockProducts = null;
         stockProducts = (ObjectMessage) message;
         try {
-            uGUI.setStocks((ArrayList<StockProduct>) stockProducts.getObject());
+            uGUI.setStocks((ArrayList<StockProductDTO>) stockProducts.getObject());
         } catch (JMSException ex) {
             Logger.getLogger(UserGUI.class.getName()).log(Level.SEVERE, null, ex);
         }

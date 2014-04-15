@@ -1,5 +1,6 @@
 package trading;
 
+import dataTransferObjects.StockProductDTO;
 import java.io.Serializable;
 
 /**
