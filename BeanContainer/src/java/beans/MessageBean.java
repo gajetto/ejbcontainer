@@ -13,6 +13,7 @@ import java.lang.Exception;
 import javax.ejb.EJBException;
 import market12.StockProduct;
 import java.util.ArrayList;
+import beans.SingletonBean;
 /**
  *
  * @author Jerome & Ludovic
@@ -29,10 +30,10 @@ public class MessageBean implements MessageListener {
 
     StockProduct stockSingle;
     StockProduct paramessage;
-    SingletonBean spb;
+    SingletonBean sb;
 
     public MessageBean() {
-        spb.getInstance();
+        sb.getInstance();
     }
 
     
@@ -43,7 +44,8 @@ public class MessageBean implements MessageListener {
 
             ArrayList<StockProduct> messageList = (ArrayList) objectMessage.getObject();
             
-            spb.setMess(messageList);
+            
+            sb.setMess(messageList);
             synchronized (this) {
                 this.notify();
             }

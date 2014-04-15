@@ -23,7 +23,7 @@ import javax.persistence.Temporal;
  * @author Sohaila.Baset
  */
 @Entity
-@Table(name = "TransactionMockStock")
+@Table
 public class TransactionMockStock implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

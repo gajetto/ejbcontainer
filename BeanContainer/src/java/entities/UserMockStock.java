@@ -51,10 +51,10 @@ public class UserMockStock implements Serializable {
     @Column(name = "IsAdmin")
     private boolean isAdmin;
     
-    @OneToMany(mappedBy = "UserMockStock", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<TransactionMockStock> transactionsMockStock;
     
-    @OneToMany(mappedBy = "UserMockStock", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<StockProduct> stockProducts;
 
     public int getId() {

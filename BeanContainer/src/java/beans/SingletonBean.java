@@ -27,7 +27,7 @@ public class SingletonBean {
     }
 
     ArrayList<StockProduct> mess;
-    private static SingletonBean speb = null;
+    private static SingletonBean sb = null;
 
     public ArrayList<StockProduct> getMess() {
         return mess;
@@ -35,10 +35,10 @@ public class SingletonBean {
 
     
     public static SingletonBean getInstance() {
-        if (speb == null) {
-            speb = new SingletonBean();
+        if (sb == null) {
+            sb = new SingletonBean();
         }
-        return speb;
+        return sb;
     }
     
     public void setMess(ArrayList<StockProduct> mess) {
