@@ -1,7 +1,11 @@
+$( document ).ready(function() {
+  searchUsers("");
+});
+
 function searchUsers(search){
     var length = $("#userSearch").val().length;
     
-    if (length > 3){
+    if (length >= 0){
         $.post("ServletGetUser",{ userSearch:search } ,function(data){
             $('#userResult').find('.results').remove();
             if(data!=''){

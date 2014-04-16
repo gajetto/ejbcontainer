@@ -90,6 +90,12 @@
                         B price
                     </div>
                     <div class="clear">&nbsp;</div>
+                    <%
+                        double res0 = WebAppData.getUser().getMyStock().get(0).getResult();
+                        double res1 = WebAppData.getUser().getMyStock().get(1).getResult();
+                        double res2 = WebAppData.getUser().getMyStock().get(2).getResult();
+                        double totalres = res0 + res1 + res2;
+                    %>
                     <form name="tradeStocks" action="manageforms" method="post">
                         <div class="stock">
                             <div class="stockName">
@@ -99,7 +105,9 @@
                                 <%= WebAppData.getUser().getMyStock().get(0).getStockQty() %>
                             </div>
                             <div class="stockResult">
-                                <%= WebAppData.getUser().getMyStock().get(0).getResult() %>
+                                <span class="<%= (res0<0?"red":"green") %>">
+                                    <%= res0 %>
+                                </span>
                             </div>
                             <div class="stockBuyingPrice">
                                 <%= (WebAppData.getUser().getMyStock().get(0).getStockQty()==0?0.0:WebAppData.getUser().getMyStock().get(0).getStockPrice()) %>
@@ -117,7 +125,9 @@
                                 <%= WebAppData.getUser().getMyStock().get(1).getStockQty() %>
                             </div>
                             <div class="stockResult">
-                                <%= WebAppData.getUser().getMyStock().get(1).getResult() %>
+                                <span class="<%= (res1<0?"red":"green") %>">
+                                    <%= res1 %>
+                                </span>
                             </div>
                             <div class="stockBuyingPrice">
                                 <%= (WebAppData.getUser().getMyStock().get(1).getStockQty()==0?0.0:WebAppData.getUser().getMyStock().get(1).getStockPrice()) %>
@@ -135,7 +145,9 @@
                                 <%= WebAppData.getUser().getMyStock().get(2).getStockQty() %>
                             </div>
                             <div class="stockResult">
-                                <%= WebAppData.getUser().getMyStock().get(2).getResult() %>
+                                <span class="<%= (res2<0?"red":"green") %>">   
+                                    <%= res2 %>
+                                </span>
                             </div>
                             <div class="stockBuyingPrice">
                                 <%= (WebAppData.getUser().getMyStock().get(2).getStockQty()==0?0.0:WebAppData.getUser().getMyStock().get(2).getStockPrice()) %>
@@ -147,7 +159,9 @@
                         </div>
                     </form>
                     <div id="result">
-                        
+                        Total result: <span class="<%= (totalres<0?"red":"green") %>">   
+                                        <%= totalres %>
+                                    </span>
                     </div>
                 </div>
             </div>
@@ -156,7 +170,7 @@
                     <ul>
                         <li>
                             <a href="#tabs-1">
-                            Stock history
+                            Stock prices
                             </a>
                         </li>
                         <li>
@@ -180,7 +194,8 @@
                                     String stockName = ((StockProductDTO)WebAppData.getStockService().getDaList().get(transaction.getStockID())).getStockName();
                                     
                                     out.println("<div class=\"newTransaction\">");
-                                    out.println(df.format(transaction.getTransactionDate())+"<br />"+(transaction.isIsBuy()?"bought ":"sold ")+transaction.getQty()+ " stocks from "+stockName+" at $"+transaction.getStockPrice());
+                                    out.println(df.format(transaction.getTransactionDate())+"<br />");
+                                    out.println((transaction.isIsBuy()?"<span class=\"blue\">bought ":"<span class=\"orange\">sold <span class=\"bold\">")+transaction.getQty()+ "</span></span> stocks from "+stockName+" at $ <span class=\"bold\">"+transaction.getStockPrice()+"</span>");
                                     out.println("<br /><br />");
                                     out.println("</div>");
                                 }

@@ -224,3 +224,23 @@ input[type=submit], .button{
 #userSearchHeader{
     display: none;
 }
+
+.bold{
+    font-weight: bold;
+}
+
+.green{
+    color: green;
+}
+
+.red{
+    color: red;
+}
+
+.blue{
+    color: blue;
+}
+
+.orange{
+    color: orange;
+}

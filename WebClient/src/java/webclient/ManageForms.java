@@ -76,7 +76,7 @@ public class ManageForms extends HttpServlet {
             List<TransactionDTO> transactions = new ArrayList<>();
             UserDTO user = new UserDTO(userName, firstName, lastName, date, hashedPassword, false, transactions, products);
             if(tradingBean.registerUser(user)){
-                WebAppData.setUser(user);
+                WebAppData.setUser(tradingBean.getUser(userName));
                 response.sendRedirect("trade.jsp");
             }else{
                 response.sendRedirect("index.jsp?error=signup");
@@ -206,8 +206,9 @@ public class ManageForms extends HttpServlet {
             if(trading){
                 StockProductDTO stock = (StockProductDTO) WebAppData.getCurrentStocksPrices().get(stockID);
                 Date now = new Date();
-                TransactionDTO transaction = new TransactionDTO(stockNumber, stock.getStockPrice(), now, isBuy, stockID);
-                user.addTransaction(transaction);
+                TransactionDTO transaction = new TransactionDTO(stockNumber, stock.getStockPrice(), now, isBuy, stockID, WebAppData.getUser().getUserId());
+                tradingBean.addUserTransaction(transaction);
+                user = tradingBean.getUser(username);
                 user.update(stockNumber, stockID, (isBuy?"buy":"sell"), WebAppData.getCurrentStocksPrices());
                 WebAppData.setUser(user);
                 response.sendRedirect("trade.jsp");
