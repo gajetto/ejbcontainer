@@ -210,7 +210,7 @@ public class ManageForms extends HttpServlet {
                 user.setMyStock(user.getMyStock());
                 try{
                     tradingBean.addUserTransaction(transaction, user);
-                }catch (Exception e){ }
+                }catch (Exception e){ e.printStackTrace(); }
 //                user = tradingBean.getUser(username);
 //                user.addTransaction(transaction);
                 WebAppData.setUser(user);
