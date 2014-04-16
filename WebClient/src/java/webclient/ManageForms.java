@@ -23,8 +23,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import trading.SessionState;
-import trading.SessionStatusRequest;
 import trading.TradingTransaction;
 import trading.TradingTransactionType;
 
@@ -88,10 +86,8 @@ public class ManageForms extends HttpServlet {
                 UserDTO user = tradingBean.getUser(request.getParameter("userName"));
                 if(user != null){
                     WebAppData.setUser(user);
-                    WebAppData.newStockService();
                     response.sendRedirect("trade.jsp"); 
-                }
-                else{
+                }else{
                     response.sendRedirect("index.jsp?error=user");
                 }
             }else{
@@ -204,10 +200,11 @@ public class ManageForms extends HttpServlet {
                     break;
             }
             if(trading){
-                StockProductDTO stock = (StockProductDTO) WebAppData.getCurrentStocksPrices().get(stockID);
+                StockProductDTO stock = (StockProductDTO) tradingBean.getLastStocks().get(stockID);
                 Date now = new Date();
                 TransactionDTO transaction = new TransactionDTO(stockNumber, stock.getStockPrice(), now, isBuy, stockID, WebAppData.getUser().getUserId());
                 tradingBean.addUserTransaction(transaction);
+                tradingBean.sendTransactionOrder(transaction, user);
                 user = tradingBean.getUser(username);
                 user.update(stockNumber, stockID, (isBuy?"buy":"sell"), WebAppData.getCurrentStocksPrices());
                 WebAppData.setUser(user);

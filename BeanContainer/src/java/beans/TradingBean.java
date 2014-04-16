@@ -268,5 +268,11 @@ public class TradingBean implements TradingRemote {
         }else{
             
             return users.get(0);
-        }  }
+        } 
+    }
+    
+    @Override
+    public void sendTransactionOrder(TransactionDTO transaction, UserDTO user){
+        TransactionProducer.sendOrder(transaction, user);
+    }
 }
