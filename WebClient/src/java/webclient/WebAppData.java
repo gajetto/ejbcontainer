@@ -7,7 +7,6 @@
 package webclient;
 
 import dataTransferObjects.StockProductDTO;
-import dataTransferObjects.StockServiceDTO;
 import dataTransferObjects.UserDTO;
 import java.util.ArrayList;
 

@@ -121,6 +121,7 @@ public class ManageForms extends HttpServlet {
         
         else if(request.getParameter("editSelf")!=null){
             WebAppData.setEditOther(false);
+            WebAppData.setUser(tradingBean.getUser(WebAppData.getUser().getUserName()));
             response.sendRedirect("user.jsp");
         }
         
@@ -202,11 +203,16 @@ public class ManageForms extends HttpServlet {
             if(trading){
                 StockProductDTO stock = (StockProductDTO) tradingBean.getLastStocks().get(stockID);
                 Date now = new Date();
-                TransactionDTO transaction = new TransactionDTO(stockNumber, stock.getStockPrice(), now, isBuy, stockID, WebAppData.getUser().getUserId());
-                tradingBean.addUserTransaction(transaction);
-                tradingBean.sendTransactionOrder(transaction, user);
-                user = tradingBean.getUser(username);
                 user.update(stockNumber, stockID, (isBuy?"buy":"sell"), WebAppData.getCurrentStocksPrices());
+                TransactionDTO transaction = new TransactionDTO(stockNumber, stock.getStockPrice(), now, isBuy, stockID, WebAppData.getUser().getUserId());
+                tradingBean.sendTransactionOrder(transaction, user);
+                user.addTransaction(transaction);
+                user.setMyStock(user.getMyStock());
+                try{
+                    tradingBean.addUserTransaction(transaction, user);
+                }catch (Exception e){ }
+//                user = tradingBean.getUser(username);
+//                user.addTransaction(transaction);
                 WebAppData.setUser(user);
                 response.sendRedirect("trade.jsp");
             }else if(request.getParameter("hitLogout")!=null){

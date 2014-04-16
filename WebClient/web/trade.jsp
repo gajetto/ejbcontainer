@@ -187,8 +187,9 @@
                         <div class="columnTitle">transactions</div>
                         <%
                             DateFormat df = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-                            if(!WebAppData.getUser().getTransactionList().isEmpty()){
-                                List<TransactionDTO> transactions = Lists.reverse(WebAppData.getUser().getTransactionList());
+                            List<TransactionDTO> transactions = WebAppData.getUser().getTransactionList();
+                            if(!transactions.isEmpty()){
+                                transactions = Lists.reverse(WebAppData.getUser().getTransactionList());
                                 for(TransactionDTO transaction : transactions){
                                     
                                     String stockName = ((StockProductDTO)WebAppData.getCurrentStocksPrices().get(transaction.getStockID())).getStockName();

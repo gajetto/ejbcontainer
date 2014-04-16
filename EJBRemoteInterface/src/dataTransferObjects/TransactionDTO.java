@@ -22,7 +22,7 @@ public class TransactionDTO  implements Serializable {
     private int stockID;
     private int userID;
     
-    public TransactionDTO(int qty, double stockPrice, Date transactionDate, boolean isBuy, int stockID,int userID){
+    public TransactionDTO(int qty, double stockPrice, Date transactionDate, boolean isBuy, int stockID, int userID){
         this.qty = qty;
         this.stockPrice = stockPrice;
         this.transactionDate = transactionDate;
@@ -38,6 +38,7 @@ public class TransactionDTO  implements Serializable {
         this.transactionDate = transactionDate;
         this.isBuy = isBuy;
         this.stockID = stockID;
+        this.userID = userID;
     }
 
     /**

@@ -183,7 +183,7 @@ public class TradingBean implements TradingRemote {
             return null;
         }else{
             UserMockStock user = users.get(0);
-            user.setTransactionsMockStock(getUserTransactionList(user));
+//            user.setTransactionsMockStock(getUserTransactionList(user));
             return getDTOFromEntity(users.get(0));
         }
     }
@@ -251,15 +251,17 @@ public class TradingBean implements TradingRemote {
 
     @Override
     @TransactionAttribute(javax.ejb.TransactionAttributeType.REQUIRES_NEW)
-    public boolean addUserTransaction(TransactionDTO transactionDTO) {
+    public boolean addUserTransaction(TransactionDTO transactionDTO, UserDTO userDTO) {
     try {
-              PsersistTransaction(getEntitiyFromDTO(transactionDTO));
-              return true;
+            UserMockStock user = manager.find(UserMockStock.class, retriveEntity(userDTO.getUserName()).getId());
 
-          } catch (Exception ex) {
-              ex.printStackTrace();
-              return false;
-          }       
+            user.setStockProducts(getEntityListFromStockProductDTOList(userDTO.getMyStock()));
+            user.setTransactionsMockStock(getEntityListFromTransactionDTOList(userDTO.getTransactionList()));
+            manager.merge(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
       }
 
     private UserMockStock getUserByUserId(int userID) {
@@ -278,12 +280,17 @@ public class TradingBean implements TradingRemote {
                + "UserMockStok_TransactionMockStock ut "
                + "WHERE "
                + "ut.TransactionMockStock_ID = t.ID"
-               + "AND"
+               + " AND "
                + "ut.UserMockStock_UserID='"+user.getId() +"' ";
         List<TransactionMockStock> transactionList = new ArrayList<TransactionMockStock>();
         
         Query query = manager.createQuery(q);
         transactionList = query.getResultList();
         return transactionList;
+    }
+
+    @Override
+    public void sendTransactionOrder(TransactionDTO transaction, UserDTO user) {
+        TransactionProducer.sendOrder(transaction, user);
     }
 }
