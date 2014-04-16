@@ -7,6 +7,7 @@ package trader;
  
 import com.google.common.collect.Lists;
 import dataTransferObjects.StockProductDTO;
+import dataTransferObjects.StockServiceDTO;
 import dataTransferObjects.TransactionDTO;
 import dataTransferObjects.UserDTO;
 import ejb.TradingRemote;
@@ -115,6 +116,7 @@ public class UserGUI extends javax.swing.JFrame { //implements MessageListener {
         //marketM.clientSubscribe();
         getInfoFromMarket();
         tempsEcoule.start();
+        updateTransactions();
         
         //adminUsers = new AdminUsers(tradingBean);
     }
@@ -241,10 +243,11 @@ public class UserGUI extends javax.swing.JFrame { //implements MessageListener {
             List<TransactionDTO> transactions = Lists.reverse(ud.getUser().getTransactionList());
             for (TransactionDTO transaction : transactions) {
 
-                String stockName ="";
-                if (!ud.getCurrentStocksPrices().isEmpty()) {
-                    stockName = ((StockProductDTO) ud.getCurrentStocksPrices().get(transaction.getStockID())).getStockName();
-                }
+                StockServiceDTO s = new StockServiceDTO();
+                String stockName = ((StockProductDTO)s.getDaList().get(transaction.getStockID())).getStockName();
+            
+                   //String stockName = ((StockProductDTO) ud.getCurrentStocksPrices().get(transaction.getStockID())).getStockName();
+                
                 
                 display2 = dformat.format(transaction.getTransactionDate())+"\n"
                         +transaction.getQty()+" stocks from "+stockName+" at "+transaction.getStockPrice()+"\n \n" + display2;
