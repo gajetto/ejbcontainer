@@ -8,17 +8,18 @@ package trader;
 
 
 import com.sun.messaging.jmq.util.MD5;
+import dataTransferObjects.StockProductDTO;
+import dataTransferObjects.TransactionDTO;
 import dataTransferObjects.UserDTO;
 import ejb.TradingRemote;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.swing.JOptionPane;
 
 /**
@@ -101,6 +102,11 @@ public class Formulaire extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cancel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,6 +203,7 @@ public class Formulaire extends javax.swing.JFrame {
         String firstName = jTextField2.getText();
         String lastName = jTextField3.getText();
         String password = new String(jPasswordField1.getPassword());
+        String password2 = new String(jPasswordField2.getPassword());
         
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         String dateString = df.format(jXDatePicker1.getDate());
@@ -207,19 +214,33 @@ public class Formulaire extends javax.swing.JFrame {
             Logger.getLogger(Formulaire.class.getName()).log(Level.SEVERE, null, ex);
         }
         String hashedPassword = MD5.getHashString(password);
-        UserDTO user = new UserDTO(username, firstName, lastName, date, password, rootPaneCheckingEnabled, null, null);
+        StockProductDTO product0 = new StockProductDTO(0, 0.0, 0, 0.0);
+            StockProductDTO product1 = new StockProductDTO(1, 0.0, 0, 0.0);
+            StockProductDTO product2 = new StockProductDTO(2, 0.0, 0, 0.0);
+            List<StockProductDTO> products = new ArrayList();
+            products.add(product2);
+            products.add(product1);
+            products.add(product0);
+            List<TransactionDTO> transactions = new ArrayList();
+        UserDTO user = new UserDTO(username, firstName, lastName, date, hashedPassword, false, transactions, products);
         
-        UserDTO userTest = tradingBean.getUser(username);
-        if (true) {
+        List<UserDTO> usernames = tradingBean.searchUsers(username);
+        if (usernames.isEmpty()) {
+            if (password.equals(password2)) {
             if (tradingBean.registerUser(user)) {
                 jmGUI.setIsCreate(true);
                 this.setVisible(false);
             }
             else {
-                jmGUI.setIsCreate(true);
-                this.setVisible(false);
+                JOptionPane.showMessageDialog(this, "Error. Try again.", "Error", JOptionPane.ERROR_MESSAGE);
+   
             }
-            jmGUI.connection();
+        }
+            else {
+                JOptionPane.showMessageDialog(this, "Error. Password do not match.", "Error", JOptionPane.ERROR_MESSAGE);
+                jPasswordField1.setText("");
+                jPasswordField2.setText("");
+            }
         }
         else {
             JOptionPane.showMessageDialog(this, "Username "+username+" already in use. Choose another one.", "Warning", JOptionPane.ERROR_MESSAGE);
@@ -231,6 +252,11 @@ public class Formulaire extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

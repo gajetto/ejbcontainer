@@ -7,6 +7,10 @@
 package trader;
 
 import dataTransferObjects.StockProductDTO;
+import dataTransferObjects.TransactionDTO;
+import dataTransferObjects.UserDTO;
+import ejb.TradingRemote;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jms.Connection;
@@ -29,41 +33,26 @@ import trading.TradingTransactionType;
  *
  * @author Manixab
  */
-public class TraderManager implements MessageListener {
+public class TraderManager { //implements MessageListener {
 
     private final  String QUEUE_NAME = "Trader";
+
+    private UserData ud;
+    private TradingRemote tradingBean;
+    private UserGUI userGUI;
     
-    private UserGUI uGUI;
-    private JoinMarketGUI jmGUI;
-    private boolean connected;
-    private String name;
-    
-    private MarketManager marketM;
-    
-    public TraderManager(JoinMarketGUI jmGUI, MarketManager marketM) {
-        this.jmGUI = jmGUI;
-        this.marketM = marketM;
-        connected = false;
-    }
-    
-    public TraderManager() {
-        
+    public TraderManager(UserData ud, TradingRemote tradingBean, UserGUI userGUI) {
+        this.ud = ud;
+        this.tradingBean = tradingBean;
+        this.userGUI = userGUI;
     }
 
-//    public UserGUI getuGUI() {
-//        return uGUI;
-//    }
-//
-//    public void setuGUI(UserGUI uGUI) {
-//        this.uGUI = uGUI;
-//    }
-//    
-    
+
     /**
      * Connection to JMS for the point to point when a buying or a selling happen
      */
     public void connection(String name) {
-        this.name = name;
+        name = ud.getUser().getUserName();
         SessionState ss = SessionState.Connected;
         SessionStatusRequest ssr = new SessionStatusRequest(name, ss);
         ConnectionFactory connectionFactory = new com.sun.messaging.ConnectionFactory();
@@ -89,125 +78,34 @@ public class TraderManager implements MessageListener {
         }
     }
 
-    /*TO COMMENT IF NOT WORKING AND IN ON MESSAGE LISTENER TOO*/
-    public void getConnectionResponse() {
-        ConnectionFactory connectionFactory = new com.sun.messaging.ConnectionFactory();
-        Connection connection = null;
-        try {
-            connection = connectionFactory.createConnection();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Queue queue = new com.sun.messaging.Queue(QUEUE_NAME);
-            MessageConsumer consumer = session.createConsumer(queue);
-            MessageListener listener = new TraderManager();
-            consumer.setMessageListener(listener);
-            connection.start();
-            synchronized (listener) {
-                listener.wait();
-            }
-        } catch (Exception e) {
-            System.out.println("Exception occurred: " + e.toString());
-            System.exit(1);
-        }
-    }
-
-    /**
-     * Deconnection from the Market using the P2P
-     *
-     * @param name
-     */
-    public void deconnection(String name) {
-        this.name = name;
-        SessionState ss = SessionState.Disconnected;
-        SessionStatusRequest ssr = new SessionStatusRequest(name, ss);
-        ConnectionFactory connectionFactory = new com.sun.messaging.ConnectionFactory();
-        Connection connection = null;
-
-        try {
-            
-            connection = connectionFactory.createConnection();
-            Queue queue = new com.sun.messaging.Queue(QUEUE_NAME);
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer producer = session.createProducer(queue);
-            ObjectMessage message = session.createObjectMessage(ssr);
-            System.out.println("Sending order [" + message.getObject().toString()+ "]");
-            producer.send(message);
-            
-            connection.close();
-            
-        } catch (Exception e) {
-            System.out.println("Exception occurred: " + e.toString());
-            System.exit(1);
-        }
-    }
-    
     /**
      * Connection to JMS for the point to point when a buying or a selling happen
      */
-    public void clientPTP(String type, int stockID) {
+    public void clientPTP(String type, int stockID, int stockNumber) {
         TradingTransactionType tty; 
+        String username = ud.getUser().getUserName();
+        UserDTO user = ud.getUser();
+        boolean isBuy = false;
+        
+        System.out.println("PTP: qtty: "+stockNumber);
+        
         if (type.equals("buy")) {
             tty = TradingTransactionType.Buy;
+            isBuy = true;
         }
         else {
             tty = TradingTransactionType.Sell;
         }
         
-        StockProductDTO p = new StockProductDTO(uGUI.getTrader().getMyStock().get(stockID).getStockName());
-        TradingTransaction tt = new TradingTransaction(tty, p, uGUI.getQtty(), uGUI.getTrader().getName());
-        
-        ConnectionFactory connectionFactory = new com.sun.messaging.ConnectionFactory();
-        Connection connection = null;
-        try {
-            connection = connectionFactory.createConnection();
-            Queue queue = new com.sun.messaging.Queue(QUEUE_NAME);
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer producer = session.createProducer(queue);
-            ObjectMessage message = session.createObjectMessage(tt);
-            System.out.println("Sending order [" + message.getObject().toString()+ "]");
-            producer.send(message);
-            
-            connection.close();
-            
-        } catch (Exception e) {
-            System.out.println("Exception occurred: " + e.toString());
-            System.exit(1);
-        }
+        StockProductDTO stock = (StockProductDTO) ud.getCurrentStocksPrices().get(stockID);
+        Date now = new Date();
+        TransactionDTO transaction = new TransactionDTO(stockNumber, stock.getStockPrice(), now, isBuy, stockID, user.getUserId());
+        user.addTransaction(transaction);
+        user.update(stockNumber, stockID, (isBuy?"buy":"sell"), ud.getCurrentStocksPrices());
+        ud.setUser(user);
+        tradingBean.sendTransactionOrder(transaction, user);
+        tradingBean.addUserTransaction(transaction);
+        userGUI.updateTransactions();
     }
-    
-    
-    @Override
-    public void onMessage(Message msg) {
-        Object order;
-        try {
-            order = ((ObjectMessage) msg).getObject();
-            SessionStatusResponse ssr = (SessionStatusResponse) order;    
-            System.out.println(name+" is connected: "+ssr.isIsAcknowledged());
-            if (ssr.isIsAcknowledged()) {
-                connected = true;
-                synchronized (this) { this.notify(); }
-            }
-        } catch (JMSException ex) {
-            System.out.println("Problem with message P2P");
-        }
-    }
-
-
-    public UserGUI getuGUI() {
-        return uGUI;
-    }
-
-    public void setuGUI(UserGUI uGUI) {
-        this.uGUI = uGUI;
-    }
-
-    public boolean isConnected() {
-        return connected;
-    }
-
-    public void setConnected(boolean connected) {
-        this.connected = connected;
-    }
-    
-    
     
 }

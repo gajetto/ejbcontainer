@@ -26,27 +26,29 @@ import javax.jms.TopicSubscriber;
  *
  * @author Manixab
  */
-public class MarketManager implements MessageListener {
+public class MarketManager {//implements MessageListener {
 
     final private String TOPIC_NAME = "market";
     private MessageListener listener;
     private TopicConnectionFactory connectionFactory;
     private TopicConnection connection;
-    private UserGUI uGUI;
+   // private UserGUI uGUI;
+    private UserData ud;
     
-    public MarketManager() {
+    public MarketManager(UserData ud) {
+        this.ud = ud;
         connectionFactory = new com.sun.messaging.TopicConnectionFactory();
         connection = null;
         
     }
     
-    public UserGUI getuGUI() {
-        return uGUI;
-    }
-
-    public void setuGUI(UserGUI uGUI) {
-        this.uGUI = uGUI;
-    }
+//    public UserGUI getuGUI() {
+//        return uGUI;
+//    }
+//
+//    public void setuGUI(UserGUI uGUI) {
+//        this.uGUI = uGUI;
+//    }
     
     
     /**
@@ -60,7 +62,7 @@ public class MarketManager implements MessageListener {
             Topic topic = new com.sun.messaging.Topic(TOPIC_NAME);
             TopicSubscriber subscriber = session.createSubscriber(topic);
 //                TopicSubscriber subscriber = session.createDurableSubscriber(topic, trader.getName());
-            listener = this;
+            //listener = this;
             subscriber.setMessageListener(listener);
             connection.start();
 
@@ -71,33 +73,34 @@ public class MarketManager implements MessageListener {
 
         System.out.println("Client started!!");
 
-        synchronized (listener) {
+/*        synchronized (listener) {
             try {
                 listener.wait();
             } catch (InterruptedException ex) {
                 Logger.getLogger(UserGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        }*/
     }
 
         /**
      * Get the object from the JMS
      * @param message 
      */
-    @Override
-    public void onMessage(javax.jms.Message message) {
-
-        ObjectMessage stockProducts = null;
-        stockProducts = (ObjectMessage) message;
-        try {
-            uGUI.setStocks((ArrayList<StockProductDTO>) stockProducts.getObject());
-        } catch (JMSException ex) {
-            Logger.getLogger(UserGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        uGUI.updateStocks();
-        synchronized (this) {
-            this.notify();
-        }
-    }
+//    @Override
+//    public void onMessage(javax.jms.Message message) {
+//
+//        ObjectMessage stockProducts = null;
+//        stockProducts = (ObjectMessage) message;
+////        try {
+////            
+////            //uGUI.setStocks((ArrayList<StockProductDTO>) stockProducts.getObject());
+////        } catch (JMSException ex) {
+////            Logger.getLogger(UserGUI.class.getName()).log(Level.SEVERE, null, ex);
+////        }
+//        //uGUI.updateStocks();
+//        synchronized (this) {
+//            this.notify();
+//        }
+//    }
     
 }
