@@ -1,3 +1,4 @@
+<%@page import="dataTransferObjects.StockServiceDTO"%>
 <%@page import="dataTransferObjects.StockProductDTO"%>
 <%@page import="com.google.common.collect.Lists"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -192,7 +193,8 @@
                                 transactions = Lists.reverse(WebAppData.getUser().getTransactionList());
                                 for(TransactionDTO transaction : transactions){
                                     
-                                    String stockName = ((StockProductDTO)WebAppData.getCurrentStocksPrices().get(transaction.getStockID())).getStockName();
+                                    StockServiceDTO s = new StockServiceDTO();
+                                    String stockName = ((StockProductDTO)s.getDaList().get(transaction.getStockID())).getStockName();
                                     
                                     out.println("<div class=\"newTransaction\">");
                                     out.println(df.format(transaction.getTransactionDate())+"<br />");
