@@ -9,22 +9,18 @@ import dataTransferObjects.StockProductDTO;
 import dataTransferObjects.TransactionDTO;
 import dataTransferObjects.UserDTO;
 import ejb.TradingRemote;
-import ejb.TradingRemote;
 import entities.StockProduct;
 import entities.TransactionMockStock;
 import entities.UserMockStock;
-import java.sql.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.sql.DataSource;
-import javax.*;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.persistence.PersistenceContextType;
@@ -63,9 +59,6 @@ public class TradingBean implements TradingRemote {
     public boolean registerUser(UserDTO userDTO) {
         try {
             insertUser(getEntitiyFromDTO(userDTO));
-//            ds = (javax.sql.DataSource) ctx.lookup("jdbc/MockStockDB");
-//            cn = ds.getConnection();
-//            cn.setAutoCommit(false);
             return true;
 
         } catch (Exception ex) {
@@ -84,11 +77,6 @@ public class TradingBean implements TradingRemote {
         manager.persist(entity);
     }
     
-    private void mergeUser(UserMockStock entity){
-        manager.merge(entity);
-        manager.refresh(entity);
-    }
-
     private UserMockStock getEntitiyFromDTO(UserDTO userDTO) {
         UserMockStock entity = new UserMockStock();
         entity.setFirstName(userDTO.getFirstName());
@@ -181,11 +169,26 @@ public class TradingBean implements TradingRemote {
             return getDTOFromEntity(users.get(0));
         }
     }
+    
+    public UserMockStock retriveEntity(String username) {
+        Query query = manager.createQuery("SELECT u FROM UserMockStock u WHERE u.userName = '"+username+"' ");
+        List<UserMockStock> users = query.getResultList();
+        if(users.isEmpty()){
+            return null;
+        }else{
+            
+            return users.get(0);
+        }
+    }
 
     @Override
     public boolean updateUser(UserDTO userDTO) {
         try{
-            mergeUser(getEntitiyFromDTO(userDTO));
+            UserMockStock user = manager.find(UserMockStock.class, retriveEntity(userDTO.getUserName()).getId());
+            user.setFirstName(userDTO.getFirstName());
+            user.setLastName(userDTO.getLastName());
+            user.setdOB(userDTO.getDateOfBirth());
+            manager.merge(user);
             return true;
         }catch (Exception e){
             return false;
