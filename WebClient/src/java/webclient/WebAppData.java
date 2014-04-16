@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class WebAppData {
     protected static ArrayList<StockProductDTO> historyStocks = new ArrayList<>();
     protected static UserDTO user;
-    protected static StockServiceDTO currentStocks;
     private static ArrayList<StockProductDTO> currentStocksPrices = new ArrayList<>();
     protected static boolean editOther = false;
     protected static UserDTO userToModifyByAdmin;
@@ -66,29 +65,7 @@ public class WebAppData {
     public static UserDTO getUser(){
         return user;
     }
-    
-    /**
-     * Instanciates a StockService
-     */
-    public static void newStockService(){
-        currentStocks = new StockServiceDTO();
-    }
-    
-    /**
-     * Gets a StockService
-     * @return the StockService
-     */
-    public static StockServiceDTO getStockService(){
-        return currentStocks;
-    }
-    
-    /**
-     * Set the StockServices' stock list to a new list
-     * @param newStocks the new Stock list to set
-     */
-    public static void setStockServiceList(ArrayList newStocks){
-        currentStocks.setDaList(newStocks);
-    }
+
     
     public static void setEditOther(boolean isEditOther){
         editOther = isEditOther;

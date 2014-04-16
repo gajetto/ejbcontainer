@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.ejb.EJB;
-import javax.jms.*;
-import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,6 +57,10 @@ public class ServletGetStock extends HttpServlet {
         double ratePrice = 0.0;
         JSONObject obj2 = new JSONObject();
         
+        if(list.isEmpty()){
+            WebAppData.sethistoryStocks(stocks);
+        }
+        
         if(!list.isEmpty()){
             WebAppData.addStocks(stocks);
             WebAppData.setCurrentStocksPrices(stocks);
@@ -75,8 +77,6 @@ public class ServletGetStock extends HttpServlet {
                 }
                 obj2.put(i, obj);
             }
-        }else{
-            WebAppData.sethistoryStocks(stocks);
         }
        
         response.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.

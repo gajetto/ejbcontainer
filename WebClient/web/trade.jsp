@@ -191,7 +191,7 @@
                                 List<TransactionDTO> transactions = Lists.reverse(WebAppData.getUser().getTransactionList());
                                 for(TransactionDTO transaction : transactions){
                                     
-                                    String stockName = ((StockProductDTO)WebAppData.getStockService().getDaList().get(transaction.getStockID())).getStockName();
+                                    String stockName = ((StockProductDTO)WebAppData.getCurrentStocksPrices().get(transaction.getStockID())).getStockName();
                                     
                                     out.println("<div class=\"newTransaction\">");
                                     out.println(df.format(transaction.getTransactionDate())+"<br />");
