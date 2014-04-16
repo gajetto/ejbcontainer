@@ -13,6 +13,7 @@ package market12;
  *
  * @author Alexandre Metrailler
  */
+import dataTransferObjects.StockProductDTO;
 import java.awt.event.ActionListener;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class PPriceEvolution {
     final double PRICE_ROOF = 0.5;//Prix minimal d'un titre'
     
     /** Creates a new instance of PriceEvolution */
-    public PPriceEvolution(ArrayList<StockPriceDTO> stockList) {   
+    public PPriceEvolution(ArrayList<StockProductDTO> stockList) {   
         this.setStockList(stockList);
     }
     
@@ -52,7 +53,7 @@ public class PPriceEvolution {
             java.util.Iterator it = getStockList().iterator();
             while(it.hasNext()){
                 java.util.Random randomizer;
-                StockPriceDTO thisStock = (StockPriceDTO) it.next();
+                StockProductDTO thisStock = (StockProductDTO) it.next();
                 double proba ;
                 randomizer = new Random();
                 proba=randomizer.nextDouble();
@@ -97,7 +98,7 @@ public class PPriceEvolution {
         return stockList;
     }
     
-    public void setStockList(ArrayList<StockPriceDTO> stockList) {
+    public void setStockList(ArrayList<StockProductDTO> stockList) {
         this.stockList = stockList;
     }
     

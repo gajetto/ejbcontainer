@@ -5,9 +5,9 @@
  */
 package beans;
 
+import dataTransferObjects.StockProductDTO;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
-import market12.StockPriceDTO;
 import java.util.ArrayList;
 
 /**
@@ -24,10 +24,10 @@ public class SingletonBean {
 
     }
 
-    private ArrayList<StockPriceDTO> stockProducts = new ArrayList<>();
+    private ArrayList<StockProductDTO> stockProducts = new ArrayList<>();
     private static SingletonBean instance = null;
 
-    public ArrayList<StockPriceDTO> getMess() {
+    public ArrayList<StockProductDTO> getMess() {
         return getStockProducts();
     }
 
@@ -39,14 +39,14 @@ public class SingletonBean {
         return instance;
     }
     
-    public void setStockProducts(ArrayList<StockPriceDTO> newStockProducts) {
+    public void setStockProducts(ArrayList<StockProductDTO> newStockProducts) {
         this.stockProducts = newStockProducts;
     }
 
     /**
      * @return the stockProducts
      */
-    public ArrayList<StockPriceDTO> getStockProducts() {
+    public ArrayList<StockProductDTO> getStockProducts() {
         return stockProducts;
     }
 

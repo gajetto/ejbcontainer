@@ -14,6 +14,7 @@ import javax.annotation.*;
 import javax.jms.*;
 import javax.naming.InitialContext;
 import GUI.MockStockServerGUI;
+import dataTransferObjects.StockProductDTO;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.naming.NamingException;
@@ -25,7 +26,7 @@ import market12.*;
  */
 public class MarketPublisher {
     
-    private ArrayList<StockPriceDTO> stockList = null;
+    private ArrayList<StockProductDTO> stockList = null;
     private PPriceEvolution pE;
     private MockStockServerGUI gui;
     
@@ -85,7 +86,7 @@ public class MarketPublisher {
     /**
      * Appele par StockService pour lui passer la liste des actions
      */
-    public void setStockList(ArrayList<StockPriceDTO> stockList) {
+    public void setStockList(ArrayList<StockProductDTO> stockList) {
         this.stockList = stockList;
         pE = new PPriceEvolution(stockList);
     }
@@ -98,7 +99,7 @@ public class MarketPublisher {
         String text = "";
         Iterator it = stockList.iterator();
         while (it.hasNext()){
-            StockPriceDTO stock = (StockPriceDTO) it.next();
+            StockProductDTO stock = (StockProductDTO) it.next();
             text += stock.getStockName() + ": " + stock.getStockPrice() + "\n";
         }
         gui.updatePrice(text);

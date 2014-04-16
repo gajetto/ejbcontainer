@@ -1,7 +1,7 @@
 package webclient;
 
 import com.sun.messaging.jmq.util.MD5;
-import market12.StockPriceDTO;
+
 import dataTransferObjects.StockProductDTO;
 import dataTransferObjects.TransactionDTO;
 import dataTransferObjects.UserDTO;
@@ -159,7 +159,7 @@ public class ManageForms extends HttpServlet {
             int stockNumber = 0;
             String username = WebAppData.getUser().getUserName();
             TradingTransactionType tty;
-            StockPriceDTO product;
+            StockProductDTO product;
             TradingTransaction tt;
             UserDTO user = WebAppData.getUser();
             boolean trading = false;
@@ -167,18 +167,18 @@ public class ManageForms extends HttpServlet {
                 case "buySun":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberSun"));
                     tty = TradingTransactionType.Buy;
-                    product = new StockPriceDTO("Sun");
+                    product = new StockProductDTO("Sun");
 //                    tt = new TradingTransaction(tty, product, stockNumber, username);
 //                    PTPConnection.sendOrder(tt);
                     user.update(stockNumber, 0, "buy", WebAppData.getStockService().getDaList());
                     WebAppData.setUser(user);
-                    StockPriceDTO p = (StockPriceDTO) WebAppData.getStockService().getDaList().get(0);
+                    StockProductDTO p = (StockProductDTO) WebAppData.getStockService().getDaList().get(0);
                     trading = true;
                     break;
                 case "sellSun":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberSun"));
                     tty = TradingTransactionType.Sell;
-                    product = new StockPriceDTO("Sun");
+                    product = new StockProductDTO("Sun");
 //                    tt = new TradingTransaction(tty, product, stockNumber, username);
 //                    PTPConnection.sendOrder(tt);
                     user.update(stockNumber, 0, "sell", WebAppData.getStockService().getDaList());
@@ -188,7 +188,7 @@ public class ManageForms extends HttpServlet {
                 case "buyIBM":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberIBM"));
                     tty = TradingTransactionType.Buy;
-                    product = new StockPriceDTO("IBM");
+                    product = new StockProductDTO("IBM");
 //                    tt = new TradingTransaction(tty, product, stockNumber, username);
 //                    PTPConnection.sendOrder(tt);
                     user.update(stockNumber, 2, "buy", WebAppData.getStockService().getDaList());
@@ -198,7 +198,7 @@ public class ManageForms extends HttpServlet {
                 case "sellIBM":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberIBM"));
                     tty = TradingTransactionType.Sell;
-                    product = new StockPriceDTO("IBM");
+                    product = new StockProductDTO("IBM");
 //                    tt = new TradingTransaction(tty, product, stockNumber, username);
 //                    PTPConnection.sendOrder(tt);
                     user.update(stockNumber, 2, "sell", WebAppData.getStockService().getDaList());
@@ -208,7 +208,7 @@ public class ManageForms extends HttpServlet {
                 case "buyApple":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberApple"));
                     tty = TradingTransactionType.Buy;
-                    product = new StockPriceDTO("apple");
+                    product = new StockProductDTO("apple");
 //                    tt = new TradingTransaction(tty, product, stockNumber, username);
 //                    PTPConnection.sendOrder(tt);
                     user.update(stockNumber, 1, "buy", WebAppData.getStockService().getDaList());
@@ -218,7 +218,7 @@ public class ManageForms extends HttpServlet {
                 case "sellApple":
                     stockNumber = Integer.parseInt(request.getParameter("stockNumberApple"));
                     tty = TradingTransactionType.Sell;
-                    product = new StockPriceDTO("apple");
+                    product = new StockProductDTO("apple");
 //                    tt = new TradingTransaction(tty, product, stockNumber, username);
 //                    PTPConnection.sendOrder(tt);
                     user.update(stockNumber, 1, "sell", WebAppData.getStockService().getDaList());

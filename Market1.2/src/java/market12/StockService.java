@@ -14,6 +14,7 @@ package market12;
  * @author Alexandre Metrailler
  */
 import com.*;
+import dataTransferObjects.StockProductDTO;
 import java.util.ArrayList;
 import java.util.Iterator;
 /**
@@ -21,7 +22,7 @@ import java.util.Iterator;
  */
 public class StockService {
     
-    private ArrayList<StockPriceDTO> stockList;
+    private ArrayList<StockProductDTO> stockList;
     private MarketPublisher pub;
     
     /**
@@ -31,15 +32,15 @@ public class StockService {
         this.pub = pub;
         setStockList(new ArrayList());
         
-        StockPriceDTO thisStockPdt = new StockPriceDTO("Sun");
+        StockProductDTO thisStockPdt = new StockProductDTO("Sun");
         thisStockPdt.setStockID(1);
         getStockList().add(thisStockPdt);
         
-        thisStockPdt = new StockPriceDTO("Apple");
+        thisStockPdt = new StockProductDTO("Apple");
         thisStockPdt.setStockID(2);
         getStockList().add(thisStockPdt);
         
-        thisStockPdt = new StockPriceDTO("IBM");
+        thisStockPdt = new StockProductDTO("IBM");
         thisStockPdt.setStockID(3);
         getStockList().add(thisStockPdt);
         

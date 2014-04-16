@@ -6,7 +6,6 @@
 
 package webclient;
 
-import market12.StockPriceDTO;
 import dataTransferObjects.StockProductDTO;
 import dataTransferObjects.StockServiceDTO;
 import dataTransferObjects.UserDTO;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
  * @author Jerome
  */
 public class WebAppData {
-    protected static ArrayList<StockPriceDTO> historyStocks = new ArrayList<>();
+    protected static ArrayList<StockProductDTO> historyStocks = new ArrayList<>();
     protected static UserDTO user;
     protected static StockServiceDTO currentStocks;
     protected static boolean editOther = false;
@@ -28,7 +27,7 @@ public class WebAppData {
      * Get the history of all stocks during the webclient life
      * @return 
      */
-    public static ArrayList<StockPriceDTO> getHistoryStocks() {
+    public static ArrayList<StockProductDTO> getHistoryStocks() {
         return historyStocks;
     }
     
@@ -36,7 +35,7 @@ public class WebAppData {
      * Set the history of stocks
      * @param newStocks list of stocks
      */
-    public static void sethistoryStocks(ArrayList<StockPriceDTO> newStocks) {
+    public static void sethistoryStocks(ArrayList<StockProductDTO> newStocks) {
         historyStocks = newStocks;
     }
         
@@ -44,8 +43,8 @@ public class WebAppData {
      * Add stocks to the top of the history stocks
      * @param newStocks a list of new received stocks
      */
-    public static void addStocks(ArrayList<StockPriceDTO> newStocks){
-        ArrayList<StockPriceDTO> temp = new ArrayList<>();
+    public static void addStocks(ArrayList<StockProductDTO> newStocks){
+        ArrayList<StockProductDTO> temp = new ArrayList<>();
         temp.addAll(newStocks);
         temp.addAll(historyStocks);
         historyStocks = temp;

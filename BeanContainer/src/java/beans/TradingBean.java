@@ -5,7 +5,6 @@
  */
 package beans;
 
-import market12.StockPriceDTO;
 import dataTransferObjects.StockProductDTO;
 import dataTransferObjects.TransactionDTO;
 import dataTransferObjects.UserDTO;
@@ -77,7 +76,7 @@ public class TradingBean implements TradingRemote {
     }
     
     @Override
-    public ArrayList<StockPriceDTO> getLastStocks(){
+    public ArrayList<StockProductDTO> getLastStocks(){
         return sb.getStockProducts();
     }
 

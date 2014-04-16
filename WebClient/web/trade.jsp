@@ -24,7 +24,7 @@
             var seconds = 6000; // time in milliseconds
             var reload = function() {
                $.ajax({
-                  url: 'servletgetstock',
+                  url: 'ServletGetStock',
                   cache: false,
                   success: function(data) {
                     printStock(data);

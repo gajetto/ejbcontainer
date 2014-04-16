@@ -6,7 +6,7 @@ package webclient;
  * and open the template in the editor.
  */
 
-import market12.StockPriceDTO;
+import dataTransferObjects.StockProductDTO;
 import ejb.TradingRemote;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -30,7 +30,7 @@ public class ServletGetStock extends HttpServlet {
     @EJB
     private TradingRemote tradingBean;
 
-    private ArrayList<StockPriceDTO> stocks;
+    private ArrayList<StockProductDTO> stocks;
     
     @Override
     public synchronized void init() throws ServletException {
@@ -53,7 +53,7 @@ public class ServletGetStock extends HttpServlet {
         
         stocks = tradingBean.getLastStocks();
         
-        ArrayList<StockPriceDTO> list = WebAppData.getHistoryStocks();
+        ArrayList<StockProductDTO> list = WebAppData.getHistoryStocks();
         
         DecimalFormat df = new DecimalFormat("##0.00");
         double ratePrice = 0.0;
@@ -64,7 +64,6 @@ public class ServletGetStock extends HttpServlet {
             for(int i=0; i<list.size()/3; i++){
             JSONObject obj = new JSONObject();
                 for(int j=0; j<3; j++){
-                    System.out.println(list.get(j).getStockName()+" "+list.get(j).getStockPrice());
                     obj.put(list.get((3*i)+j).getStockName(), list.get((3*i)+j).getStockPrice());
                     if((i+1)<list.size()/3 && list.get((3*(i+1))+j).getStockPrice() != 0.0){
                         ratePrice = ((list.get((3*i)+j).getStockPrice()/ list.get((3*(i+1))+j).getStockPrice()) - 1) * 100;

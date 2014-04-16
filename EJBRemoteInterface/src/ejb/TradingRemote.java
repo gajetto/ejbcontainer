@@ -7,7 +7,7 @@
 package ejb;
 
 
-import market12.StockPriceDTO;
+import dataTransferObjects.StockProductDTO;
 import dataTransferObjects.UserDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,6 @@ public interface TradingRemote {
     public boolean updateUser(UserDTO userDTO);
     public List<UserDTO> searchUsers(String username);
     public boolean deleteUser(UserDTO userDTO);
-    public ArrayList<StockPriceDTO> getLastStocks();
+    public ArrayList<StockProductDTO> getLastStocks();
     
 }
