@@ -104,7 +104,7 @@ public class TraderManager { //implements MessageListener {
         user.update(stockNumber, stockID, (isBuy?"buy":"sell"), ud.getCurrentStocksPrices());
         ud.setUser(user);
         tradingBean.sendTransactionOrder(transaction, user);
-        tradingBean.addUserTransaction(transaction);
+        tradingBean.addUserTransaction(transaction, user);
         userGUI.updateTransactions();
     }
     
