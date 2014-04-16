@@ -30,7 +30,7 @@ public class UserMockStock implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "UserId", nullable = false)    
-    private int id;
+    private int userId;
     
     @Column(name = "UserName", unique = true)
     private String userName;
@@ -58,28 +58,28 @@ public class UserMockStock implements Serializable {
     private List<StockProduct> stockProducts;
 
     public int getId() {
-        return id;
+        return userId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.userId = id;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-//        hash += (id != null ? id.hashCode() : 0);
+//        hash += (userId != null ? userId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // TODO: Warning - this method won't work in the case the userId fields are not set
         if (!(object instanceof UserMockStock)) {
             return false;
         }
         UserMockStock other = (UserMockStock) object;
-//        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+//        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
 //            return false;
 //        }
         return true;
@@ -87,7 +87,7 @@ public class UserMockStock implements Serializable {
 
     @Override
     public String toString() {
-        return "beans.User[ id=" + id + " ]";
+        return "beans.User[ id=" + userId + " ]";
     }
 
     /**

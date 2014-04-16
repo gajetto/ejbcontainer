@@ -68,6 +68,7 @@ public class TradingBean implements TradingRemote {
 
     }
     
+   
     @Override
     public ArrayList<StockProductDTO> getLastStocks(){
         return sb.getStockProducts();
@@ -87,6 +88,21 @@ public class TradingBean implements TradingRemote {
         entity.setIsAdmin(userDTO.isIsAdmin());
         entity.setTransactionsMockStock(getEntityListFromTransactionDTOList(userDTO.getTransactionList()));
         entity.setStockProducts(getEntityListFromStockProductDTOList(userDTO.getMyStock()));
+
+        return entity;
+
+    }
+    
+    
+    private TransactionMockStock getEntitiyFromDTO(TransactionDTO transactionDTO) {
+        TransactionMockStock entity = new TransactionMockStock();
+        entity.setIsBuy(transactionDTO.isIsBuy());
+        entity.setQty(transactionDTO.getQty());
+        entity.setStockId(transactionDTO.getStockID());
+        entity.setStockPrice(transactionDTO.getStockPrice());
+        entity.setTransactionDate(transactionDTO.getTransactionDate());
+        entity.setUserMockStock(getUserByUserId(transactionDTO.getUserID()));
+
 
         return entity;
 
@@ -226,4 +242,31 @@ public class TradingBean implements TradingRemote {
         }
         
     }
+
+    private void PsersistTransaction(TransactionMockStock entitiyFromDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    @TransactionAttribute(javax.ejb.TransactionAttributeType.REQUIRES_NEW)
+    public boolean addUserTransaction(TransactionDTO transactionDTO) {
+    try {
+              PsersistTransaction(getEntitiyFromDTO(transactionDTO));
+              return true;
+
+          } catch (Exception ex) {
+              ex.printStackTrace();
+              return false;
+          }       
+      }
+
+    private UserMockStock getUserByUserId(int userID) {
+        Query query = manager.createQuery("SELECT u FROM UserMockStock u WHERE u.userId = '"+userID+"' ");
+        List<UserMockStock> users = query.getResultList();
+        if(users.isEmpty()){
+            return null;
+        }else{
+            
+            return users.get(0);
+        }  }
 }
