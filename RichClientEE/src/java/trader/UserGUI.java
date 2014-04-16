@@ -464,7 +464,6 @@ public class UserGUI extends javax.swing.JFrame { //implements MessageListener {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         userLabel = new javax.swing.JLabel();
-        adminButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -609,13 +608,6 @@ public class UserGUI extends javax.swing.JFrame { //implements MessageListener {
             }
         });
 
-        adminButton.setText("Admin");
-        adminButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminButtonActionPerformed(evt);
-            }
-        });
-
         org.jdesktop.layout.GroupLayout jpanel3Layout = new org.jdesktop.layout.GroupLayout(jpanel3);
         jpanel3.setLayout(jpanel3Layout);
         jpanel3Layout.setHorizontalGroup(
@@ -651,29 +643,25 @@ public class UserGUI extends javax.swing.JFrame { //implements MessageListener {
                             .add(jLabel17)
                             .add(jLabel18))
                         .add(9, 9, 9)
-                        .add(jpanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jpanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                .add(jpanel3Layout.createSequentialGroup()
-                                    .add(qttbuypdtField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 51, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                    .add(jBuy1)
-                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                    .add(jSell1))
-                                .add(jpanel3Layout.createSequentialGroup()
-                                    .add(qttbuypdtField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 51, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                    .add(jBuy3)
-                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                    .add(jSell3))
-                                .add(jpanel3Layout.createSequentialGroup()
-                                    .add(qttbuypdtField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 51, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                    .add(jBuy2)
-                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                    .add(jSell2)))
+                        .add(jpanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                             .add(jpanel3Layout.createSequentialGroup()
-                                .add(118, 118, 118)
-                                .add(adminButton))))
+                                .add(qttbuypdtField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 51, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jBuy1)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jSell1))
+                            .add(jpanel3Layout.createSequentialGroup()
+                                .add(qttbuypdtField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 51, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jBuy3)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jSell3))
+                            .add(jpanel3Layout.createSequentialGroup()
+                                .add(qttbuypdtField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 51, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jBuy2)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jSell2))))
                     .add(jpanel3Layout.createSequentialGroup()
                         .add(50, 50, 50)
                         .add(jLabel5))
@@ -702,9 +690,7 @@ public class UserGUI extends javax.swing.JFrame { //implements MessageListener {
                         .addContainerGap()
                         .add(jpanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(jLabel22)
-                            .add(userLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(adminButton)))
+                            .add(userLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel1)
                 .add(18, 18, 18)
@@ -895,23 +881,19 @@ public class UserGUI extends javax.swing.JFrame { //implements MessageListener {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
-        System.exit(1);
+        this.setVisible(false);
+        dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void userLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userLabelMouseReleased
         userFrame.setVisible(true);
     }//GEN-LAST:event_userLabelMouseReleased
 
-    private void adminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButtonActionPerformed
-        //adminUsers.setVisible(true);
-    }//GEN-LAST:event_adminButtonActionPerformed
-
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton adminButton;
     private javax.swing.JButton jBuy1;
     private javax.swing.JButton jBuy2;
     private javax.swing.JButton jBuy3;
