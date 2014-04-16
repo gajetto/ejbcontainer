@@ -1,7 +1,7 @@
 package webclient;
 
 import com.sun.messaging.jmq.util.MD5;
-import dataTransferObjects.StockPriceDTO;
+import market12.StockPriceDTO;
 import dataTransferObjects.StockProductDTO;
 import dataTransferObjects.TransactionDTO;
 import dataTransferObjects.UserDTO;

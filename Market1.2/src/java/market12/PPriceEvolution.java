@@ -36,7 +36,7 @@ public class PPriceEvolution {
     final double PRICE_ROOF = 0.5;//Prix minimal d'un titre'
     
     /** Creates a new instance of PriceEvolution */
-    public PPriceEvolution(ArrayList stockList) {   
+    public PPriceEvolution(ArrayList<StockPriceDTO> stockList) {   
         this.setStockList(stockList);
     }
     
@@ -97,7 +97,7 @@ public class PPriceEvolution {
         return stockList;
     }
     
-    public void setStockList(ArrayList stockList) {
+    public void setStockList(ArrayList<StockPriceDTO> stockList) {
         this.stockList = stockList;
     }
     

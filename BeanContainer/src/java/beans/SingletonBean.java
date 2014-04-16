@@ -7,7 +7,7 @@ package beans;
 
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
-import dataTransferObjects.StockPriceDTO;
+import market12.StockPriceDTO;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +24,7 @@ public class SingletonBean {
 
     }
 
-    private ArrayList<StockPriceDTO> stockProducts;
+    private ArrayList<StockPriceDTO> stockProducts = new ArrayList<>();
     private static SingletonBean instance = null;
 
     public ArrayList<StockPriceDTO> getMess() {

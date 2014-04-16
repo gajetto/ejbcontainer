@@ -61,7 +61,7 @@ function printStock(data){
                     </div><br /><br />';
         finalDiv = finalDiv+div;
         })
-        $("#stockList").html(finalDiv);
+        $(".newStock").html(finalDiv);
                
 }
 
@@ -83,7 +83,6 @@ function getChartData(data){
 }
 
 function drawChart(stocks) {
-    console.log(stocks);
         var data = google.visualization.arrayToDataTable(stocks);
 
             var options = {

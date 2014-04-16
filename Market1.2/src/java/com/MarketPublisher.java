@@ -25,7 +25,7 @@ import market12.*;
  */
 public class MarketPublisher {
     
-    private ArrayList stockList = null;
+    private ArrayList<StockPriceDTO> stockList = null;
     private PPriceEvolution pE;
     private MockStockServerGUI gui;
     
@@ -85,7 +85,7 @@ public class MarketPublisher {
     /**
      * Appele par StockService pour lui passer la liste des actions
      */
-    public void setStockList(ArrayList stockList) {
+    public void setStockList(ArrayList<StockPriceDTO> stockList) {
         this.stockList = stockList;
         pE = new PPriceEvolution(stockList);
     }

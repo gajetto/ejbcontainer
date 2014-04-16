@@ -7,7 +7,7 @@
 package ejb;
 
 
-import dataTransferObjects.StockPriceDTO;
+import market12.StockPriceDTO;
 import dataTransferObjects.UserDTO;
 import java.util.ArrayList;
 import java.util.List;

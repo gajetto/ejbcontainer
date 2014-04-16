@@ -5,7 +5,7 @@
  */
 package beans;
 
-import dataTransferObjects.StockPriceDTO;
+import market12.StockPriceDTO;
 import dataTransferObjects.StockProductDTO;
 import dataTransferObjects.TransactionDTO;
 import dataTransferObjects.UserDTO;
@@ -26,14 +26,16 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.sql.DataSource;
 import javax.*;
+import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
+import javax.persistence.PersistenceContextType;
 
 /**
  *
  * @author Sohaila.Baset
  */
 @Resource(name = "jdbc/MockStockDB", type = javax.sql.DataSource.class)
-@Stateless
+@Stateful
 public class TradingBean implements TradingRemote {
 
     private DataSource ds;
@@ -43,7 +45,7 @@ public class TradingBean implements TradingRemote {
     @Resource
     SessionContext ctx;
 
-    @PersistenceContext
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     EntityManager manager;
 
     @Override
@@ -79,8 +81,13 @@ public class TradingBean implements TradingRemote {
         return sb.getStockProducts();
     }
 
-    public void insertUser(UserMockStock entity) {
+    private void insertUser(UserMockStock entity) {
         manager.persist(entity);
+    }
+    
+    private void mergeUser(UserMockStock entity){
+        manager.merge(entity);
+        manager.refresh(entity);
     }
 
     private UserMockStock getEntitiyFromDTO(UserDTO userDTO) {
@@ -178,8 +185,12 @@ public class TradingBean implements TradingRemote {
 
     @Override
     public boolean updateUser(UserDTO userDTO) {
-        System.out.println("update");
-        return true;
+        try{
+            mergeUser(getEntitiyFromDTO(userDTO));
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     @Override

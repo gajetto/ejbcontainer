@@ -6,7 +6,7 @@ package webclient;
  * and open the template in the editor.
  */
 
-import dataTransferObjects.StockPriceDTO;
+import market12.StockPriceDTO;
 import ejb.TradingRemote;
 import java.io.IOException;
 import java.text.DecimalFormat;

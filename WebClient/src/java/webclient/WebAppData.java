@@ -6,7 +6,7 @@
 
 package webclient;
 
-import dataTransferObjects.StockPriceDTO;
+import market12.StockPriceDTO;
 import dataTransferObjects.StockProductDTO;
 import dataTransferObjects.StockServiceDTO;
 import dataTransferObjects.UserDTO;
