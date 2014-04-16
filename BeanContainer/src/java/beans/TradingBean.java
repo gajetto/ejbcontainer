@@ -243,8 +243,8 @@ public class TradingBean implements TradingRemote {
         
     }
 
-    private void PsersistTransaction(TransactionMockStock entitiyFromDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void PsersistTransaction(TransactionMockStock transaction) {
+     manager.persist(transaction);
     }
 
     @Override
