@@ -188,6 +188,7 @@ public class TradingBean implements TradingRemote {
             user.setFirstName(userDTO.getFirstName());
             user.setLastName(userDTO.getLastName());
             user.setdOB(userDTO.getDateOfBirth());
+            user.setPassword(userDTO.getPassword());
             manager.merge(user);
             return true;
         }catch (Exception e){
@@ -213,7 +214,16 @@ public class TradingBean implements TradingRemote {
 
     @Override
     public boolean deleteUser(UserDTO userDTO) {
-        System.out.println("delete");
+        try{
+        UserMockStock user = manager.find(UserMockStock.class, retriveEntity(userDTO.getUserName()).getId());
+        manager.remove(user);
         return true;
+        }
+        catch(Exception e)
+        {
+            
+        return false;
+        }
+        
     }
 }
