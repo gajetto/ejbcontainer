@@ -87,8 +87,6 @@ public class TraderManager { //implements MessageListener {
         UserDTO user = ud.getUser();
         boolean isBuy = false;
         
-        System.out.println("PTP: qtty: "+stockNumber);
-        
         if (type.equals("buy")) {
             tty = TradingTransactionType.Buy;
             isBuy = true;

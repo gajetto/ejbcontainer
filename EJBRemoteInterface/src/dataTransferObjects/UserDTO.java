@@ -26,6 +26,18 @@ public class UserDTO implements Serializable{
     private List<TransactionDTO> transactionList;
     private List<StockProductDTO> myStock;
 
+    public UserDTO(int userId, String userName, String firstName, String lastName, Date dateOfBirth, String password, boolean isAdmin, List<TransactionDTO> transactionList, List<StockProductDTO> products) {
+        this.userId = userId;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.transactionList = transactionList;
+        this.myStock = products;
+    }
+    
     public UserDTO(String userName, String firstName, String lastName, Date dateOfBirth, String password, boolean isAdmin, List<TransactionDTO> transactionList, List<StockProductDTO> products) {
         this.userName = userName;
         this.firstName = firstName;

@@ -241,7 +241,10 @@ public class UserGUI extends javax.swing.JFrame { //implements MessageListener {
             List<TransactionDTO> transactions = Lists.reverse(ud.getUser().getTransactionList());
             for (TransactionDTO transaction : transactions) {
 
-                String stockName = ((StockProductDTO) ud.getCurrentStocksPrices().get(transaction.getStockID())).getStockName();
+                String stockName ="";
+                if (!ud.getCurrentStocksPrices().isEmpty()) {
+                    stockName = ((StockProductDTO) ud.getCurrentStocksPrices().get(transaction.getStockID())).getStockName();
+                }
                 
                 display2 = dformat.format(transaction.getTransactionDate())+"\n"
                         +transaction.getQty()+" stocks from "+stockName+" at "+transaction.getStockPrice()+"\n \n" + display2;

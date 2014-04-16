@@ -50,6 +50,9 @@ public class TransactionMockStock implements Serializable {
     
     @Column(name = "isBuy")
     private boolean isBuy;
+    
+    @Column(name = "idTrader")
+    private int idTrader;
 
     public int getId() {
         return id;
@@ -194,6 +197,20 @@ public class TransactionMockStock implements Serializable {
      */
     public void setStockId(int stockId) {
         this.stockId = stockId;
+    }
+
+    /**
+     * @return the idTrader
+     */
+    public int isIdTrader() {
+        return idTrader;
+    }
+
+    /**
+     * @param idTrader the idTrader to set
+     */
+    public void setIdTrader(int idTrader) {
+        this.idTrader = idTrader;
     }
     
 }
