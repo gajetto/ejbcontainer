@@ -116,11 +116,11 @@ public class TradingBean implements TradingRemote {
         return new StockProductDTO(entity.getId(), entity.getStockPrice(), entity.getStockQty(), entity.getStockResult());
     }
     
-    private List<TransactionDTO> getTransactionDTOListFromEntityList(List<TransactionMockStock> entities){
+    private List<TransactionDTO> getTransactionDTOListFromEntityList(UserMockStock user){
         List<TransactionDTO> transactionsList = new ArrayList<>();
-        for (TransactionMockStock entity : entities) {
-            TransactionDTO transaction = getDTOFromEntity(entity);
-            transactionsList.add(transaction);
+        for (TransactionMockStock transaction : user.getTransactionsMockStock()) {
+            TransactionDTO transactionDTO = getDTOFromEntity(transaction);
+            transactionsList.add(transactionDTO);
         }
         return transactionsList;
     }
@@ -142,6 +142,7 @@ public class TradingBean implements TradingRemote {
         }
         return entities;
     }
+     
      private List<StockProductDTO> getStockProductDTOListFromEntityList(List<StockProduct> stocks){
          List<StockProductDTO> entities = new ArrayList<>();
          for (StockProduct stock : stocks) {
@@ -151,7 +152,7 @@ public class TradingBean implements TradingRemote {
          return entities;
      }
      
-     private StockProduct getEntityFromDTO(StockProductDTO productDTO){
+    private StockProduct getEntityFromDTO(StockProductDTO productDTO){
          StockProduct product = new StockProduct();
          product.setStockId(productDTO.getStockID());
          product.setStockPrice(productDTO.getStockPrice());
@@ -160,7 +161,7 @@ public class TradingBean implements TradingRemote {
          return product;
      }
      
-     private TransactionMockStock getEntityFromDTO(TransactionDTO transactionDTO){
+    private TransactionMockStock getEntityFromDTO(TransactionDTO transactionDTO){
          TransactionMockStock transaction = new TransactionMockStock();
          transaction.setStockId(transactionDTO.getStockID());
          transaction.setIsBuy(transactionDTO.isIsBuy());
@@ -171,7 +172,7 @@ public class TradingBean implements TradingRemote {
      }
     
     private UserDTO getDTOFromEntity(UserMockStock entity){
-        return new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin(), getTransactionDTOListFromEntityList(entity.getTransactionsMockStock()), getStockProductDTOListFromEntityList(entity.getStockProducts()));
+        return new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin(), getTransactionDTOListFromEntityList(entity), getStockProductDTOListFromEntityList(entity.getStockProducts()));
     }
 
     @Override
@@ -181,7 +182,8 @@ public class TradingBean implements TradingRemote {
         if(users.isEmpty()){
             return null;
         }else{
-            
+            UserMockStock user = users.get(0);
+//            user.setTransactionsMockStock(getUserTransactionList(user));
             return getDTOFromEntity(users.get(0));
         }
     }
@@ -221,7 +223,7 @@ public class TradingBean implements TradingRemote {
         List<UserMockStock> users = query.getResultList();
         if(!users.isEmpty()){
             for (UserMockStock entity : users) {
-                UserDTO userDTO = new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin(), getTransactionDTOListFromEntityList(entity.getTransactionsMockStock()), getStockProductDTOListFromEntityList(entity.getStockProducts()));
+                UserDTO userDTO = new UserDTO(entity.getUserName(), entity.getFirstName(), entity.getLastName(), entity.getdOB(), entity.getPassword(), entity.isIsAdmin(), getTransactionDTOListFromEntityList(entity), getStockProductDTOListFromEntityList(entity.getStockProducts()));
                 usersDTO.add(userDTO);
             }            
         }
@@ -249,15 +251,17 @@ public class TradingBean implements TradingRemote {
 
     @Override
     @TransactionAttribute(javax.ejb.TransactionAttributeType.REQUIRES_NEW)
-    public boolean addUserTransaction(TransactionDTO transactionDTO) {
+    public boolean addUserTransaction(TransactionDTO transactionDTO, UserDTO userDTO) {
     try {
-              PsersistTransaction(getEntitiyFromDTO(transactionDTO));
-              return true;
+            UserMockStock user = manager.find(UserMockStock.class, retriveEntity(userDTO.getUserName()).getId());
 
-          } catch (Exception ex) {
-              ex.printStackTrace();
-              return false;
-          }       
+            user.setStockProducts(getEntityListFromStockProductDTOList(userDTO.getMyStock()));
+            user.setTransactionsMockStock(getEntityListFromTransactionDTOList(userDTO.getTransactionList()));
+            manager.merge(user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
       }
 
     private UserMockStock getUserByUserId(int userID) {
@@ -268,11 +272,25 @@ public class TradingBean implements TradingRemote {
         }else{
             
             return users.get(0);
-        } 
+        }  }
+
+    private List<TransactionMockStock> getUserTransactionList(UserMockStock user) {
+       String q = "SELECT t FROM "
+               + "TransactionMockStock t, "
+               + "UserMockStok_TransactionMockStock ut "
+               + "WHERE "
+               + "ut.TransactionMockStock_ID = t.ID"
+               + " AND "
+               + "ut.UserMockStock_UserID='"+user.getId() +"' ";
+        List<TransactionMockStock> transactionList = new ArrayList<TransactionMockStock>();
+        
+        Query query = manager.createQuery(q);
+        transactionList = query.getResultList();
+        return transactionList;
     }
-    
+
     @Override
-    public void sendTransactionOrder(TransactionDTO transaction, UserDTO user){
+    public void sendTransactionOrder(TransactionDTO transaction, UserDTO user) {
         TransactionProducer.sendOrder(transaction, user);
     }
 }

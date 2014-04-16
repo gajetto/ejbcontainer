@@ -28,7 +28,7 @@ public interface TradingRemote {
     public List<UserDTO> searchUsers(String username);
     public boolean deleteUser(UserDTO userDTO);
     public ArrayList<StockProductDTO> getLastStocks();
-    public boolean addUserTransaction(TransactionDTO transactionDTO);
+    public boolean addUserTransaction(TransactionDTO transactionDTO, UserDTO user);
     public void sendTransactionOrder(TransactionDTO transaction, UserDTO user);
     
 }

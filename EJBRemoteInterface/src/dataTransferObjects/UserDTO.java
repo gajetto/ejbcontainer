@@ -190,7 +190,7 @@ public class UserDTO implements Serializable{
     /**
      * @param myStock the myStock to set
      */
-    public void setMyStock(ArrayList<StockProductDTO> myStock) {
+    public void setMyStock(List<StockProductDTO> myStock) {
         this.myStock = myStock;
     }
     
