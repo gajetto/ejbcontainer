@@ -20,13 +20,15 @@ public class TransactionDTO  implements Serializable {
     private Date transactionDate;
     private boolean isBuy;
     private int stockID;
+    private int userID;
     
-    public TransactionDTO(int qty, double stockPrice, Date transactionDate, boolean isBuy, int stockID){
+    public TransactionDTO(int qty, double stockPrice, Date transactionDate, boolean isBuy, int stockID,int userID){
         this.qty = qty;
         this.stockPrice = stockPrice;
         this.transactionDate = transactionDate;
         this.isBuy = isBuy;
         this.stockID = stockID;
+        this.userID=userID;
     }
     
     public TransactionDTO(int transactionID, int qty, double stockPrice, Date transactionDate, boolean isBuy, int stockID){
@@ -122,5 +124,19 @@ public class TransactionDTO  implements Serializable {
         this.stockID = stockID;
     }
     
+    
+     /**
+     * @return the UserId
+     */
+    public int getUserID() {
+        return userID;
+    }
+
+    /**
+     * @param userID the userID to set
+     */
+    public void setUserId(int userID) {
+        this.userID = userID;
+    }
     
 }
