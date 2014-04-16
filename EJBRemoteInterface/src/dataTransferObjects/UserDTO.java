@@ -193,4 +193,8 @@ public class UserDTO implements Serializable{
     public void setMyStock(ArrayList<StockProductDTO> myStock) {
         this.myStock = myStock;
     }
+    
+    public void addTransaction(TransactionDTO transaction){
+        this.transactionList.add(transaction);
+    }
 }

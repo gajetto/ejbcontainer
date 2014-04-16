@@ -1,3 +1,10 @@
+<%@page import="dataTransferObjects.StockProductDTO"%>
+<%@page import="com.google.common.collect.Lists"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.List"%>
+<%@page import="dataTransferObjects.TransactionDTO"%>
 <%@ page import="webclient.WebAppData" %>
 <%
     if(WebAppData.getUser() == null){
@@ -164,6 +171,21 @@
                     </div>
                     <div class="transactionList" id="tabs-2">
                         <div class="columnTitle">transactions</div>
+                        <%
+                            DateFormat df = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+                            if(!WebAppData.getUser().getTransactionList().isEmpty()){
+                                List<TransactionDTO> transactions = Lists.reverse(WebAppData.getUser().getTransactionList());
+                                for(TransactionDTO transaction : transactions){
+                                    
+                                    String stockName = ((StockProductDTO)WebAppData.getStockService().getDaList().get(transaction.getStockID())).getStockName();
+                                    
+                                    out.println("<div class=\"newTransaction\">");
+                                    out.println(df.format(transaction.getTransactionDate())+"<br />"+(transaction.isIsBuy()?"bought ":"sold ")+transaction.getQty()+ " stocks from "+stockName+" at $"+transaction.getStockPrice());
+                                    out.println("<br /><br />");
+                                    out.println("</div>");
+                                }
+                            }
+                        %>
                         <div class="newTransaction"></div>
                     </div>
                 </div>

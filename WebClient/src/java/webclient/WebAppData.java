@@ -20,6 +20,7 @@ public class WebAppData {
     protected static ArrayList<StockProductDTO> historyStocks = new ArrayList<>();
     protected static UserDTO user;
     protected static StockServiceDTO currentStocks;
+    private static ArrayList<StockProductDTO> currentStocksPrices = new ArrayList<>();
     protected static boolean editOther = false;
     protected static UserDTO userToModifyByAdmin;
         
@@ -103,6 +104,20 @@ public class WebAppData {
     
     public static UserDTO getUserToModifyByAdmin(){
         return userToModifyByAdmin;
+    }
+
+    /**
+     * @return the currentStocksPrices
+     */
+    public static ArrayList<StockProductDTO> getCurrentStocksPrices() {
+        return currentStocksPrices;
+    }
+
+    /**
+     * @param aCurrentStocksPrices the currentStocksPrices to set
+     */
+    public static void setCurrentStocksPrices(ArrayList<StockProductDTO> aCurrentStocksPrices) {
+        currentStocksPrices = aCurrentStocksPrices;
     }
 
 }

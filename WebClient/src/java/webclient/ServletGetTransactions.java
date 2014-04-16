@@ -1,19 +1,17 @@
-package webclient;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import dataTransferObjects.StockProductDTO;
+package webclient;
+
 import ejb.TradingRemote;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.ejb.EJB;
-import javax.jms.*;
-import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,26 +20,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 
 /**
- * Permits to update the stock list whenever it's called
+ *
  * @author Jerome
  */
-@WebServlet(urlPatterns = {"/ServletGetStock"})
-public class ServletGetStock extends HttpServlet {
+@WebServlet(name = "ServletGetTransactions", urlPatterns = {"/ServletGetTransactions"})
+public class ServletGetTransactions extends HttpServlet {
+
     @EJB
     private TradingRemote tradingBean;
-
-    private ArrayList<StockProductDTO> stocks;
     
-    @Override
-    public synchronized void init() throws ServletException {
-        this.stocks = new ArrayList<>();
-    }
-    
+    private DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     * 
-     * Send the stock list when it is called
      *
      * @param request servlet request
      * @param response servlet response
@@ -50,38 +41,11 @@ public class ServletGetStock extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         
-        stocks = tradingBean.getLastStocks();
+        JSONObject obj = new JSONObject();
         
-        ArrayList<StockProductDTO> list = WebAppData.getHistoryStocks();
         
-        DecimalFormat df = new DecimalFormat("##0.00");
-        double ratePrice = 0.0;
-        JSONObject obj2 = new JSONObject();
-        
-        if(!list.isEmpty()){
-            WebAppData.addStocks(stocks);
-            WebAppData.setCurrentStocksPrices(stocks);
-            for(int i=0; i<list.size()/3; i++){
-            JSONObject obj = new JSONObject();
-                for(int j=0; j<3; j++){
-                    obj.put(list.get((3*i)+j).getStockName(), list.get((3*i)+j).getStockPrice());
-                    if((i+1)<list.size()/3 && list.get((3*(i+1))+j).getStockPrice() != 0.0){
-                        ratePrice = ((list.get((3*i)+j).getStockPrice()/ list.get((3*(i+1))+j).getStockPrice()) - 1) * 100;
-                    }else{
-                        ratePrice = 0.0;
-                    }
-                    obj.put(list.get(j).getStockName()+"Rate", df.format(ratePrice)+"%");
-                }
-                obj2.put(i, obj);
-            }
-        }else{
-            WebAppData.sethistoryStocks(stocks);
-        }
-       
-        response.setContentType("application/json");  // Set content type of the response so that jQuery knows what it can expect.
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(obj2.toJSONString());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -97,7 +61,6 @@ public class ServletGetStock extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
     }
 
     /**

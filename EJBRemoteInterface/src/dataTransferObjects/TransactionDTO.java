@@ -21,7 +21,15 @@ public class TransactionDTO  implements Serializable {
     private boolean isBuy;
     private int stockID;
     
-    public TransactionDTO(int TransactionID, int qty, double stockPrice, Date transactionDate, boolean isBuy, int stockID){
+    public TransactionDTO(int qty, double stockPrice, Date transactionDate, boolean isBuy, int stockID){
+        this.qty = qty;
+        this.stockPrice = stockPrice;
+        this.transactionDate = transactionDate;
+        this.isBuy = isBuy;
+        this.stockID = stockID;
+    }
+    
+    public TransactionDTO(int transactionID, int qty, double stockPrice, Date transactionDate, boolean isBuy, int stockID){
         this.transactionID = transactionID;
         this.qty = qty;
         this.stockPrice = stockPrice;
